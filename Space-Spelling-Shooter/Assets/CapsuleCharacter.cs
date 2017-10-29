@@ -15,10 +15,17 @@ public class CapsuleCharacter : MonoBehaviour {
         {
             gameObject.GetComponent<Rigidbody>().transform.Translate(0, 0, 0.25f);
         }
-
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.DownArrow))
         {
             gameObject.GetComponent<Rigidbody>().transform.Translate(0, 0, -0.25f);
+        }
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            gameObject.GetComponent<Rigidbody>().transform.Translate(-0.25f, 0, 0);
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            gameObject.GetComponent<Rigidbody>().transform.Translate(0.25f, 0, 0);
         }
     }
 }
