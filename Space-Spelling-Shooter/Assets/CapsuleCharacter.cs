@@ -11,9 +11,14 @@ public class CapsuleCharacter : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow))
         {
-            gameObject.GetComponent<Rigidbody>().transform.Translate(0,0,0.25f);
+            gameObject.GetComponent<Rigidbody>().transform.Translate(0, 0, 0.25f);
         }
-	}
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            gameObject.GetComponent<Rigidbody>().transform.Translate(0, 0, -0.25f);
+        }
+    }
 }
