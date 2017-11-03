@@ -21,11 +21,11 @@ public class CapsuleCharacter : MonoBehaviour {
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            gameObject.GetComponent<Rigidbody>().transform.Translate(-0.15f, 0, 0);
+            gameObject.GetComponent<Rigidbody>().transform.Translate(-0.10f, 0, 0);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            gameObject.GetComponent<Rigidbody>().transform.Translate(0.15f, 0, 0);
+            gameObject.GetComponent<Rigidbody>().transform.Translate(0.10f, 0, 0);
         }
     }
 }
