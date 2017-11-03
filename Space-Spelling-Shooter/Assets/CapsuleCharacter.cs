@@ -13,19 +13,19 @@ public class CapsuleCharacter : MonoBehaviour {
 	void Update () {
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            gameObject.GetComponent<Rigidbody>().transform.Translate(0, 0, 0.20f);
+            gameObject.GetComponent<Rigidbody>().transform.Translate(0, 0, 0.15f);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
-            gameObject.GetComponent<Rigidbody>().transform.Translate(0, 0, -10f);
+            gameObject.GetComponent<Rigidbody>().transform.Translate(0, 0, -0.15f);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            gameObject.GetComponent<Rigidbody>().transform.Translate(-0.20f, 0, 0);
+            gameObject.GetComponent<Rigidbody>().transform.Translate(-0.15f, 0, 0);
         }
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            gameObject.GetComponent<Rigidbody>().transform.Translate(0.20f, 0, 0);
+            gameObject.GetComponent<Rigidbody>().transform.Translate(0.15f, 0, 0);
         }
     }
 }
