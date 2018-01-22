@@ -15,10 +15,12 @@ public class Movimentacao : MonoBehaviour {
     private float inputRotation;
 
     //Variável de ajuste para aceleração
-    float deltaTime = Time.deltaTime;
+    float deltaTime;
 
     // Use this for initialization
     void Start () {
+
+        deltaTime = Time.deltaTime;
 
         //Definindo alguns valores iniciais de variáveis
         rigidBody2D.angularDrag = 0.8f;
@@ -38,12 +40,13 @@ public class Movimentacao : MonoBehaviour {
 
     void FixedUpdate()
     {
+
         //Cálculo da movimentação do player
         rigidBody2D.AddRelativeForce(
-            inputImpulse * (Vector2.up * impulseThreshold) * Time.deltaTime
+            inputImpulse * (Vector2.up * impulseThreshold) * deltaTime
             );
         rigidBody2D.AddTorque(
-            inputRotation * (rotationThreshold) * Time.deltaTime
+            inputRotation * (rotationThreshold) * deltaTime
             );
     }
 }
