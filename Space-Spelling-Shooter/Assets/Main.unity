@@ -108,6 +108,60 @@ NavMeshSettings:
     tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &1579257874
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4992070426030326, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992070426030326, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 1.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992070426030326, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -5.4326
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992070426030326, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992070426030326, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992070426030326, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992070426030326, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992070426030326, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992070426030326, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 0.5449647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992070426030326, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 0.54496497
+      objectReference: {fileID: 0}
+    - target: {fileID: 4992070426030326, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 0.54496497
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d66cf0044d3322a4ebc4aa178d0fc6af, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &1662784915
 GameObject:
   m_ObjectHideFlags: 0
