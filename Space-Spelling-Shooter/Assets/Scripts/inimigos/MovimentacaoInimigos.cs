@@ -73,15 +73,15 @@ public class MovimentacaoInimigos : MonoBehaviour {
         // Lidando com os limites do cenário
         if (Mathf.Abs(transform.position.x) > GeradorDeArestas.bottomRightCorner.x + deadZone)
             if (transform.position.x > 0)
-                newPosition.x = GeradorDeArestas.bottomLeftCorner.x;
+                newPosition.x = GeradorDeArestas.bottomLeftCorner.x - deadZone / 2;
             else
-                newPosition.x = GeradorDeArestas.bottomRightCorner.x;
+                newPosition.x = GeradorDeArestas.bottomRightCorner.x + deadZone / 2;
 
         if (Mathf.Abs(transform.position.y) > GeradorDeArestas.upperRightCorner.y + deadZone)
             if (transform.position.y > 0)
-                newPosition.y = GeradorDeArestas.bottomRightCorner.y;
+                newPosition.y = GeradorDeArestas.bottomRightCorner.y - deadZone / 2;
             else
-                newPosition.y = GeradorDeArestas.upperRightCorner.y;
+                newPosition.y = GeradorDeArestas.upperRightCorner.y + deadZone / 2;
 
         transform.position = newPosition;
 
