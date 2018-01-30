@@ -6,26 +6,22 @@ public class Movimentacao : MonoBehaviour {
 
     //Declaração das Variáveis
 
-    // Variáveis com a nova posição do player ao chegar no limite do cenário
-    float newX;
-    float newY;
-
     //É o tamanho da zona fora da tela onde objetos podem se movimentar
-    float deadZone;
+    protected float deadZone;
 
     public Rigidbody2D rigidBody2D;
 
     //Variáveis para controle do personagem
     public float impulseThreshold;
     public float rotationThreshold;
-    private float inputImpulse;
-    private float inputRotation;
+    protected float inputImpulse;
+    protected float inputRotation;
 
     //Variável de ajuste para aceleração
-    float deltaTime;
+    protected float deltaTime;
 
     // Use this for initialization
-    void Start () {
+    protected virtual void Start () {
 
         deltaTime = Time.deltaTime;
 
@@ -39,39 +35,34 @@ public class Movimentacao : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        //Captura de entrada para movimentação do player
-        inputImpulse = Input.GetAxis("Vertical");
-        inputRotation = -Input.GetAxis("Horizontal");
+    protected virtual void Update () {
 
         //Tratamento das bordas do cenário
         verificaBordas();
-
     }
 
-    void verificaBordas()
+    private void verificaBordas()
     {
         Vector2 newPosition = transform.position;
 
         // Lidando com os limites do cenário
         if (Mathf.Abs(transform.position.x) > GeradorDeArestas.bottomRightCorner.x + deadZone)
-            if(transform.position.x > 0)
-                newPosition.x = GeradorDeArestas.bottomLeftCorner.x;
+            if (transform.position.x > 0)
+                newPosition.x = GeradorDeArestas.bottomLeftCorner.x - deadZone / 2;
             else
-                newPosition.x = GeradorDeArestas.bottomRightCorner.x;
+                newPosition.x = GeradorDeArestas.bottomRightCorner.x + deadZone / 2;
 
         if (Mathf.Abs(transform.position.y) > GeradorDeArestas.upperRightCorner.y + deadZone)
             if (transform.position.y > 0)
-                newPosition.y = GeradorDeArestas.bottomRightCorner.y;
+                newPosition.y = GeradorDeArestas.bottomRightCorner.y - deadZone / 2;
             else
-                newPosition.y = GeradorDeArestas.upperRightCorner.y;
+                newPosition.y = GeradorDeArestas.upperRightCorner.y + deadZone / 2;
 
         transform.position = newPosition;
 
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
 
         //Cálculo da movimentação do player
