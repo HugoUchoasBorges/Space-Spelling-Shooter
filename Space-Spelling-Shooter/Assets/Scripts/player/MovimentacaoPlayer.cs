@@ -25,4 +25,12 @@ public class MovimentacaoPlayer : Movimentacao {
     {
         base.FixedUpdate();
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (--GlobalVariables.totalVidas == 0)
+        {
+            GlobalVariables.GameOVer();
+        }
+    }
 }
