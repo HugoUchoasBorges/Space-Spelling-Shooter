@@ -73,4 +73,12 @@ public class Movimentacao : MonoBehaviour {
             inputRotation * (rotationThreshold) * deltaTime
             );
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (--GlobalVariables.totalVidas == 0) 
+        {
+            GlobalVariables.GameOVer();
+        }
+    }
 }
