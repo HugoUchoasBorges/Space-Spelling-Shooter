@@ -52,7 +52,7 @@ public class MovimentacaoPlayer : Movimentacao {
         GetComponent<CircleCollider2D>().enabled = false;
 
         // Espera por 3 Segundos
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(GlobalVariables.tempoRespawn);
 
         // Centraliza o player no cenário
         Centraliza();
@@ -62,10 +62,10 @@ public class MovimentacaoPlayer : Movimentacao {
 
         // Muda a cor do player
         Color oldColor = GetComponent<SpriteRenderer>().color;
-        GetComponent<SpriteRenderer>().color = Color.red;
+        GetComponent<SpriteRenderer>().color = GlobalVariables.corInvulneravel;
 
         //Espera por 3 segundos
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(GlobalVariables.tempoInvulneravel);
 
         // Deixa player Tangível
         GetComponent<CircleCollider2D>().enabled = true;

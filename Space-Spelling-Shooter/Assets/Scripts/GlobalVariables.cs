@@ -8,6 +8,13 @@ public class GlobalVariables : Singleton<GlobalVariables> {
 
     public static int totalVidas = 3;
 
+    public static Color corInvulneravel = Color.red;
+
+    public static float tempoRespawn = 3f;
+
+    public static float tempoInvulneravel = 3f;
+
+
     public static void GameOVer() {
         print("GameOver");
     }
