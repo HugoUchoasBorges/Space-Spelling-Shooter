@@ -25,4 +25,60 @@ public class MovimentacaoPlayer : Movimentacao {
     {
         base.FixedUpdate();
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (--GlobalVariables.totalVidas == 0)
+        {
+            GlobalVariables.GameOVer();
+        }
+
+        DeathSequence();
+        Respawn();
+    }
+
+    private void DeathSequence()
+    {
+        StartCoroutine(Respawn());
+    }
+
+    private IEnumerator Respawn()
+    {
+
+        // Deixa o player invisível
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+
+        // Deixa player intangível
+        GetComponent<CircleCollider2D>().enabled = false;
+
+        // Espera por 3 Segundos
+        yield return new WaitForSeconds(GlobalVariables.tempoRespawn);
+
+        // Centraliza o player no cenário
+        Centraliza();
+
+        // Deixa o player visível
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+
+        // Muda a cor do player
+        Color oldColor = GetComponent<SpriteRenderer>().color;
+        GetComponent<SpriteRenderer>().color = GlobalVariables.corInvulneravel;
+
+        //Espera por 3 segundos
+        yield return new WaitForSeconds(GlobalVariables.tempoInvulneravel);
+
+        // Deixa player Tangível
+        GetComponent<CircleCollider2D>().enabled = true;
+
+        // Volta a cor original
+        GetComponent<SpriteRenderer>().color = oldColor;
+    }
+
+    protected void Centraliza()
+    {
+        // Seta o player ESTÁTICO no centro do cenário
+        transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+        rigidBody2D.angularVelocity = 0;
+        rigidBody2D.velocity = Vector2.zero;
+    }
 }

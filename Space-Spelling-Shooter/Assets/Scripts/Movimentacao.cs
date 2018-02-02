@@ -9,7 +9,7 @@ public class Movimentacao : MonoBehaviour {
     //É o tamanho da zona fora da tela onde objetos podem se movimentar
     protected float deadZone;
 
-    public Rigidbody2D rigidBody2D;
+    protected Rigidbody2D rigidBody2D;
 
     //Variáveis para controle do personagem
     public float impulseThreshold;
@@ -24,6 +24,8 @@ public class Movimentacao : MonoBehaviour {
     protected virtual void Start () {
 
         deltaTime = Time.deltaTime;
+
+        rigidBody2D = GetComponent<Rigidbody2D>();
 
         //Definindo alguns valores iniciais de variáveis
         rigidBody2D.angularDrag = 0.8f;
