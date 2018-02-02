@@ -9,6 +9,9 @@ public class MovimentacaoInimigos : Movimentacao {
 
         base.Start();
 
+        Physics.IgnoreCollision(gameObject.GetComponent<CircleCollider2D>(), 
+            GameObject.FindGameObjectWithTag("Inimigo").GetComponent<CircleCollider2D>());
+
         //Valores gerados para movimentação do inimigo
         inputImpulse = 0.2f;
         inputRotation = 0;
