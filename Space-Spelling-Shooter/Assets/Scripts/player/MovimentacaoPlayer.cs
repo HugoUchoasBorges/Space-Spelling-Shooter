@@ -8,6 +8,7 @@ public class MovimentacaoPlayer : Movimentacao {
     protected override void Start () {
 
         base.Start();
+        GeradorPalavras gp = new GeradorPalavras();
     }
 
     // Update is called once per frame
