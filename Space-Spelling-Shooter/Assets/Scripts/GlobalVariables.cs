@@ -25,6 +25,8 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static float inputImpulse = 0.2f;
     public static float inputRotation = 0f;
 
+    // Sistema de Digitação
+    public static Dictionary<char, bool> letrasUsadas = new Dictionary<char, bool>();
 
     public static void GameOVer() {
         print("GameOver");
