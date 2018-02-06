@@ -9,12 +9,12 @@ public class MovimentacaoInimigos : Movimentacao {
 
         base.Start();
 
-        Physics.IgnoreCollision(gameObject.GetComponent<CircleCollider2D>(), 
-            GameObject.FindGameObjectWithTag("Inimigo").GetComponent<CircleCollider2D>());
-
         //Valores gerados para movimentação do inimigo
         inputImpulse = 0.2f;
         inputRotation = 0;
+
+        // A colisão entre todos os objetos da Layer8 serão ignoradas
+        Physics2D.IgnoreLayerCollision(8, 8);
 
         //Definindo uma posição, direção e sentido iniciais
         SetaPosicaoDirecaoInicial();
