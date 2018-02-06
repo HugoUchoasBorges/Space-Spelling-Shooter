@@ -178,7 +178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eef0a0a35a89194e8b4f0920c038789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidBody2D: {fileID: 50374885690371330}
   impulseThreshold: 0
   rotationThreshold: 0
 --- !u!212 &212184807428793800
