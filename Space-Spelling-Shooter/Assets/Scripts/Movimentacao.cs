@@ -28,10 +28,10 @@ public class Movimentacao : MonoBehaviour {
         rigidBody2D = GetComponent<Rigidbody2D>();
 
         //Definindo alguns valores iniciais de variáveis
-        rigidBody2D.angularDrag = 0.8f;
-        rigidBody2D.drag = 0.3f;
-        impulseThreshold = 50;
-        rotationThreshold = 8;
+        rigidBody2D.angularDrag = GlobalVariables.angularDrag;
+        rigidBody2D.drag = GlobalVariables.linearDrag;
+        impulseThreshold = GlobalVariables.impulseThreshold;
+        rotationThreshold = GlobalVariables.rotationThreshold;
 
         deadZone = GetComponent<CircleCollider2D>().radius;
     }

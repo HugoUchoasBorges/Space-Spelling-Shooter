@@ -10,11 +10,11 @@ public class MovimentacaoInimigos : Movimentacao {
         base.Start();
 
         //Valores gerados para movimentação do inimigo
-        inputImpulse = 0.2f;
-        inputRotation = 0;
+        inputImpulse = GlobalVariables.inputImpulse;
+        inputRotation = GlobalVariables.inputRotation;
 
-        // A colisão entre todos os objetos da Layer8 serão ignoradas
-        Physics2D.IgnoreLayerCollision(8, 8);
+        // A colisão entre todos os objetos da Layer dos Inimigos serão ignoradas
+        Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
 
         //Definindo uma posição, direção e sentido iniciais
         SetaPosicaoDirecaoInicial();
