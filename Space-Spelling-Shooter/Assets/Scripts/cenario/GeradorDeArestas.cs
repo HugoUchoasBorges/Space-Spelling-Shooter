@@ -28,12 +28,12 @@ public class GeradorDeArestas : MonoBehaviour {
 
 
         print("TESTANDO GERAR PALAVRAS POR TAGS");
-        for ( int i = 0; i < GlobalVariables.TAGS.Count; i++)
+        for (int i = 0; i < GlobalVariables.TAGS.Count; i++)
         {
 
             print("TAG: " + GlobalVariables.TAGS[i]);
 
-            List<Palavra> palavras = GeradorPalavras.requisitaPalavras(5, GlobalVariables.TAGS.ToArray());
+            List<Palavra> palavras = GeradorPalavras.requisitaPalavras(5, new string[]{GlobalVariables.TAGS[i]});
 
             foreach (Palavra palavra in palavras)
             {
