@@ -53,14 +53,14 @@ public class GeradorPalavras : Singleton<GeradorPalavras> {
     }
 
     // Método para adicionar uma palavra nos dicionários
-    public static void addPalavra(string texto, string[] tags)
+    private static void addPalavra(string texto, string[] tags)
     {
         Palavra palavra = new Palavra(texto, tags.ToList());
         addPalavra(palavra);
     }
 
     // Método para adicionar uma palavra nos dicionários
-    public static void addPalavra(Palavra palavra)
+    private static void addPalavra(Palavra palavra)
     {
         palavras.Add(palavra);
 
@@ -84,60 +84,46 @@ public class GeradorPalavras : Singleton<GeradorPalavras> {
         
     }
 
-    public static List<Palavra> requisitaPalavras(int quantidade)
+    public static List<Palavra> requisitaPalavras(int quantidade, string[] tags = null)
     {
         List<Palavra> lista = new List<Palavra>();
 
         for (int i = 0; i < quantidade; i++)
         {
+            if(tags != null)
+            {
+                lista.Add(getPalavra(tags));
+                continue;
+            }
+
             lista.Add(getPalavra());
         }
 
         return lista;
     }
 
-    public static List<Palavra> requisitaPalavras(int quantidade, string[] tags)
-    {
-        List<Palavra> lista = new List<Palavra>();
-
-        for (int i = 0; i < quantidade; i++)
-        {
-            lista.Add(getPalavra(tags));
-        }
-
-        return lista;
-    }
-
-    // Método que retorna uma palavra qualquer do dicionário
-    private static Palavra getPalavra()
-    {
-        if(palavras == null)
-        {
-            preenchePalavras();
-        }
-            
-		int i = Random.Range(0, palavras.Count);
-		return palavras[i];
-	}
-
     // Método que retorna uma palavra do dicionário de acordo com as tags do parâmetro
-    private static Palavra getPalavra(string[] tags)
+    private static Palavra getPalavra(string[] tags = null)
     {
         if (palavras == null)
         {
             preenchePalavras();
         }
 
-        List<Palavra> listaPalavras = new List<Palavra>();
+        List<Palavra> palavrasRange = palavras;
 
-        foreach(string tag in tags)
+        if(tags != null)
         {
-            listaPalavras.AddRange(palavrasTags[tag]);
+            List<Palavra> listaPalavras = new List<Palavra>();
+            foreach (string tag in tags)
+            {
+                listaPalavras.AddRange(palavrasTags[tag]);
+            }
+            palavrasRange = listaPalavras;
         }
-        
 
-        int i = Random.Range(0, listaPalavras.Count);
-        return listaPalavras[i];
+        int i = Random.Range(0, palavrasRange.Count);
+        return palavrasRange[i];
     }
 
 }
