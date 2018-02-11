@@ -24,7 +24,30 @@ public class GeradorDeArestas : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-   
+        GeradorPalavras.preenchePalavras();
+
+
+        print("TESTANDO GERAR PALAVRAS POR TAGS");
+        for ( int i = 0; i < GlobalVariables.TAGS.Count; i++)
+        {
+
+            print("TAG: " + GlobalVariables.TAGS[i]);
+
+            List<Palavra> palavras = GeradorPalavras.requisitaPalavras(5, GlobalVariables.TAGS.ToArray());
+
+            foreach (Palavra palavra in palavras)
+            {
+                print(palavra.texto);
+            }
+        }
+
+        print("TESTANDO GERAR PALAVRAS QUAISQUER");
+        List<Palavra> palavrasQuaisquer = GeradorPalavras.requisitaPalavras(5);
+
+        foreach (Palavra palavra in palavrasQuaisquer)
+        {
+            print(palavra.texto);
+        }
     }
 
     void geraCollider()
