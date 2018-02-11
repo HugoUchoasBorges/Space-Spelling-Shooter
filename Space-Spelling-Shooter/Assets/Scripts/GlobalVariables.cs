@@ -27,6 +27,15 @@ public class GlobalVariables : Singleton<GlobalVariables> {
 
     // Sistema de Digitação
     public static Dictionary<char, bool> letrasUsadas = new Dictionary<char, bool>();
+    public static List<string> TAGS = new List<string>();
+
+    public static void addTag(string tag)
+    {
+        if (!TAGS.Contains(tag))
+        {
+            TAGS.Add(tag);
+        }
+    }
 
     public static void GameOVer() {
         print("GameOver");
