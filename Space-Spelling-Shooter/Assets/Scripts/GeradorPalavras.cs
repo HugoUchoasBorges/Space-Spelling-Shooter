@@ -6,53 +6,138 @@ using UnityEngine;
 
 public class GeradorPalavras : Singleton<GeradorPalavras> {
 
-    protected static List<Palavra> palavras { get; private set; }
+    // Lista com TODAS as palavras
+    public static List<Palavra> palavras { get; private set; }
+
+    //Lista com TODAS as palavras separadas por tags
+    public static Dictionary<string, List<Palavra>> palavrasTags { get; private set; }
 
     // Construtor protegido para classe Singleton
 	protected GeradorPalavras() { }
 
-    private static void preenchePalavras(string path = "Assets\\Resources\\Words\\")
+    public static void preenchePalavras(string path = "Assets\\Resources\\Words\\")
     {
         palavras = new List<Palavra>();
+        palavrasTags = new Dictionary<string, List<Palavra>>();
 
-        // Pega o nome de todos os arquivos TXT que estão no PATH
-        string[] filenames = Directory.GetFiles(path, "*.txt").Select(Path.GetFileName).ToArray();
-
-        foreach (string filename in filenames)
+        try
         {
-            // Lê todas as strings desses arquvos
-            string fullPath = path + filename;
-            string[] dicionario = System.IO.File.ReadAllLines(@fullPath);
+            // Pega o nome de todos os arquivos TXT que estão no PATH
+            string[] filenames = Directory.GetFiles(path, "*.txt").Select(Path.GetFileName).ToArray();
 
-            foreach (string palavra in dicionario)
+            foreach (string filename in filenames)
             {
-                palavras.Add(new Palavra(palavra, filename));
+                // Lê todas as strings desses arquvos
+                string fullPath = path + filename;
+                string[] dicionario = System.IO.File.ReadAllLines(@fullPath);
+
+                // Adiciona a nova tag na lista de tags
+                GlobalVariables.addTag(filename);
+
+                foreach (string palavra in dicionario)
+                {
+                    Palavra newPalavra = new Palavra(palavra, filename);
+                    addPalavra(newPalavra);
+                }
+            }
+
+            for (char a = 'A'; a <= 'Z'; a++)
+            {
+                GlobalVariables.letrasUsadas[a] = false;
             }
         }
-
-        for (char a = 'A'; a <= 'Z'; a++)
+        catch (System.Exception e)
         {
-            GlobalVariables.letrasUsadas[a] = false;
+            print("Nenhum dicionário encontrado na pasta: " + path + "\n" + e);
         }
     }
 
-	public static Palavra getPalavra() {
+    // Método para adicionar uma palavra nos dicionários
+    public static void addPalavra(string texto, string[] tags)
+    {
+        Palavra palavra = new Palavra(texto, tags.ToList());
+        addPalavra(palavra);
+    }
+
+    // Método para adicionar uma palavra nos dicionários
+    public static void addPalavra(Palavra palavra)
+    {
+        palavras.Add(palavra);
+
+        foreach(string tag in palavra.tags)
+        {
+            List<Palavra> list;
+
+            if (palavrasTags.ContainsKey(tag))
+            {
+                list = palavrasTags[tag];
+            }
+            else
+            {
+                list = new List<Palavra>();
+            }
+
+            list.Add(palavra);
+
+            palavrasTags[tag] = list;
+        }
+        
+    }
+
+    public static List<Palavra> requisitaPalavras(int quantidade)
+    {
+        List<Palavra> lista = new List<Palavra>();
+
+        for (int i = 0; i < quantidade; i++)
+        {
+            lista.Add(getPalavra());
+        }
+
+        return lista;
+    }
+
+    public static List<Palavra> requisitaPalavras(int quantidade, string[] tags)
+    {
+        List<Palavra> lista = new List<Palavra>();
+
+        for (int i = 0; i < quantidade; i++)
+        {
+            lista.Add(getPalavra(tags));
+        }
+
+        return lista;
+    }
+
+    // Método que retorna uma palavra qualquer do dicionário
+    private static Palavra getPalavra()
+    {
         if(palavras == null)
         {
             preenchePalavras();
         }
             
 		int i = Random.Range(0, palavras.Count);
-		return palavras[i]; // Por enquanto não será feita verificação de letras repetidas.
-
-		/*
-		if (!GlobalVariables.letrasUsadas[palavras[i].texto[0]]) {
-			return palavras[i];
-		}
-		else {
-			return null;
-		}
-		*/
+		return palavras[i];
 	}
+
+    // Método que retorna uma palavra do dicionário de acordo com as tags do parâmetro
+    private static Palavra getPalavra(string[] tags)
+    {
+        if (palavras == null)
+        {
+            preenchePalavras();
+        }
+
+        List<Palavra> listaPalavras = new List<Palavra>();
+
+        foreach(string tag in tags)
+        {
+            listaPalavras.AddRange(palavrasTags[tag]);
+        }
+        
+
+        int i = Random.Range(0, listaPalavras.Count);
+        return listaPalavras[i];
+    }
 
 }
