@@ -1,24 +1,33 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class Palavra {
 
-	public string texto;
-	public int tamanho;
-	public tipoPalavra tipo;
-	public int pontos;
+	public string texto { get; set; }
+	public int tamanho { get; private set; }
+    public List<string> tags { get; set; }
+    public int pontos { get; protected set; }
 
-	public Palavra() {
-		texto = "";
-		tamanho = 0;
-		pontos = 0;
+    public Palavra() {
+		this.texto = "";
+        this.tamanho = 0;
+        this.pontos = 0;
+        this.tags = new List<string>();
+    }
+
+	public Palavra(string texto, List<string> tags)
+    {
+		this.texto = texto;
+		this.tamanho = this.texto.Length;
+		this.tags = tags;
+		this.pontos = this.tamanho * 10;
 	}
 
-	public Palavra(string p, tipoPalavra tipo) {
-		texto = p;
-		tamanho = p.Length;
-		this.tipo = tipo;
-		pontos = tamanho * 10;
-	}
+    public Palavra(string texto, string tag)
+    {
+        this.texto = texto;
+        this.tamanho = this.texto.Length;
+        this.tags = new List<string>();
+        this.tags.Add(tag);
+        this.pontos = this.tamanho * 10;
+    }
 }
