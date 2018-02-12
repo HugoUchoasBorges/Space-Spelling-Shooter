@@ -1,11 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.UI;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MovimentacaoInimigos : Movimentacao {
 
+    public Palavra palavra;
+    protected Text texto;
+
     protected void Spawn()
     {
+        // Inserindo uma palavra no inimigo
+        List<Palavra> palavras = GeradorPalavras.requisitaPalavras(1);
+
+        if (palavras != null)
+        {
+            palavra = palavras[0];
+            texto.text = palavra.texto;
+        }
+        else { return; }
+
         //Valores gerados para movimentação do inimigo
         inputImpulse = GlobalVariables.inputImpulse;
         inputRotation = GlobalVariables.inputRotation;
@@ -18,7 +31,7 @@ public class MovimentacaoInimigos : Movimentacao {
     protected override void Start () {
 
         base.Start();
-
+        texto = gameObject.GetComponentInChildren<Text>();
         Spawn();
     }
 
