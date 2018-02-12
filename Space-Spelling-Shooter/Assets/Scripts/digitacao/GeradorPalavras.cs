@@ -110,8 +110,16 @@ public class GeradorPalavras : Singleton<GeradorPalavras> {
             preenchePalavras();
         }
 
+        // Caso não existam letras disponíveis
+        if (!GlobalVariables.letrasUsadas.Values.Contains(false))
+        {
+            Debug.LogError("Não existem letras disponíveis.");
+            return null;
+        }
+        
         List<Palavra> palavrasRange = palavras;
 
+        // Tratando o casode ser requisitada uma palavra com TAG
         if(tags != null)
         {
             List<Palavra> listaPalavras = new List<Palavra>();
@@ -119,10 +127,30 @@ public class GeradorPalavras : Singleton<GeradorPalavras> {
             {
                 listaPalavras.AddRange(palavrasTags[tag]);
             }
+
             palavrasRange = listaPalavras;
         }
 
+        // Tratando palavras com letras iniciais repetidas
+        List<Palavra> palavrasRepetidas = new List<Palavra>();
+
+        // Retira palavras com letras repetidas
+        foreach (Palavra p in palavrasRange)
+        {
+            if (GlobalVariables.letrasUsadas[p.texto[0]])
+            {
+                palavrasRepetidas.Add(p);
+            }
+        }
+        foreach (Palavra p in palavrasRepetidas)
+        {
+            palavrasRange.Remove(p);
+        }
+
         int i = Random.Range(0, palavrasRange.Count);
+        char letraUsada = palavrasRange[i].texto[0];
+        GlobalVariables.addLetraUsada(letraUsada);
+
         return palavrasRange[i];
     }
 
