@@ -27,13 +27,13 @@ public class GeradorDeArestas : MonoBehaviour {
         GeradorPalavras.preenchePalavras();
 
 
-        print("TESTANDO GERAR PALAVRAS POR TAGS");
+        print("TESTANDO GERAR PALAVRAS POR TAGS SEPARADAS");
         for (int i = 0; i < GlobalVariables.TAGS.Count; i++)
         {
 
             print("TAG: " + GlobalVariables.TAGS[i]);
 
-            List<Palavra> palavras = GeradorPalavras.requisitaPalavras(5, new string[]{GlobalVariables.TAGS[i]});
+            List<Palavra> palavras = GeradorPalavras.requisitaPalavras(5, new string[] { GlobalVariables.TAGS[i] });
 
             foreach (Palavra palavra in palavras)
             {
@@ -45,6 +45,14 @@ public class GeradorDeArestas : MonoBehaviour {
         List<Palavra> palavrasQuaisquer = GeradorPalavras.requisitaPalavras(5);
 
         foreach (Palavra palavra in palavrasQuaisquer)
+        {
+            print(palavra.texto);
+        }
+
+        print("TESTANDO GERAR PALAVRAS COM TODAS AS TAGS JUNTAS");
+        List<Palavra> palavrasTags = GeradorPalavras.requisitaPalavras(5, GlobalVariables.TAGS.ToArray());
+
+        foreach (Palavra palavra in palavrasTags)
         {
             print(palavra.texto);
         }
