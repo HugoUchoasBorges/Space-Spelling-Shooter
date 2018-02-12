@@ -36,7 +36,7 @@ public class GeradorPalavras : Singleton<GeradorPalavras> {
 
                 foreach (string palavra in dicionario)
                 {
-                    Palavra newPalavra = new Palavra(palavra, filename);
+                    Palavra newPalavra = new Palavra(palavra.ToUpper(), filename);
                     addPalavra(newPalavra);
                 }
             }
