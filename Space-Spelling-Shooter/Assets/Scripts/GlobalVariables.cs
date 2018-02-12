@@ -37,6 +37,16 @@ public class GlobalVariables : Singleton<GlobalVariables> {
         }
     }
 
+    public static void addLetraUsada(char letra)
+    {
+        letrasUsadas[letra] = true;
+    }
+
+    public static void rmvLetraUsada(char letra)
+    {
+        letrasUsadas[letra] = false;
+    }
+
     public static void GameOVer() {
         print("GameOver");
     }
