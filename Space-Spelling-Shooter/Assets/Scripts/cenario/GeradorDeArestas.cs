@@ -24,8 +24,11 @@ public class GeradorDeArestas : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        GeradorPalavras.preenchePalavras();
 
+        // A colisão entre todos os objetos da Layer dos Inimigos serão ignoradas
+        Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
+
+        GeradorPalavras.preenchePalavras();
 
         print("TESTANDO GERAR PALAVRAS POR TAGS SEPARADAS");
         for (int i = 0; i < GlobalVariables.TAGS.Count; i++)

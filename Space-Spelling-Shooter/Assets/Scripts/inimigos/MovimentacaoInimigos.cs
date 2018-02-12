@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class MovimentacaoInimigos : Movimentacao {
 
+    protected void Spawn()
+    {
+        //Valores gerados para movimentação do inimigo
+        inputImpulse = GlobalVariables.inputImpulse;
+        inputRotation = GlobalVariables.inputRotation;
+
+        //Definindo uma posição, direção e sentido iniciais
+        SetaPosicaoDirecaoInicial();
+    }
+
     // Use this for initialization
     protected override void Start () {
 
         base.Start();
 
-        //Valores gerados para movimentação do inimigo
-        inputImpulse = GlobalVariables.inputImpulse;
-        inputRotation = GlobalVariables.inputRotation;
-
-        // A colisão entre todos os objetos da Layer dos Inimigos serão ignoradas
-        Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
-
-        //Definindo uma posição, direção e sentido iniciais
-        SetaPosicaoDirecaoInicial();
-
+        Spawn();
     }
 
     protected void SetaPosicaoDirecaoInicial()
