@@ -24,7 +24,7 @@ public class GeradorDeArestas : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-
+        /*
         print("TESTANDO GERAR PALAVRAS POR TAGS SEPARADAS");
         for (int i = 0; i < GlobalVariables.TAGS.Count; i++)
         {
@@ -54,6 +54,7 @@ public class GeradorDeArestas : MonoBehaviour {
         {
             print(palavra.texto);
         }
+        */
     }
 
     void geraCollider()
