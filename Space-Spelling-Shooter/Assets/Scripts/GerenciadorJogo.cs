@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GerenciadorJogo : MonoBehaviour {
 
-    List<GameObject> inimigos;
+    public static List<GameObject> inimigos { get; private set; }
 
     public static bool JOGO_PAUSADO = false;
 
@@ -18,6 +18,11 @@ public class GerenciadorJogo : MonoBehaviour {
 
         inimigos = new List<GameObject>();
         StartCoroutine(GeraInimigos());
+    }
+
+    public static void removeInimigo(GameObject inimigo)
+    {
+        inimigos.Remove(inimigo);
     }
 
     private IEnumerator GeraInimigos()

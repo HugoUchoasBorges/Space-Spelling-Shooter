@@ -59,7 +59,7 @@ public class MovimentacaoInimigos : Movimentacao {
     protected void morte()
     {
         GlobalVariables.rmvLetraUsada(texto.text[0]);
-
+        GerenciadorJogo.removeInimigo(gameObject);
         Destroy(gameObject);
     }
 
