@@ -21,6 +21,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static Color corInvulneravel = Color.red;
     public static float tempoRespawn = 3f;
     public static float tempoInvulneravel = 3f;
+    public static bool playerAtivo = true;
 
     // Inimigos
     public static float inputImpulse = 0.23f;

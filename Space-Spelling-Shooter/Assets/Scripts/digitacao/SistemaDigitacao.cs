@@ -22,6 +22,10 @@ public class SistemaDigitacao : MonoBehaviour {
     {
         while (!GerenciadorJogo.JOGO_PAUSADO)
         {
+            // Espera o player Respawnar
+            if (!GlobalVariables.playerAtivo)
+                yield return new WaitUntil(() => GlobalVariables.playerAtivo == true);
+
             foreach (char c in Input.inputString.ToUpper())
             {
                 switch (c)
