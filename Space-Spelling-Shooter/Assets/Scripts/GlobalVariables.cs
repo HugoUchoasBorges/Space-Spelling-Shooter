@@ -23,7 +23,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static float tempoInvulneravel = 3f;
 
     // Inimigos
-    public static float inputImpulse = 0.2f;
+    public static float inputImpulse = 0.23f;
     public static float inputRotation = 0f;
 
     // Sistema de Digitação

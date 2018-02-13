@@ -25,6 +25,11 @@ public class MovimentacaoInimigos : Movimentacao {
         inputImpulse = GlobalVariables.inputImpulse;
         inputRotation = GlobalVariables.inputRotation;
 
+        float additionalImpulse = (Mathf.Min(texto.text.Length, 12)) / 60;
+
+        // Velocidade do inimigo diminui conforme tamanho da palavra
+        inputImpulse -= additionalImpulse;
+
         //Definindo uma posição, direção e sentido iniciais
         SetaPosicaoDirecaoInicial();
     }
