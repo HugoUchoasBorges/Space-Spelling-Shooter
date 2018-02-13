@@ -5,7 +5,9 @@ using System.Collections.Generic;
 public class MovimentacaoInimigos : Movimentacao {
 
     public Palavra palavra;
+
     protected Text texto;
+    protected Slider vida;
 
     protected void Spawn()
     {
@@ -32,6 +34,7 @@ public class MovimentacaoInimigos : Movimentacao {
 
         base.Start();
         texto = gameObject.GetComponentInChildren<Text>();
+        vida = gameObject.GetComponentInChildren<Slider>();
         Spawn();
     }
 

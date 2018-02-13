@@ -158,7 +158,7 @@ GameObject:
   - component: {fileID: 114778982691882426}
   m_Layer: 8
   m_Name: InimigoPadrao
-  m_TagString: Untagged
+  m_TagString: inimigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -634,7 +634,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   impulseThreshold: 0
   rotationThreshold: 0
-  painel: {fileID: 1920986701745904}
 --- !u!114 &114923804907533602
 MonoBehaviour:
   m_ObjectHideFlags: 1

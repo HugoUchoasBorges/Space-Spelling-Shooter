@@ -7,24 +7,23 @@ public class FollowObject : MonoBehaviour {
     protected GameObject trackObject;
     protected Dictionary<string,Vector3> offset;
 
-
     private void Start()
     {
         trackObject = gameObject.transform.parent.transform.parent.gameObject;
-        float diametro = 2*trackObject.GetComponent<CircleCollider2D>().radius;
+        float raio = trackObject.GetComponent<CircleCollider2D>().radius;
 
         offset = new Dictionary<string, Vector3>()
         {
-            {"left", Camera.main.ScreenToWorldPoint(Vector3.left * diametro)},
-            {"right", Camera.main.ScreenToWorldPoint(Vector3.right * diametro)},
-            {"up", Camera.main.ScreenToWorldPoint(Vector3.up * diametro)},
-            {"down", Camera.main.ScreenToWorldPoint(Vector3.down * diametro)},
+            {"left", Vector3.left * raio},
+            {"right", Vector3.right * raio},
+            {"up", Vector3.up * raio},
+            {"down", Vector3.down * raio},
 
         };
     }
 
     // Update is called once per frame
     void Update () {
-        gameObject.transform.position = Camera.main.WorldToScreenPoint(trackObject.transform.position) + offset["down"];
+        gameObject.transform.position = Camera.main.WorldToScreenPoint(trackObject.GetComponent<CircleCollider2D>().bounds.center + offset["down"]/1.5f);
     }
 }
