@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class GlobalVariables : Singleton<GlobalVariables> {
@@ -49,5 +50,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
 
     public static void GameOVer() {
         print("GameOver");
+        Application.Quit();
+        EditorApplication.isPlaying = false;
     }
 }
