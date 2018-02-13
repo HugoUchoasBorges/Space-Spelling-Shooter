@@ -15,16 +15,20 @@ public class MovimentacaoInimigos : Movimentacao {
         // Inserindo uma palavra no inimigo
         List<Palavra> palavras = GeradorPalavras.requisitaPalavras(1);
 
-        if (palavras != null)
-        {
-            palavra = palavras[0];
-            texto.text = palavra.texto;
-        }
-        else { return; }
+        if (palavras[0] == null)
+            return;
+        
+        palavra = palavras[0];
+        texto.text = palavra.texto;
 
         //Valores gerados para movimentação do inimigo
         inputImpulse = GlobalVariables.inputImpulse;
         inputRotation = GlobalVariables.inputRotation;
+
+        float additionalImpulse = (Mathf.Min(texto.text.Length, 12)) / 60;
+
+        // Velocidade do inimigo diminui conforme tamanho da palavra
+        inputImpulse -= additionalImpulse;
 
         //Definindo uma posição, direção e sentido iniciais
         SetaPosicaoDirecaoInicial();

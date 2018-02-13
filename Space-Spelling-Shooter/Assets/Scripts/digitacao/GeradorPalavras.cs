@@ -38,12 +38,10 @@ public class GeradorPalavras : Singleton<GeradorPalavras> {
                 {
                     Palavra newPalavra = new Palavra(palavra.ToUpper(), filename);
                     addPalavra(newPalavra);
-                }
-            }
 
-            for (char a = 'A'; a <= 'Z'; a++)
-            {
-                GlobalVariables.letrasUsadas[a] = false;
+                    if (!GlobalVariables.letrasUsadas.ContainsKey(newPalavra.texto[0]))
+                        GlobalVariables.letrasUsadas[newPalavra.texto[0]] = false;
+                }
             }
         }
         catch (System.Exception e)
@@ -145,6 +143,12 @@ public class GeradorPalavras : Singleton<GeradorPalavras> {
         foreach (Palavra p in palavrasRepetidas)
         {
             palavrasRange.Remove(p);
+        }
+
+        if (palavrasRange.Count < 1)
+        {
+            Debug.LogError("Não existem palavras disponíveis.");
+            return null;
         }
 
         int i = Random.Range(0, palavrasRange.Count);

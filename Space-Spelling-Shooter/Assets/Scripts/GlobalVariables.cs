@@ -23,12 +23,15 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static float tempoInvulneravel = 3f;
 
     // Inimigos
-    public static float inputImpulse = 0.2f;
+    public static float inputImpulse = 0.23f;
     public static float inputRotation = 0f;
 
     // Sistema de Digitação
     public static Dictionary<char, bool> letrasUsadas = new Dictionary<char, bool>();
     public static List<string> TAGS = new List<string>();
+
+    // Spawn de inimigos
+    public static float tempoGeraInimigo = 3f;
 
     public static void addTag(string tag)
     {

@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GerenciadorJogo : MonoBehaviour {
+
+    List<GameObject> inimigos;
 
 	// Use this for initialization
 	void Start () {
@@ -10,6 +13,28 @@ public class GerenciadorJogo : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
 
         GeradorPalavras.preenchePalavras();
+
+        inimigos = new List<GameObject>();
+        StartCoroutine(GeraInimigos());
+    }
+
+    private IEnumerator GeraInimigos()
+    {
+        while (true)
+        {
+            while (!GlobalVariables.letrasUsadas.Values.Contains(false))
+            {
+                // Espera por 3 Segundos
+                yield return new WaitForSeconds(GlobalVariables.tempoGeraInimigo);
+            }
+
+            // Gera um inimigo
+            GameObject inimigo = GameObject.Instantiate(Resources.Load("Prefabs/inimigos/InimigoPadrao")) as GameObject;
+            inimigos.Add(inimigo);
+
+            // Espera por 3 Segundos
+            yield return new WaitForSeconds(GlobalVariables.tempoGeraInimigo);
+        }
     }
 	
 	// Update is called once per frame
