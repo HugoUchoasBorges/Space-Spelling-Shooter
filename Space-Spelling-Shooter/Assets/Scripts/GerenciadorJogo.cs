@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GerenciadorJogo : MonoBehaviour {
 
@@ -20,9 +21,23 @@ public class GerenciadorJogo : MonoBehaviour {
         StartCoroutine(GeraInimigos());
     }
 
-    public static void removeInimigo(GameObject inimigo)
+    public static void destroiInimigo(GameObject inimigo, char letraInicial)
     {
+        GlobalVariables.rmvLetraUsada(letraInicial);
         inimigos.Remove(inimigo);
+        Destroy(inimigo);
+    }
+
+    public static GameObject buscaAlvo(char c)
+    {
+        foreach (GameObject inimigo in inimigos)
+        {
+            if (inimigo.GetComponentInChildren<Text>().text[0] == c)
+            {
+                return inimigo;
+            }
+        }
+        return null;
     }
 
     private IEnumerator GeraInimigos()

@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SistemaDigitacao : MonoBehaviour {
 
     public GameObject inimigoAlvo = null;
+    private Text texto;
+    private string palavra;
 
     // Use this for initialization
     void Start () {
@@ -19,7 +22,7 @@ public class SistemaDigitacao : MonoBehaviour {
     {
         while (!GerenciadorJogo.JOGO_PAUSADO)
         {
-            foreach (char c in Input.inputString)
+            foreach (char c in Input.inputString.ToUpper())
             {
                 switch (c)
                 {
@@ -33,15 +36,79 @@ public class SistemaDigitacao : MonoBehaviour {
 
                     case '\r': // return
                         print("Return");
+                        if (inimigoAlvo)
+                        {
+                            retiraAlvo();
+                        }
                         break;
 
                     default:
-                        print(c);
+                        buscaAlvo(c);
                         break;
                 }
             }
             // Espera um tempo para verificar novamente as teclas
             yield return new WaitForSeconds(GlobalVariables.tempoVerificaTeclas);
+        }
+    }
+
+    private void buscaAlvo(char c)
+    {
+        if (!inimigoAlvo)
+        {
+
+            GameObject alvo;
+
+            if (alvo = GerenciadorJogo.buscaAlvo(c))
+            {
+                colocaAlvo(alvo);
+            }
+        }
+
+        if (inimigoAlvo)
+        {
+            consomeLetra(c);
+        }
+    }
+
+    private void colocaAlvo(GameObject alvo)
+    {
+        // Setando o novo alvo
+        inimigoAlvo = alvo;
+        texto = inimigoAlvo.GetComponentInChildren<Text>();
+        palavra = texto.text;
+
+        // Características do alvo recém adicionado
+        texto.color = GlobalVariables.corInimigoAlvo;
+    }
+
+    private void retiraAlvo()
+    {
+        print("RETIRANDO ALVO");
+
+        texto.color = GlobalVariables.corInimigo;
+        texto.text = palavra;
+        inimigoAlvo = null;
+        texto = null;
+        palavra = null;
+    }
+
+    private void consomeLetra(char c)
+    {
+        Text texto = inimigoAlvo.GetComponentInChildren<Text>();
+
+        if (texto.text[0] == c)
+        {
+            texto.text = texto.text.Remove(0, 1);
+            print("Letra Removida: " + c);
+
+            if (texto.text == "")
+            {
+                GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]);
+                inimigoAlvo = null;
+
+                print("Inimigo Destruído!!!");
+            }
         }
     }
 }

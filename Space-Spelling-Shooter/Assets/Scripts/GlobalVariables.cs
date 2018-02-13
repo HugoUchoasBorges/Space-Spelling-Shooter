@@ -25,6 +25,8 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     // Inimigos
     public static float inputImpulse = 0.23f;
     public static float inputRotation = 0f;
+    public static Color corInimigo = Color.white;
+    public static Color corInimigoAlvo = Color.red;
 
     // Sistema de Digitação
     public static Dictionary<char, bool> letrasUsadas = new Dictionary<char, bool>();
