@@ -34,7 +34,6 @@ public class MovimentacaoPlayer : Movimentacao {
         }
 
         DeathSequence();
-        Respawn();
     }
 
     private void DeathSequence()
@@ -49,7 +48,7 @@ public class MovimentacaoPlayer : Movimentacao {
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
         // Deixa player intangível
-        GetComponent<CircleCollider2D>().enabled = false;
+        gameObject.layer = GlobalVariables.LAYER_INIMIGOS;
 
         // Espera por 3 Segundos
         yield return new WaitForSeconds(GlobalVariables.tempoRespawn);
@@ -69,6 +68,7 @@ public class MovimentacaoPlayer : Movimentacao {
 
         // Deixa player Tangível
         GetComponent<CircleCollider2D>().enabled = true;
+        gameObject.layer = 0;
 
         // Volta a cor original
         GetComponent<SpriteRenderer>().color = oldColor;
