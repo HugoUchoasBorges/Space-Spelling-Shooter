@@ -6,6 +6,7 @@ public class MovimentacaoInimigos : Movimentacao {
 
     public Palavra palavra;
 
+    protected GameObject painel;
     protected Text texto;
     protected Slider vida;
 
@@ -33,8 +34,11 @@ public class MovimentacaoInimigos : Movimentacao {
     protected override void Start () {
 
         base.Start();
+
+        painel = gameObject.GetComponentInChildren<CanvasRenderer>().transform.gameObject;
         texto = gameObject.GetComponentInChildren<Text>();
         vida = gameObject.GetComponentInChildren<Slider>();
+
         Spawn();
     }
 

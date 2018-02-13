@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Parede
   - inimigo
+  - painel
+  - texto
+  - vida
   layers:
   - Default
   - TransparentFX
