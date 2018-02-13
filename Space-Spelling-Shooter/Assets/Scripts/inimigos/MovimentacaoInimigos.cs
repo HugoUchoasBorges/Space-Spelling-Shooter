@@ -15,12 +15,11 @@ public class MovimentacaoInimigos : Movimentacao {
         // Inserindo uma palavra no inimigo
         List<Palavra> palavras = GeradorPalavras.requisitaPalavras(1);
 
-        if (palavras != null)
-        {
-            palavra = palavras[0];
-            texto.text = palavra.texto;
-        }
-        else { return; }
+        if (palavras[0] == null)
+            return;
+        
+        palavra = palavras[0];
+        texto.text = palavra.texto;
 
         //Valores gerados para movimentação do inimigo
         inputImpulse = GlobalVariables.inputImpulse;
