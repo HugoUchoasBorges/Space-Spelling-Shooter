@@ -1,24 +1,45 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine.UI;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MovimentacaoInimigos : Movimentacao {
+
+    public Palavra palavra;
+
+    protected GameObject painel;
+    protected Text texto;
+    protected Slider vida;
+
+    protected void Spawn()
+    {
+        // Inserindo uma palavra no inimigo
+        List<Palavra> palavras = GeradorPalavras.requisitaPalavras(1);
+
+        if (palavras != null)
+        {
+            palavra = palavras[0];
+            texto.text = palavra.texto;
+        }
+        else { return; }
+
+        //Valores gerados para movimentação do inimigo
+        inputImpulse = GlobalVariables.inputImpulse;
+        inputRotation = GlobalVariables.inputRotation;
+
+        //Definindo uma posição, direção e sentido iniciais
+        SetaPosicaoDirecaoInicial();
+    }
 
     // Use this for initialization
     protected override void Start () {
 
         base.Start();
 
-        //Valores gerados para movimentação do inimigo
-        inputImpulse = GlobalVariables.inputImpulse;
-        inputRotation = GlobalVariables.inputRotation;
+        painel = gameObject.GetComponentInChildren<CanvasRenderer>().transform.gameObject;
+        texto = gameObject.GetComponentInChildren<Text>();
+        vida = gameObject.GetComponentInChildren<Slider>();
 
-        // A colisão entre todos os objetos da Layer dos Inimigos serão ignoradas
-        Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
-
-        //Definindo uma posição, direção e sentido iniciais
-        SetaPosicaoDirecaoInicial();
-
+        Spawn();
     }
 
     protected void SetaPosicaoDirecaoInicial()
