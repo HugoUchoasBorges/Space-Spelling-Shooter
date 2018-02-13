@@ -44,11 +44,9 @@ public class GerenciadorJogo : MonoBehaviour {
     {
         while (!JOGO_PAUSADO)
         {
-            while (!GlobalVariables.letrasUsadas.Values.Contains(false))
-            {
-                // Espera por 3 Segundos
-                yield return new WaitForSeconds(GlobalVariables.tempoGeraInimigo);
-            }
+            // Espera Existirem letras disponíveis
+            if (!GlobalVariables.letrasUsadas.Values.Contains(false))
+                yield return new WaitUntil(() => GlobalVariables.letrasUsadas.Values.Contains(false) == true);
 
             // Gera um inimigo
             GameObject inimigo = GameObject.Instantiate(Resources.Load("Prefabs/inimigos/InimigoPadrao")) as GameObject;
