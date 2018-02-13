@@ -7,6 +7,8 @@ public class GerenciadorJogo : MonoBehaviour {
 
     List<GameObject> inimigos;
 
+    public static bool JOGO_PAUSADO = false;
+
 	// Use this for initialization
 	void Start () {
         // A colisão entre todos os objetos da Layer dos Inimigos serão ignoradas
@@ -20,7 +22,7 @@ public class GerenciadorJogo : MonoBehaviour {
 
     private IEnumerator GeraInimigos()
     {
-        while (true)
+        while (!JOGO_PAUSADO)
         {
             while (!GlobalVariables.letrasUsadas.Values.Contains(false))
             {

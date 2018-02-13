@@ -29,6 +29,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     // Sistema de Digitação
     public static Dictionary<char, bool> letrasUsadas = new Dictionary<char, bool>();
     public static List<string> TAGS = new List<string>();
+    public static float tempoVerificaTeclas = 0.005f;
 
     // Spawn de inimigos
     public static float tempoGeraInimigo = 3f;
