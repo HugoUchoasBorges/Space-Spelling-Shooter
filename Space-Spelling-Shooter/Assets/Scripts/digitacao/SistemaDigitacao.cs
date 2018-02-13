@@ -86,8 +86,12 @@ public class SistemaDigitacao : MonoBehaviour {
     {
         print("RETIRANDO ALVO");
 
-        texto.color = GlobalVariables.corInimigo;
-        texto.text = palavra;
+        if (texto)
+        {
+            texto.color = GlobalVariables.corInimigo;
+            texto.text = palavra;
+        }
+
         inimigoAlvo = null;
         texto = null;
         palavra = null;
@@ -100,12 +104,11 @@ public class SistemaDigitacao : MonoBehaviour {
         if (texto.text[0] == c)
         {
             texto.text = texto.text.Remove(0, 1);
-            print("Letra Removida: " + c);
 
             if (texto.text == "")
             {
                 GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]);
-                inimigoAlvo = null;
+                retiraAlvo();
 
                 print("Inimigo Destruído!!!");
             }
