@@ -21,14 +21,18 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static Color corInvulneravel = Color.red;
     public static float tempoRespawn = 3f;
     public static float tempoInvulneravel = 3f;
+    public static bool playerAtivo = true;
 
     // Inimigos
     public static float inputImpulse = 0.23f;
     public static float inputRotation = 0f;
+    public static Color corInimigo = Color.white;
+    public static Color corInimigoAlvo = Color.red;
 
     // Sistema de Digitação
     public static Dictionary<char, bool> letrasUsadas = new Dictionary<char, bool>();
     public static List<string> TAGS = new List<string>();
+    public static float tempoVerificaTeclas = 0.005f;
 
     // Spawn de inimigos
     public static float tempoGeraInimigo = 3f;

@@ -111,13 +111,14 @@ public class GeradorPalavras : Singleton<GeradorPalavras> {
         // Caso não existam letras disponíveis
         if (!GlobalVariables.letrasUsadas.Values.Contains(false))
         {
-            Debug.LogError("Não existem letras disponíveis.");
+            print("Não existem letras disponíveis.");
             return null;
         }
-        
-        List<Palavra> palavrasRange = palavras;
 
-        // Tratando o casode ser requisitada uma palavra com TAG
+        List<Palavra> palavrasRange = new List<Palavra>();
+        palavrasRange.AddRange(palavras);
+
+        // Tratando o caso de ser requisitada uma palavra com TAG
         if(tags != null)
         {
             List<Palavra> listaPalavras = new List<Palavra>();
@@ -126,7 +127,8 @@ public class GeradorPalavras : Singleton<GeradorPalavras> {
                 listaPalavras.AddRange(palavrasTags[tag]);
             }
 
-            palavrasRange = listaPalavras;
+            palavrasRange = new List<Palavra>();
+            palavrasRange.AddRange(listaPalavras);
         }
 
         // Tratando palavras com letras iniciais repetidas

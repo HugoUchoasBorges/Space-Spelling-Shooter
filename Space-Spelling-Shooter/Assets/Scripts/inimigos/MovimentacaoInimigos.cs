@@ -56,13 +56,6 @@ public class MovimentacaoInimigos : Movimentacao {
                 0);
     }
 
-    protected void morte()
-    {
-        GlobalVariables.rmvLetraUsada(texto.text[0]);
-
-        Destroy(gameObject);
-    }
-
     // Update is called once per frame
     protected override void Update()
     {

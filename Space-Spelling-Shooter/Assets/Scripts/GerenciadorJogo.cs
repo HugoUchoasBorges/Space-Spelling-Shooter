@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GerenciadorJogo : MonoBehaviour {
 
-    List<GameObject> inimigos;
+    public static List<GameObject> inimigos { get; private set; }
+
+    public static bool JOGO_PAUSADO = false;
 
 	// Use this for initialization
 	void Start () {
@@ -18,15 +21,32 @@ public class GerenciadorJogo : MonoBehaviour {
         StartCoroutine(GeraInimigos());
     }
 
+    public static void destroiInimigo(GameObject inimigo, char letraInicial)
+    {
+        GlobalVariables.rmvLetraUsada(letraInicial);
+        inimigos.Remove(inimigo);
+        Destroy(inimigo);
+    }
+
+    public static GameObject buscaAlvo(char c)
+    {
+        foreach (GameObject inimigo in inimigos)
+        {
+            if (inimigo.GetComponentInChildren<Text>().text[0] == c)
+            {
+                return inimigo;
+            }
+        }
+        return null;
+    }
+
     private IEnumerator GeraInimigos()
     {
-        while (true)
+        while (!JOGO_PAUSADO)
         {
-            while (!GlobalVariables.letrasUsadas.Values.Contains(false))
-            {
-                // Espera por 3 Segundos
-                yield return new WaitForSeconds(GlobalVariables.tempoGeraInimigo);
-            }
+            // Espera Existirem letras disponíveis
+            if (!GlobalVariables.letrasUsadas.Values.Contains(false))
+                yield return new WaitUntil(() => GlobalVariables.letrasUsadas.Values.Contains(false) == true);
 
             // Gera um inimigo
             GameObject inimigo = GameObject.Instantiate(Resources.Load("Prefabs/inimigos/InimigoPadrao")) as GameObject;

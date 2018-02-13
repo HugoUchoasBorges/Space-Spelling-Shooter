@@ -43,6 +43,8 @@ public class MovimentacaoPlayer : Movimentacao {
 
     private IEnumerator Respawn()
     {
+        // Avisa o jogo que o player foi desativado
+        GlobalVariables.playerAtivo = false;
 
         // Deixa o player invisível
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
@@ -72,6 +74,9 @@ public class MovimentacaoPlayer : Movimentacao {
 
         // Volta a cor original
         GetComponent<SpriteRenderer>().color = oldColor;
+
+        // Avisa o jogo que o player está ativo
+        GlobalVariables.playerAtivo = true;
     }
 
     protected void Centraliza()
