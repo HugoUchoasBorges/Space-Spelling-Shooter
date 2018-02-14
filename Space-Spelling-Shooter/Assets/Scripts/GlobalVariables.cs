@@ -32,7 +32,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static Dictionary<ENUM_AUDIO, AudioClip> audio_enemy = new Dictionary<ENUM_AUDIO, AudioClip>()
     {
         { ENUM_AUDIO.enemy_hit, Resources.Load<AudioClip>("Audios/inimigos/enemy_hit")},
-        { ENUM_AUDIO.enemy_dying, Resources.Load<AudioClip>("Audios/inimigos/enemy/dying")},
+        { ENUM_AUDIO.enemy_dying, Resources.Load<AudioClip>("Audios/inimigos/enemy_dying")},
     };
 
     // Prefabs
