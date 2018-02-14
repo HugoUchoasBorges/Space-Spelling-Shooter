@@ -21,10 +21,14 @@ public class GerenciadorJogo : MonoBehaviour {
         StartCoroutine(GeraInimigos());
     }
 
-    public static void destroiInimigo(GameObject inimigo, char letraInicial)
+    public static IEnumerator destroiInimigo(GameObject inimigo, char letraInicial)
     {
         GlobalVariables.rmvLetraUsada(letraInicial);
         inimigos.Remove(inimigo);
+        inimigo.GetComponent<Inimigo>().PlayAudio(GlobalVariables.ENUM_AUDIO.enemy_dying);
+
+        inimigo.transform.position = new Vector3(-5000, 5000, 0);
+        yield return new WaitForSeconds(0.6f);
         Destroy(inimigo);
     }
 

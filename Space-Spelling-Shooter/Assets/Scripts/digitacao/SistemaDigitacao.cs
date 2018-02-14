@@ -126,7 +126,7 @@ public class SistemaDigitacao : MonoBehaviour {
 
             if (texto.text == "")
             {
-                GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]);
+                StartCoroutine(GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]));
                 retiraAlvo();
 
                 print("Inimigo Destruído!!!");
