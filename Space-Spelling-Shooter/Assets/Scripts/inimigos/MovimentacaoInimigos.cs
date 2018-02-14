@@ -4,46 +4,26 @@ using System.Collections.Generic;
 
 public class MovimentacaoInimigos : Movimentacao {
 
-    public Palavra palavra;
+    Inimigo inimigo;
 
-    protected GameObject painel;
-    protected Text texto;
-    protected Slider vida;
+    // Use this for initialization
+    protected override void Start () {
 
-    protected void Spawn()
-    {
-        // Inserindo uma palavra no inimigo
-        List<Palavra> palavras = GeradorPalavras.requisitaPalavras(1);
+        inimigo = gameObject.GetComponent<Inimigo>();
 
-        if (palavras[0] == null)
-            return;
-        
-        palavra = palavras[0];
-        texto.text = palavra.texto;
+        base.Start();
 
         //Valores gerados para movimentação do inimigo
         inputImpulse = GlobalVariables.inputImpulse;
         inputRotation = GlobalVariables.inputRotation;
 
-        float additionalImpulse = (Mathf.Min(texto.text.Length, 12)) / 6.67f;
+        float additionalImpulse = (Mathf.Min(inimigo.texto.text.Length, 12)) / 6.67f;
 
         // Velocidade do inimigo diminui conforme tamanho da palavra
         inputImpulse -= additionalImpulse;
 
         //Definindo uma posição, direção e sentido iniciais
         SetaPosicaoDirecaoInicial();
-    }
-
-    // Use this for initialization
-    protected override void Start () {
-
-        base.Start();
-
-        painel = gameObject.GetComponentInChildren<CanvasRenderer>().transform.gameObject;
-        texto = gameObject.GetComponentInChildren<Text>();
-        vida = gameObject.GetComponentInChildren<Slider>();
-
-        Spawn();
     }
 
     protected void SetaPosicaoDirecaoInicial()
