@@ -35,6 +35,14 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     // Spawn de inimigos
     public static float tempoGeraInimigo = 3f;
 
+    // Prefabs
+    public static string prefab_canvas = "Prefabs/inimigos/Canvas";
+    public static string prefab_inimigoPadrao = "Prefabs/inimigos/InimigoPadrao";
+    public static string prefab_background1 = "Prefabs/background/background1";
+    public static string prefab_nave1Player = "Prefabs/player/Nave1Player";
+    public static string prefab_nave2Player = "Prefabs/player/Nave2Player";
+    public static string prefab_nave3Player = "Prefabs/player/Nave3Player";
+
     public static void addTag(string tag)
     {
         if (!TAGS.Contains(tag))

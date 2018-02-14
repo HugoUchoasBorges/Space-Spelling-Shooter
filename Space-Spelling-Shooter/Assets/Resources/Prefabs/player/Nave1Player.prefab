@@ -22,9 +22,7 @@ GameObject:
   - component: {fileID: 212046522570506106}
   - component: {fileID: 58313913111911004}
   - component: {fileID: 50617155503370536}
-  - component: {fileID: 114094421596971144}
-  - component: {fileID: 114857566380551938}
-  - component: {fileID: 114737623204821514}
+  - component: {fileID: 114358813541568702}
   m_Layer: 0
   m_Name: Nave1Player
   m_TagString: Untagged
@@ -39,7 +37,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1742677408839460}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.36, z: 0}
+  m_LocalPosition: {x: -1.538, y: -0.455, z: 0}
   m_LocalScale: {x: 0.44687304, y: 0.4383611, z: 0.42559332}
   m_Children: []
   m_Father: {fileID: 0}
@@ -80,7 +78,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.48988485
---- !u!114 &114094421596971144
+--- !u!114 &114358813541568702
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -88,35 +86,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1742677408839460}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b69367f595a680749a84f6d2fbe29ea3, type: 3}
+  m_Script: {fileID: 11500000, guid: d11bc4f1c2e918248a29e5fe5615f17e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114737623204821514
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1742677408839460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8caadde36f08b4749950712c17a1a7e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  impulseThreshold: 1
-  rotationThreshold: 1
---- !u!114 &114857566380551938
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1742677408839460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 37805ddf89462e446a50f1017de9738d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inimigoAlvo: {fileID: 0}
-  gt: {fileID: 0}
+  gerenciadorJogo: {fileID: 0}
+  sistemaDigitacao: {fileID: 0}
+  movimentacao: {fileID: 0}
 --- !u!212 &212046522570506106
 SpriteRenderer:
   m_ObjectHideFlags: 1
