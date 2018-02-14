@@ -8,17 +8,29 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     // Áudios
     public enum ENUM_AUDIO
     {
-        player_shooting,
+        player_key_lock,
         player_dying,
+        player_key,
+        player_key_space,
+        player_key_return,
         enemy_hit,
         enemy_dying,
         game_start,
     }
-    public static Dictionary<ENUM_AUDIO, AudioClip> audio_dict = new Dictionary<ENUM_AUDIO, AudioClip>()
+    public static Dictionary<ENUM_AUDIO, AudioClip> audio_player = new Dictionary<ENUM_AUDIO, AudioClip>()
+    {
+        { ENUM_AUDIO.player_key_lock , Resources.Load<AudioClip>("Audios/player/key_lock")},
+        { ENUM_AUDIO.player_key , Resources.Load<AudioClip>("Audios/player/key")},
+        { ENUM_AUDIO.player_key_space , Resources.Load<AudioClip>("Audios/player/key_space")},
+        { ENUM_AUDIO.player_key_return , Resources.Load<AudioClip>("Audios/player/key_return")},
+        { ENUM_AUDIO.player_dying, Resources.Load<AudioClip>("Audios/player/player_dying")},
+    };
+    public static Dictionary<ENUM_AUDIO, AudioClip> audio_game = new Dictionary<ENUM_AUDIO, AudioClip>()
     {
         { ENUM_AUDIO.game_start, Resources.Load<AudioClip>("Audios/jogo/game_start")},
-        { ENUM_AUDIO.player_shooting , Resources.Load<AudioClip>("Audios/player/player_shooting")},
-        { ENUM_AUDIO.player_dying, Resources.Load<AudioClip>("Audios/player/player_dying")},
+    };
+    public static Dictionary<ENUM_AUDIO, AudioClip> audio_enemy = new Dictionary<ENUM_AUDIO, AudioClip>()
+    {
         { ENUM_AUDIO.enemy_hit, Resources.Load<AudioClip>("Audios/inimigos/enemy_hit")},
         { ENUM_AUDIO.enemy_dying, Resources.Load<AudioClip>("Audios/inimigos/enemy/dying")},
     };
