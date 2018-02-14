@@ -82,6 +82,13 @@ public class GeradorPalavras : Singleton<GeradorPalavras> {
         
     }
 
+    public static Palavra requisitaPalavra(string[] tags = null)
+    {
+        Palavra palavra = requisitaPalavras(1, tags)[0];
+
+        return palavra;
+    }
+
     public static List<Palavra> requisitaPalavras(int quantidade, string[] tags = null)
     {
         List<Palavra> lista = new List<Palavra>();
