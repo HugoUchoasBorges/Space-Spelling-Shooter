@@ -15,7 +15,7 @@ public class GeradorPalavras : Singleton<GeradorPalavras> {
     // Construtor protegido para classe Singleton
 	protected GeradorPalavras() { }
 
-    public static void preenchePalavras(string path = "Assets\\Resources\\Words\\")
+    public static void preenchePalavras(string path = "Assets/Resources/Words/")
     {
         palavras = new List<Palavra>();
         palavrasTags = new Dictionary<string, List<Palavra>>();
