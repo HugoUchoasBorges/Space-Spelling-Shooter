@@ -25,7 +25,7 @@ public class Inimigo : MonoBehaviour {
             return;
         }
 
-        canvas = Instantiate(Resources.Load(GlobalVariables.prefab_canvas)) as GameObject;
+        canvas = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.canvas]) as GameObject;
         canvas.transform.SetParent(transform);
 
         texto = canvas.GetComponentInChildren<Text>();

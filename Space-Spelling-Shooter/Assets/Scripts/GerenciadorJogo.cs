@@ -49,7 +49,7 @@ public class GerenciadorJogo : MonoBehaviour {
                 yield return new WaitUntil(() => GlobalVariables.letrasUsadas.Values.Contains(false) == true);
 
             // Gera um inimigo
-            GameObject inimigo = Instantiate(Resources.Load(GlobalVariables.prefab_inimigoPadrao)) as GameObject;
+            GameObject inimigo = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.inimigoPadrao]) as GameObject;
             inimigos.Add(inimigo);
 
             // Espera por 3 Segundos

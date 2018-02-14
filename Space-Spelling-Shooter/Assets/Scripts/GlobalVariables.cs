@@ -5,6 +5,27 @@ public class GlobalVariables : Singleton<GlobalVariables> {
 
     protected GlobalVariables() { } // guarantee this will be always a singleton only - can't use the constructor!
 
+    // Prefabs
+    public enum ENUM_PREFAB
+    {
+        canvas,
+        inimigoPadrao,
+        background1,
+        nave1Player,
+        nave2Player,
+        nave3Player,
+        audioSource,
+    }
+    public static Dictionary<ENUM_PREFAB, GameObject> prefab_dict = new Dictionary<ENUM_PREFAB, GameObject>(){
+        { ENUM_PREFAB.canvas, Resources.Load<GameObject>("Prefabs/inimigos/Canvas") },
+        { ENUM_PREFAB.inimigoPadrao, Resources.Load<GameObject>("Prefabs/inimigos/InimigoPadrao") },
+        { ENUM_PREFAB.background1, Resources.Load<GameObject>("Prefabs/background/background1") },
+        { ENUM_PREFAB.nave1Player, Resources.Load<GameObject>("Prefabs/player/Nave1Player") },
+        { ENUM_PREFAB.nave2Player, Resources.Load<GameObject>("Prefabs/player/Nave2Player") },
+        { ENUM_PREFAB.nave3Player, Resources.Load<GameObject>("Prefabs/player/Nave3Player") },
+        { ENUM_PREFAB.audioSource, Resources.Load<GameObject>("Prefabs/audio/AudioSource") },
+    };
+
     // Layers
     public const int LAYER_INIMIGOS = 8;
 
@@ -34,14 +55,6 @@ public class GlobalVariables : Singleton<GlobalVariables> {
 
     // Spawn de inimigos
     public static float tempoGeraInimigo = 3f;
-
-    // Prefabs
-    public static string prefab_canvas = "Prefabs/inimigos/Canvas";
-    public static string prefab_inimigoPadrao = "Prefabs/inimigos/InimigoPadrao";
-    public static string prefab_background1 = "Prefabs/background/background1";
-    public static string prefab_nave1Player = "Prefabs/player/Nave1Player";
-    public static string prefab_nave2Player = "Prefabs/player/Nave2Player";
-    public static string prefab_nave3Player = "Prefabs/player/Nave3Player";
 
     public static void addTag(string tag)
     {
