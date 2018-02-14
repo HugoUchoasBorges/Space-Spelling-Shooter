@@ -22,7 +22,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static bool playerAtivo = true;
 
     // Inimigos
-    public static float inputImpulse = 0.23f;
+    public static float inputImpulse = 2f;
     public static float inputRotation = 0f;
     public static Color corInimigo = Color.white;
     public static Color corInimigoAlvo = Color.red;
