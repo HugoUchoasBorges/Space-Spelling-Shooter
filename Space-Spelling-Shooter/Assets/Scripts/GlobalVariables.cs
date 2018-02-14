@@ -5,6 +5,24 @@ public class GlobalVariables : Singleton<GlobalVariables> {
 
     protected GlobalVariables() { } // guarantee this will be always a singleton only - can't use the constructor!
 
+    // Áudios
+    public enum ENUM_AUDIO
+    {
+        player_shooting,
+        player_dying,
+        enemy_hit,
+        enemy_dying,
+        game_start,
+    }
+    public static Dictionary<ENUM_AUDIO, AudioClip> audio_dict = new Dictionary<ENUM_AUDIO, AudioClip>()
+    {
+        { ENUM_AUDIO.game_start, Resources.Load<AudioClip>("Audios/jogo/game_start")},
+        { ENUM_AUDIO.player_shooting , Resources.Load<AudioClip>("Audios/player/player_shooting")},
+        { ENUM_AUDIO.player_dying, Resources.Load<AudioClip>("Audios/player/player_dying")},
+        { ENUM_AUDIO.enemy_hit, Resources.Load<AudioClip>("Audios/inimigos/enemy_hit")},
+        { ENUM_AUDIO.enemy_dying, Resources.Load<AudioClip>("Audios/inimigos/enemy/dying")},
+    };
+
     // Prefabs
     public enum ENUM_PREFAB
     {
