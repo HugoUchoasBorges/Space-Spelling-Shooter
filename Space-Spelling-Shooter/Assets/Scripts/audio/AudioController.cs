@@ -20,4 +20,8 @@ public class AudioController : MonoBehaviour {
     {
         audioSource.Play();
     }
+
+    public float getAudioLength() {
+        return audioSource.clip.length;
+    }
 }

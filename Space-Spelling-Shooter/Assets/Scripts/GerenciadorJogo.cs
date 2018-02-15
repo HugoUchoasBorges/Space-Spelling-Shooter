@@ -25,10 +25,10 @@ public class GerenciadorJogo : MonoBehaviour {
     {
         GlobalVariables.rmvLetraUsada(letraInicial);
         inimigos.Remove(inimigo);
-        inimigo.GetComponent<Inimigo>().PlayAudio(GlobalVariables.ENUM_AUDIO.enemy_dying);
+        float tamanhoAudio = inimigo.GetComponent<Inimigo>().PlayAudio(GlobalVariables.ENUM_AUDIO.enemy_dying);
 
-        inimigo.transform.position = new Vector3(-5000, 5000, 0);
-        yield return new WaitForSeconds(0.6f);
+        inimigo.SetActive(false);
+        yield return new WaitForSeconds(tamanhoAudio);
         Destroy(inimigo);
     }
 

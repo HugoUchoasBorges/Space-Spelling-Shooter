@@ -27,8 +27,9 @@ public class Personagem : MonoBehaviour {
         }
     }
 
-    public virtual void PlayAudio(GlobalVariables.ENUM_AUDIO audio)
+    public virtual float PlayAudio(GlobalVariables.ENUM_AUDIO audio)
     {
         audioControllers[audio].Play();
+        return audioControllers[audio].getAudioLength();
     }
 }
