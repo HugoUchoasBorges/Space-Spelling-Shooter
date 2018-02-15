@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class MovimentacaoPlayer : Movimentacao {
 
+    private Player player;
+
     // Use this for initialization
     protected override void Start () {
 
         base.Start();
+        player = gameObject.GetComponent<Player>();
+
     }
 
     // Update is called once per frame
@@ -38,6 +42,7 @@ public class MovimentacaoPlayer : Movimentacao {
 
     private void DeathSequence()
     {
+        player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_dying);
         StartCoroutine(Respawn());
     }
 

@@ -21,10 +21,14 @@ public class GerenciadorJogo : MonoBehaviour {
         StartCoroutine(GeraInimigos());
     }
 
-    public static void destroiInimigo(GameObject inimigo, char letraInicial)
+    public static IEnumerator destroiInimigo(GameObject inimigo, char letraInicial)
     {
         GlobalVariables.rmvLetraUsada(letraInicial);
         inimigos.Remove(inimigo);
+        inimigo.GetComponent<Inimigo>().PlayAudio(GlobalVariables.ENUM_AUDIO.enemy_dying);
+
+        inimigo.transform.position = new Vector3(-5000, 5000, 0);
+        yield return new WaitForSeconds(0.6f);
         Destroy(inimigo);
     }
 
@@ -49,7 +53,7 @@ public class GerenciadorJogo : MonoBehaviour {
                 yield return new WaitUntil(() => GlobalVariables.letrasUsadas.Values.Contains(false) == true);
 
             // Gera um inimigo
-            GameObject inimigo = Instantiate(Resources.Load(GlobalVariables.prefab_inimigoPadrao)) as GameObject;
+            GameObject inimigo = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.inimigoPadrao]) as GameObject;
             inimigos.Add(inimigo);
 
             // Espera por 3 Segundos

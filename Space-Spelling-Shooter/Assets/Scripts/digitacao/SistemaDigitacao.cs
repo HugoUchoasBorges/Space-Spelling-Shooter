@@ -7,9 +7,11 @@ public class SistemaDigitacao : MonoBehaviour {
     public GameObject inimigoAlvo = null;
     private Text texto;
     private string palavra;
+    private Player player;
 
     // Use this for initialization
     void Start () {
+        player = gameObject.GetComponent<Player>();
         StartCoroutine(verificaTeclas());
     }
 	
@@ -32,6 +34,7 @@ public class SistemaDigitacao : MonoBehaviour {
                 {
                     case '\b': // backspace/delete
                         print("Backspace");
+                        player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_space);
                         break;
 
                     case '\n': // enter
@@ -43,6 +46,7 @@ public class SistemaDigitacao : MonoBehaviour {
                         if (inimigoAlvo)
                         {
                             retiraAlvo();
+                            player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_return);
                         }
                         break;
 
@@ -71,7 +75,18 @@ public class SistemaDigitacao : MonoBehaviour {
 
         if (inimigoAlvo)
         {
-            consomeLetra(c);
+            if (consomeLetra(c))
+            {
+                player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key);
+            }
+            else
+            {
+                player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_lock);
+            }
+        }
+        else
+        {
+            player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_lock);
         }
     }
 
@@ -101,7 +116,7 @@ public class SistemaDigitacao : MonoBehaviour {
         palavra = null;
     }
 
-    private void consomeLetra(char c)
+    private bool consomeLetra(char c)
     {
         Text texto = inimigoAlvo.GetComponentInChildren<Text>();
 
@@ -111,11 +126,13 @@ public class SistemaDigitacao : MonoBehaviour {
 
             if (texto.text == "")
             {
-                GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]);
+                StartCoroutine(GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]));
                 retiraAlvo();
 
                 print("Inimigo Destruído!!!");
             }
+            return true;
         }
+        return false;
     }
 }

@@ -92,6 +92,8 @@ MonoBehaviour:
   gerenciadorJogo: {fileID: 0}
   sistemaDigitacao: {fileID: 0}
   movimentacao: {fileID: 0}
+  audioSource: {fileID: 0}
+  audio_tiro: {fileID: 0}
 --- !u!212 &212046522570506106
 SpriteRenderer:
   m_ObjectHideFlags: 1

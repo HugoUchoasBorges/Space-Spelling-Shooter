@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Inimigo : MonoBehaviour {
+public class Inimigo : Personagem {
 
     public Palavra palavra { get; protected set; }
 
@@ -25,7 +25,7 @@ public class Inimigo : MonoBehaviour {
             return;
         }
 
-        canvas = Instantiate(Resources.Load(GlobalVariables.prefab_canvas)) as GameObject;
+        canvas = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.canvas]) as GameObject;
         canvas.transform.SetParent(transform);
 
         texto = canvas.GetComponentInChildren<Text>();
@@ -40,8 +40,11 @@ public class Inimigo : MonoBehaviour {
     }
 
     // Use this for initialization
-    void Start () {
+    protected override void Start () {
+        base.Start();
+
         Spawn();
+        inicializaAudios(GlobalVariables.audio_enemy);
     }
 	
 	// Update is called once per frame
