@@ -24,17 +24,35 @@ public class MovimentacaoPlayer : Movimentacao {
     {
         base.Update();
 
-        //Captura de entrada para movimentação do player
-        float axisY = Input.GetAxis("Vertical");
-        float axisX = Input.GetAxis("Horizontal");
-
-        transform.Translate(new Vector3(axisX, axisY).normalized * deltaTime * velocidade);
-
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+        ControllPlayer();
+    }
+
+    private void ControllPlayer()
+    {
+        //Captura de entrada para movimentação do player
+        float axisY = Input.GetAxis("Vertical");
+        float axisX = Input.GetAxis("Horizontal");
+
+        Vector3 movimento = transform.TransformDirection(new Vector3(axisX, axisY));
+
+        // Limita Velocidade na Diagonal
+        if (movimento.magnitude > 1)
+        {
+            movimento = movimento.normalized;
+        }
+
+        // Aplica a velocidade ao movimento
+        movimento *= velocidade;
+
+        Vector3 velocidadeAtual = rigidBody2D.velocity;
+        Vector3 aceleracao = (movimento - velocidadeAtual);
+
+        rigidBody2D.AddForce(aceleracao, ForceMode2D.Impulse);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
