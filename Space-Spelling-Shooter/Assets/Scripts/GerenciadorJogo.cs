@@ -8,13 +8,22 @@ public class GerenciadorJogo : MonoBehaviour {
 
     public static List<GameObject> inimigos { get; private set; }
 
+    public static Player player;
+
     public static bool JOGO_PAUSADO = false;
 
     public void iniciaJogo(){
-        // A colisão entre todos os objetos da Layer dos Inimigos serão ignoradas
-        Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
 
+        gameObject.AddComponent<GeradorDeArestas>();
+
+        // Carrega as palavras dos arquivos para o jogo
         GeradorPalavras.preenchePalavras();
+
+        // Cria instancia do player
+        player = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.nave1Player]).GetComponent<Player>();
+
+        // A colisão entre todos os objetos da Layer dos Inimigos será ignorada
+        Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
 
         inimigos = new List<GameObject>();
         StartCoroutine(GeraInimigos());
