@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player : Personagem {
 
-    public GerenciadorJogo gerenciadorJogo;
     public SistemaDigitacao sistemaDigitacao;
     public MovimentacaoPlayer movimentacao;
 
@@ -14,10 +13,10 @@ public class Player : Personagem {
         base.Start();
 
         movimentacao = gameObject.AddComponent<MovimentacaoPlayer>();
-        gerenciadorJogo = gameObject.AddComponent<GerenciadorJogo>();
         sistemaDigitacao = gameObject.AddComponent<SistemaDigitacao>();
 
         inicializaAudios(GlobalVariables.audio_player);
 
+        PlayAudio(GlobalVariables.ENUM_AUDIO.game_start);
     }
 }

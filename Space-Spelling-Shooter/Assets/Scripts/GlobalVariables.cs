@@ -24,6 +24,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
         { ENUM_AUDIO.player_key_space , Resources.Load<AudioClip>("Audios/player/key_space")},
         { ENUM_AUDIO.player_key_return , Resources.Load<AudioClip>("Audios/player/key_return")},
         { ENUM_AUDIO.player_dying, Resources.Load<AudioClip>("Audios/player/player_dying")},
+        { ENUM_AUDIO.game_start, Resources.Load<AudioClip>("Audios/jogo/game_start")},
     };
     public static Dictionary<ENUM_AUDIO, AudioClip> audio_game = new Dictionary<ENUM_AUDIO, AudioClip>()
     {
