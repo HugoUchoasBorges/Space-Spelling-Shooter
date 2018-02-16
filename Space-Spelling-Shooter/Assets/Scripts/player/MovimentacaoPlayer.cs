@@ -5,6 +5,7 @@ using UnityEngine;
 public class MovimentacaoPlayer : Movimentacao {
 
     private Player player;
+    public float velocidade;
 
     // Use this for initialization
     protected override void Start () {
@@ -12,6 +13,7 @@ public class MovimentacaoPlayer : Movimentacao {
         base.Start();
         player = gameObject.GetComponent<Player>();
 
+        velocidade = 3f;
         // Centraliza o player no cenário
         Centraliza();
 
@@ -23,8 +25,10 @@ public class MovimentacaoPlayer : Movimentacao {
         base.Update();
 
         //Captura de entrada para movimentação do player
-        inputImpulse = Input.GetAxis("Vertical");
-        inputRotation = -Input.GetAxis("Horizontal");
+        float axisY = Input.GetAxis("Vertical");
+        float axisX = Input.GetAxis("Horizontal");
+
+        transform.Translate(new Vector3(axisX, axisY).normalized * deltaTime * velocidade);
 
     }
 

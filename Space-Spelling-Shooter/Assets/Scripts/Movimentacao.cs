@@ -72,12 +72,5 @@ public class Movimentacao : MonoBehaviour {
     protected virtual void FixedUpdate()
     {
 
-        //Cálculo da movimentação do player
-        rigidBody2D.AddRelativeForce(
-            inputImpulse * (Vector2.up * impulseThreshold) * deltaTime
-            );
-        rigidBody2D.AddTorque(
-            inputRotation * (rotationThreshold) * deltaTime
-            );
     }
 }

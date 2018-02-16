@@ -48,5 +48,12 @@ public class MovimentacaoInimigos : Movimentacao {
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
+
+        rigidBody2D.AddRelativeForce(
+            inputImpulse * (Vector2.up * impulseThreshold) * deltaTime
+            );
+        rigidBody2D.AddTorque(
+            inputRotation * (rotationThreshold) * deltaTime
+            );
     }
 }
