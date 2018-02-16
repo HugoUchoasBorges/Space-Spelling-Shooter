@@ -12,6 +12,9 @@ public class MovimentacaoPlayer : Movimentacao {
         base.Start();
         player = gameObject.GetComponent<Player>();
 
+        // Centraliza o player no cenário
+        Centraliza();
+
     }
 
     // Update is called once per frame
