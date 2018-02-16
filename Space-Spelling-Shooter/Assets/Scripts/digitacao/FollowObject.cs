@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FollowObject : MonoBehaviour {
 
@@ -28,6 +29,8 @@ public class FollowObject : MonoBehaviour {
             {"default", Vector3.down * raio}
 
         };
+
+        trackObject.GetComponentInChildren<ContentSizeFitter>().horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
     }
 
     // Update is called once per frame
