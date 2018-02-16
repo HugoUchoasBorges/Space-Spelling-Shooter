@@ -9,10 +9,15 @@ public class FollowObject : MonoBehaviour {
 
     private float raio;
 
-    private void Start()
+    private void Awake()
     {
         trackObject = gameObject.transform.parent.transform.parent.gameObject;
         raio = trackObject.GetComponent<CircleCollider2D>().radius;
+        gameObject.transform.position = Camera.main.WorldToScreenPoint(trackObject.GetComponent<CircleCollider2D>().bounds.center);
+    }
+
+    private void Start()
+    {
 
         offset = new Dictionary<string, Vector3>()
         {
