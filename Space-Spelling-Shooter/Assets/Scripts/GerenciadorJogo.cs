@@ -10,8 +10,7 @@ public class GerenciadorJogo : MonoBehaviour {
 
     public static bool JOGO_PAUSADO = false;
 
-	// Use this for initialization
-	void Start () {
+    public void iniciaJogo(){
         // A colisão entre todos os objetos da Layer dos Inimigos serão ignoradas
         Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
 
@@ -19,6 +18,11 @@ public class GerenciadorJogo : MonoBehaviour {
 
         inimigos = new List<GameObject>();
         StartCoroutine(GeraInimigos());
+    }
+
+	// Use this for initialization
+	void Start () {
+        iniciaJogo();
     }
 
     public static IEnumerator destroiInimigo(GameObject inimigo, char letraInicial)
