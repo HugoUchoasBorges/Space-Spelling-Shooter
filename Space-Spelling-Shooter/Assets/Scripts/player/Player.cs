@@ -17,5 +17,6 @@ public class Player : Personagem {
 
         inicializaAudios(GlobalVariables.audio_player);
 
+        PlayAudio(GlobalVariables.ENUM_AUDIO.game_start);
     }
 }
