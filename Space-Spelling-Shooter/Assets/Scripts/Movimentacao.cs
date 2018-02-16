@@ -20,6 +20,11 @@ public class Movimentacao : MonoBehaviour {
     //Variável de ajuste para aceleração
     protected float deltaTime;
 
+    protected virtual void Awake()
+    {
+
+    }
+
     // Use this for initialization
     protected virtual void Start () {
 

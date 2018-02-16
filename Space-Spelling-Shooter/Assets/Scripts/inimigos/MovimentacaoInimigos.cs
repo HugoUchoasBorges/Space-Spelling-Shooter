@@ -6,6 +6,12 @@ public class MovimentacaoInimigos : Movimentacao {
 
     Inimigo inimigo;
 
+    protected override void Awake()
+    {
+        //Definindo uma posição, direção e sentido iniciais
+        SetaPosicaoDirecaoInicial();
+    }
+
     // Use this for initialization
     protected override void Start () {
 
@@ -21,9 +27,6 @@ public class MovimentacaoInimigos : Movimentacao {
 
         // Velocidade do inimigo diminui conforme tamanho da palavra
         inputImpulse -= additionalImpulse;
-
-        //Definindo uma posição, direção e sentido iniciais
-        SetaPosicaoDirecaoInicial();
     }
 
     protected void SetaPosicaoDirecaoInicial()
