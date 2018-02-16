@@ -50,5 +50,23 @@ public class Inimigo : Personagem {
 	// Update is called once per frame
 	void Update () {
 		
+        atualizaVida();
 	}
+
+    private void atualizaVida(){
+        
+        Image fill = vida.transform.GetChild(1).GetComponentInChildren<Image>();
+        vida.value = texto.text.Length / ((float)palavra.texto.Length);
+
+        if (vida.value < 0.35f)
+        {
+            fill.color = Color.red;
+        }
+        else if(vida.value < 0.7f)
+        {
+            fill.color = Color.yellow;
+        }else{
+            fill.color = Color.green;
+        }
+    }
 }
