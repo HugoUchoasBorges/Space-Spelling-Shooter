@@ -9,7 +9,6 @@ public class AudioController : MonoBehaviour {
     void Awake()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
-        audioSource.volume = GlobalVariables.VOLUME;
     }
 
     public void SetAudio(AudioClip audio)
@@ -19,6 +18,7 @@ public class AudioController : MonoBehaviour {
 
     public void Play()
     {
+        audioSource.volume = GlobalVariables.VOLUME;
         audioSource.Play();
     }
 
