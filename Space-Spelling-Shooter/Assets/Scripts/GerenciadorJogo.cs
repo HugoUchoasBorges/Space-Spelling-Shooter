@@ -123,9 +123,15 @@ public class GerenciadorJogo : MonoBehaviour {
             inimigos.Add(inimigo);
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    public static void GameOVer()
+    {
+        print("GameOver");
+        Application.Quit();
+    }
+
+    // Update is called once per frame
+    void Update () {
 
         // Uses the ESC Key to pause and unpause the game
         if (Input.GetKeyDown(KeyCode.Escape))

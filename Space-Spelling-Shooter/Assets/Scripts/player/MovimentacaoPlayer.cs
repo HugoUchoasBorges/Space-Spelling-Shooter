@@ -37,7 +37,7 @@ public class MovimentacaoPlayer : Movimentacao {
     {
         if (--GlobalVariables.totalVidas == 0)
         {
-            GlobalVariables.GameOVer();
+            GerenciadorJogo.GameOVer();
         }
 
         DeathSequence();

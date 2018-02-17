@@ -108,9 +108,4 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     {
         letrasUsadas[letra] = false;
     }
-
-    public static void GameOVer() {
-        print("GameOver");
-        Application.Quit();
-    }
 }
