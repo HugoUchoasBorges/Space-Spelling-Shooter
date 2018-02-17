@@ -22,4 +22,9 @@ public class MainMenu : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
+    //controls the pausing of the scene
+    public void Resume()
+    {
+        GerenciadorJogo.pauseControl();
+    }
 }
