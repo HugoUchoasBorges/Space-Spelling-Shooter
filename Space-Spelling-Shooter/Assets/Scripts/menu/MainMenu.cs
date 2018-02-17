@@ -16,4 +16,15 @@ public class MainMenu : MonoBehaviour {
         Application.Quit();
     }
 
+    public void QuitToMainMenu()
+    {
+        Debug.Log("Quit to Main Menu");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    //controls the pausing of the scene
+    public void Resume()
+    {
+        GerenciadorJogo.pauseControl();
+    }
 }

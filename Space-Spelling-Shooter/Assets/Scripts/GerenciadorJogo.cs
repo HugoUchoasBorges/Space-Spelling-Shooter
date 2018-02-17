@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GerenciadorJogo : MonoBehaviour {
@@ -11,6 +12,9 @@ public class GerenciadorJogo : MonoBehaviour {
     public static Player player;
 
     public static bool JOGO_PAUSADO = false;
+
+    // Objetos do menu de pausa
+    public static GameObject[] pauseObjects;
 
     public void iniciaJogo(){
 
@@ -31,7 +35,53 @@ public class GerenciadorJogo : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+        Time.timeScale = 1;
+        pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
+        hidePaused();
+
         iniciaJogo();
+    }
+
+    //Reloads the Level
+    public static void Reload()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    //controls the pausing of the scene
+    public static void pauseControl()
+    {
+        if (Time.timeScale == 1)
+        {
+            player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key);
+            Time.timeScale = 0;
+            showPaused();
+        }
+        else if (Time.timeScale == 0)
+        {
+            player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_return);
+            Time.timeScale = 1;
+            hidePaused();
+        }
+    }
+
+    //hides objects with ShowOnPause tag
+    public static void hidePaused()
+    {
+        foreach (GameObject g in pauseObjects)
+        {
+            g.SetActive(false);
+        }
+    }
+
+    //shows objects with ShowOnPause tag
+    public static void showPaused()
+    {
+        foreach (GameObject g in pauseObjects)
+        {
+            g.SetActive(true);
+        }
     }
 
     public static IEnumerator destroiInimigo(GameObject inimigo, char letraInicial)
@@ -76,6 +126,23 @@ public class GerenciadorJogo : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+
+        // Uses the ESC Key to pause and unpause the game
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Time.timeScale == 1)
+            {
+                player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_return);
+                Time.timeScale = 0;
+                showPaused();
+            }
+            else if (Time.timeScale == 0)
+            {
+                player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key);
+                Debug.Log("high");
+                Time.timeScale = 1;
+                hidePaused();
+            }
+        }
+    }
 }

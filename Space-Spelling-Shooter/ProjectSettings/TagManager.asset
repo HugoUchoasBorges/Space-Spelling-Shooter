@@ -9,6 +9,7 @@ TagManager:
   - painel
   - texto
   - vida
+  - ShowOnPause
   layers:
   - Default
   - TransparentFX
