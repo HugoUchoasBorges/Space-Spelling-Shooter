@@ -16,6 +16,12 @@ public class MenuController : Personagem {
 
     }
 
+    public void NewGame()
+    {
+        PlayAudioSelect();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
     private void LoadSettings()
     {
         Resolution[] resolutions = Screen.resolutions;
