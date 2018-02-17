@@ -16,4 +16,10 @@ public class MainMenu : MonoBehaviour {
         Application.Quit();
     }
 
+    public void QuitToMainMenu()
+    {
+        Debug.Log("Quit to Main Menu");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
 }
