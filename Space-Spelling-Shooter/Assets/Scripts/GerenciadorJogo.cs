@@ -128,6 +128,7 @@ public class GerenciadorJogo : MonoBehaviour {
     {
         print("GameOver");
         Application.Quit();
+        player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_dying);
     }
 
     // Update is called once per frame

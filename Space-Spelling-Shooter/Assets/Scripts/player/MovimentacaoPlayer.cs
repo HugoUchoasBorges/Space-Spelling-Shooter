@@ -45,7 +45,6 @@ public class MovimentacaoPlayer : Movimentacao {
 
     private void DeathSequence()
     {
-        player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_dying);
         StartCoroutine(Respawn());
     }
 
