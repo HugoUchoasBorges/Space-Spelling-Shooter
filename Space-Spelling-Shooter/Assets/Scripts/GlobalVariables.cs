@@ -6,6 +6,8 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     protected GlobalVariables() { } // guarantee this will be always a singleton only - can't use the constructor!
 
     // Áudios
+    public static float VOLUME = 1f;
+
     public enum ENUM_AUDIO
     {
         player_key_lock,
@@ -29,6 +31,8 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static Dictionary<ENUM_AUDIO, AudioClip> audio_game = new Dictionary<ENUM_AUDIO, AudioClip>()
     {
         { ENUM_AUDIO.game_start, Resources.Load<AudioClip>("Audios/jogo/game_start")},
+        { ENUM_AUDIO.player_key , Resources.Load<AudioClip>("Audios/player/key")},
+        { ENUM_AUDIO.player_key_return , Resources.Load<AudioClip>("Audios/player/key_return")},
     };
     public static Dictionary<ENUM_AUDIO, AudioClip> audio_enemy = new Dictionary<ENUM_AUDIO, AudioClip>()
     {

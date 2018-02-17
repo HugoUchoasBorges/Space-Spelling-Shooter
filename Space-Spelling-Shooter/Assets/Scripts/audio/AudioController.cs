@@ -18,6 +18,7 @@ public class AudioController : MonoBehaviour {
 
     public void Play()
     {
+        audioSource.volume = GlobalVariables.VOLUME;
         audioSource.Play();
     }
 
