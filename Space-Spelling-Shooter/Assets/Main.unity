@@ -210,6 +210,46 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114923154041963238, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114923154041963238, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114689955983370316, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114689955983370316, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114034912947104028, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114034912947104028, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114901466682364600, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114901466682364600, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 114584071586436144, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
         type: 2}
       propertyPath: m_havePropertiesChanged
@@ -226,16 +266,6 @@ Prefab:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114449776767250404, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114901466682364600, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114901466682364600, guid: 7a58fcc862a8a884bb2f4a79cac4cda5,
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
