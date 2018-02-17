@@ -109,7 +109,7 @@ public class SettingManager : Personagem {
             string file = File.ReadAllText(Application.persistentDataPath + "/gamesettings.json");
             gameSettings = JsonUtility.FromJson<GameSetting>(file);
         }
-        catch (FileNotFoundException e)
+        catch (System.Exception e)
         {
             Debug.Log(e);
             Debug.Log("Gerando configurações padrão");
