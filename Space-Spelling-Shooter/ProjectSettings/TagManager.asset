@@ -10,6 +10,11 @@ TagManager:
   - texto
   - vida
   - ShowOnPause
+  - VolumeSlider
+  - ResolutionDropdown
+  - FullScreenToggle
+  - AntiAliasingToggle
+  - ApplyButton
   layers:
   - Default
   - TransparentFX

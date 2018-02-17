@@ -6,6 +6,8 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     protected GlobalVariables() { } // guarantee this will be always a singleton only - can't use the constructor!
 
     // Áudios
+    public static float VOLUME = 1f;
+
     public enum ENUM_AUDIO
     {
         player_key_lock,
