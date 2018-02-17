@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-public class SettingManager : MonoBehaviour {
+public class SettingManager : Personagem {
 
     public Toggle fullScreenToggle;
     public Dropdown resolutionDropdown;
@@ -14,6 +14,12 @@ public class SettingManager : MonoBehaviour {
 
     public Resolution[] resolutions;
     public GameSetting gameSettings;
+
+    protected override void Start()
+    {
+        base.Start();
+        inicializaAudios(GlobalVariables.audio_game);
+    }
 
     public void OnEnable()
     {
@@ -29,7 +35,7 @@ public class SettingManager : MonoBehaviour {
         resolutionDropdown.onValueChanged.AddListener(delegate { OnResolutionChange(); });
         musicVolumeSlider.onValueChanged.AddListener(delegate { OnMusicVolumeChange(); });
         antiAliasingToggle.onValueChanged.AddListener(delegate { OnAntiAliasingToggle(); });
-        applyButton.onClick.AddListener(delegate { onApplyButtonClick(); });
+        applyButton.onClick.AddListener(delegate { OnApplyButtonClick(); });
 
         resolutions = Screen.resolutions;
 
@@ -42,25 +48,41 @@ public class SettingManager : MonoBehaviour {
         LoadSettings();
     }
 
+    private void PlayAudioSelect()
+    {
+        try
+        {
+            PlayAudio(GlobalVariables.ENUM_AUDIO.player_key);
+        }
+        catch (System.NullReferenceException e)
+        {
+            //Debug.Log(e);
+        }
+        
+    }
+
     public void OnFullScreenToggle()
     {
+        PlayAudioSelect();
         gameSettings.fullScreen = Screen.fullScreen = fullScreenToggle.isOn;
     }
 
     public void OnResolutionChange()
     {
+        PlayAudioSelect();
         Screen.SetResolution(resolutions[resolutionDropdown.value].width, resolutions[resolutionDropdown.value].height, Screen.fullScreen);
         gameSettings.resolutionIndex = resolutionDropdown.value;
     }
 
     public void OnMusicVolumeChange()
     {
+        PlayAudioSelect();
         GlobalVariables.VOLUME = gameSettings.musicVolume = musicVolumeSlider.value; 
     }
 
     public void OnAntiAliasingToggle()
     {
-
+        PlayAudioSelect();
         if (antiAliasingToggle.isOn)
             QualitySettings.antiAliasing = (int)Mathf.Pow(2f, 4f);
         else
@@ -69,7 +91,7 @@ public class SettingManager : MonoBehaviour {
         gameSettings.antiAliasing = antiAliasingToggle.isOn;
     }
 
-    public void onApplyButtonClick()
+    public void OnApplyButtonClick()
     {
         SaveSettings();
     }
