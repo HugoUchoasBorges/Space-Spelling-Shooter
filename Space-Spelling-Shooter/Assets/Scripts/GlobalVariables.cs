@@ -76,6 +76,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static float tempoRespawn = 3f;
     public static float tempoInvulneravel = 3f;
     public static bool playerAtivo = true;
+    public static float playerSpeed = 4f;
 
     // Inimigos
     public static float inputImpulse = 2f;

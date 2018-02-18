@@ -13,7 +13,7 @@ public class MovimentacaoPlayer : Movimentacao {
         base.Start();
         player = gameObject.GetComponent<Player>();
 
-        velocidade = 3f;
+        velocidade = GlobalVariables.playerSpeed;
         // Centraliza o player no cenário
         Centraliza();
 
@@ -34,25 +34,33 @@ public class MovimentacaoPlayer : Movimentacao {
 
     private void ControllPlayer()
     {
-        //Captura de entrada para movimentação do player
+        // Captures user input
         float axisY = Input.GetAxis("Vertical");
         float axisX = Input.GetAxis("Horizontal");
 
-        Vector3 movimento = transform.TransformDirection(new Vector3(axisX, axisY));
+        Vector3 movement = new Vector3(axisX, axisY);
 
-        // Limita Velocidade na Diagonal
-        if (movimento.magnitude > 1)
+        // Normalizes diagonal speed
+        if (movement.magnitude > 1)
+            movement = movement.normalized;
+        
+        // Applies speed to the movement
+        movement *= velocidade;
+
+        // Move the player
+        transform.Translate(movement * Time.deltaTime, Space.World);
+
+        // Rotates the player
+        if (movement.magnitude != 0)
         {
-            movimento = movimento.normalized;
+            Quaternion angle = Quaternion.Euler(0, 0, Vector3.Angle(Vector3.up, movement));
+            if (movement.x > 0)
+            {
+                angle.z = -angle.z;
+            }
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, angle, 7f * Time.deltaTime);
         }
-
-        // Aplica a velocidade ao movimento
-        movimento *= velocidade;
-
-        Vector3 velocidadeAtual = rigidBody2D.velocity;
-        Vector3 aceleracao = (movimento - velocidadeAtual);
-
-        rigidBody2D.AddForce(aceleracao, ForceMode2D.Impulse);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
