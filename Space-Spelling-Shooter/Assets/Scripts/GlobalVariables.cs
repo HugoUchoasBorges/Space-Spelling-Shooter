@@ -96,7 +96,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static float mediaAcuracia;
 
     // Spawn de inimigos
-    public static float tempoGeraInimigo = 3f;
+    public static float tempoGeraInimigo = 0.5f;
 
     public static void addTag(string tag)
     {

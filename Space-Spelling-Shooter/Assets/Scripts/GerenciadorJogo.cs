@@ -7,11 +7,20 @@ using UnityEngine.UI;
 
 public class GerenciadorJogo : MonoBehaviour {
 
-    public static List<GameObject> inimigos { get; private set; }
+    private static List<GameObject> inimigos;
+    public static List<GameObject> Inimigos
+    {
+        get { return inimigos; }
+        private set
+        {
+            inimigos = value;
+            GerenciaWaves.OnInimigosChange(Inimigos);
+        }
+    }
 
     public static Player player;
 
-    public static bool JOGO_PAUSADO = false;
+    public static bool JOGO_PAUSADO = true;
 
     // Objetos do menu de pausa
     public static GameObject[] pauseObjects;
@@ -51,9 +60,9 @@ public class GerenciadorJogo : MonoBehaviour {
         // A colisão entre todos os objetos da Layer dos Inimigos será ignorada
         Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
 
-        inimigos = new List<GameObject>();
+        Inimigos = new List<GameObject>();
 
-        gerenciaWaves.iniciaWaves();
+        GerenciaWaves.iniciaWaves();
     }
 
     //Reloads the Level
@@ -100,7 +109,7 @@ public class GerenciadorJogo : MonoBehaviour {
     public static IEnumerator destroiInimigo(GameObject inimigo, char letraInicial)
     {
         GlobalVariables.rmvLetraUsada(letraInicial);
-        inimigos.Remove(inimigo);
+        Inimigos.Remove(inimigo);
         inimigo.transform.localScale = Vector3.zero;
         inimigo.GetComponent<CircleCollider2D>().enabled = false;
         float tamanhoAudio = inimigo.GetComponent<Inimigo>().PlayAudio(GlobalVariables.ENUM_AUDIO.enemy_dying);        
@@ -110,7 +119,7 @@ public class GerenciadorJogo : MonoBehaviour {
 
     public static GameObject buscaAlvo(char c)
     {
-        foreach (GameObject inimigo in inimigos)
+        foreach (GameObject inimigo in Inimigos)
         {
             if (inimigo.GetComponentInChildren<Text>().text[0] == c)
             {
@@ -122,18 +131,25 @@ public class GerenciadorJogo : MonoBehaviour {
 
     public static IEnumerator GeraInimigos()
     {
-        while (!JOGO_PAUSADO)
+        while (true)
         {
+            // Espera
+            yield return new WaitUntil(() => JOGO_PAUSADO == false);
+
             // Espera Existirem letras disponíveis
             if (!GlobalVariables.letrasUsadas.Values.Contains(false))
                 yield return new WaitUntil(() => GlobalVariables.letrasUsadas.Values.Contains(false) == true);
 
-            // Espera por 3 Segundos
+            // Espera
             yield return new WaitForSeconds(GlobalVariables.tempoGeraInimigo);
 
             // Gera um inimigo
-            GameObject inimigo = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.inimigoPadrao]) as GameObject;
-            inimigos.Add(inimigo);
+            if (GerenciaWaves.permiteNovoInimigo())
+            {
+                GameObject inimigo = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.inimigoPadrao]) as GameObject;
+                Inimigos.Add(inimigo);
+            }
+            
         }
     }
 
