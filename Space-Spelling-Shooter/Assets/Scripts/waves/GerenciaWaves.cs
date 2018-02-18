@@ -5,7 +5,16 @@ using UnityEngine;
 public class GerenciaWaves : MonoBehaviour {
 
     // Informações da Wave
-    public static int wave;
+    private static int wave;
+    public static int Wave
+    {
+        get { return wave; }
+        set
+        {
+            wave = value;
+            GUIController.atualizaGUI();
+        }
+    }
     public static bool waveAtiva;
     public static int totalInimigos;
 
@@ -22,7 +31,7 @@ public class GerenciaWaves : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-        wave = 0;
+        Wave = 0;
         desativaWaves();
 
         inicializaVariaveis();
@@ -55,12 +64,12 @@ public class GerenciaWaves : MonoBehaviour {
 
     private void novaWave()
     {
-        wave++;
+        Wave += 1;
 
-        int inimigosWave = (wave + 1) * 3;
+        int inimigosWave = (Wave + 1) * 3;
         totalInimigosWave.Add(inimigosWave);
 
-        int inimigosTela = wave + 2;
+        int inimigosTela = Wave + 2;
         maxInimigosTela.Add(inimigosTela);
         inimigosDerrotados.Add(0);
         inimigosRestantes = inimigosWave;
@@ -83,7 +92,7 @@ public class GerenciaWaves : MonoBehaviour {
 
     public static void removeInimigo()
     {
-        inimigosDerrotados[wave - 1]++;
+        inimigosDerrotados[Wave - 1]++;
         inimigosRestantes--;
 
         incrementaInimigosTela();
@@ -105,9 +114,9 @@ public class GerenciaWaves : MonoBehaviour {
     private static void incrementaInimigosTela()
     {
         // Há cada totalInimigosWave/3 inimigos derrotados
-        if (inimigosDerrotados[wave - 1] % (totalInimigosWave[wave - 1] / 3) == 0)
+        if (inimigosDerrotados[Wave - 1] % (totalInimigosWave[Wave - 1] / 3) == 0)
         {
-            maxInimigosTela[wave - 1]++;
+            maxInimigosTela[Wave - 1]++;
         }
     }
 
@@ -115,7 +124,7 @@ public class GerenciaWaves : MonoBehaviour {
     {
         // Aumenta pontuação do jogador
         if(GlobalVariables.playerAtivo == true)
-            pontuacao[wave - 1] += SistemaDigitacao.palavra.Length * 10;
+            pontuacao[Wave - 1] += SistemaDigitacao.palavra.Length * 10;
     }
 
     public static void desativaWaves()
@@ -131,13 +140,13 @@ public class GerenciaWaves : MonoBehaviour {
     public static bool permiteNovoInimigo()
     {
         print("Permite novo inimigo????");
-        print("Wave: " + wave);
-        print("MaxInimigosTela: " + maxInimigosTela[wave - 1]);
+        print("Wave: " + Wave);
+        print("MaxInimigosTela: " + maxInimigosTela[Wave - 1]);
         print("Inimigos Restantes: " + inimigosRestantes);
         print("Total Inimigos: " + totalInimigos);
-        print("TotalInimigosWave: " + totalInimigosWave[wave - 1]);
-        if ((GerenciadorJogo.Inimigos.Count < maxInimigosTela[wave - 1]) && 
-            (inimigosRestantes > 0) && totalInimigos < totalInimigosWave[wave - 1])
+        print("TotalInimigosWave: " + totalInimigosWave[Wave - 1]);
+        if ((GerenciadorJogo.Inimigos.Count < maxInimigosTela[Wave - 1]) && 
+            (inimigosRestantes > 0) && totalInimigos < totalInimigosWave[Wave - 1])
             return true;
         return false;
     }

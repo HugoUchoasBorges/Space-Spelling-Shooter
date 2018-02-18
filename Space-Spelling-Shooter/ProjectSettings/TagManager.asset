@@ -19,6 +19,7 @@ TagManager:
   - ShowOnDeath
   - GUIVidas
   - GUI
+  - GUIWave
   layers:
   - Default
   - TransparentFX
