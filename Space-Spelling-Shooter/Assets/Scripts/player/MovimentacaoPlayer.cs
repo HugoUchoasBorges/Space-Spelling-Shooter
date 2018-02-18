@@ -65,6 +65,12 @@ public class MovimentacaoPlayer : Movimentacao {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+        // Destroi o inimigo
+        SistemaDigitacao.destroiInimigo(collision.gameObject);
+
+        print("Inimigo Destruído!!!");
+
         if (--player.vidas == 0)
         {
             GerenciadorJogo.GameOVer();
