@@ -147,7 +147,13 @@ public class GerenciadorJogo : MonoBehaviour {
             if (GerenciaWaves.permiteNovoInimigo())
             {
                 GameObject inimigo = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.inimigoPadrao]) as GameObject;
-                Inimigos.Add(inimigo);
+
+                // Adicionando novo inimigo
+                List<GameObject> inimigos = Inimigos;
+                inimigos.Add(inimigo);
+
+                Inimigos = inimigos;
+
             }
             
         }
