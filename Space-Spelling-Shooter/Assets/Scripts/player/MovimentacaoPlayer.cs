@@ -66,7 +66,10 @@ public class MovimentacaoPlayer : Movimentacao {
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        // Destroi o inimigo
+        // Retira o alvo que o player está mirando
+        SistemaDigitacao.retiraAlvo();
+
+        // Destroi o inimigo da colisão
         SistemaDigitacao.destroiInimigo(collision.gameObject);
 
         print("Inimigo Destruído!!!");

@@ -101,7 +101,7 @@ public class SistemaDigitacao : MonoBehaviour {
         texto.color = GlobalVariables.corInimigoAlvo;
     }
 
-    private static void retiraAlvo()
+    public static void retiraAlvo()
     {
         print("RETIRANDO ALVO");
 
