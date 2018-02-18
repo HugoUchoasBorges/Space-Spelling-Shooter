@@ -91,7 +91,16 @@ public class GlobalVariables : Singleton<GlobalVariables> {
 
     // Gerencia Wave
     public static int totalInimigosDerrotados;
-    public static int totalPontuacao;
+    private static int totalPontuacao;
+    public static int TotalPontuacao
+    {
+        get { return totalPontuacao; }
+        set
+        {
+            totalPontuacao = value;
+            GUIController.atualizaGUI();
+        }
+    }
     public static float mediaPPM;
     public static float mediaAcuracia;
 

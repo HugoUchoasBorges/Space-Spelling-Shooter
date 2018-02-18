@@ -20,6 +20,7 @@ TagManager:
   - GUIVidas
   - GUI
   - GUIWave
+  - GUIPontos
   layers:
   - Default
   - TransparentFX

@@ -124,7 +124,11 @@ public class GerenciaWaves : MonoBehaviour {
     {
         // Aumenta pontuação do jogador
         if(GlobalVariables.playerAtivo == true)
+        {
             pontuacao[Wave - 1] += SistemaDigitacao.palavra.Length * 10;
+            GlobalVariables.TotalPontuacao += pontuacao[Wave - 1];
+        }
+
     }
 
     public static void desativaWaves()
