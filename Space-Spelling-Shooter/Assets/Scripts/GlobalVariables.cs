@@ -90,7 +90,17 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static float tempoVerificaTeclas = 0.005f;
 
     // Gerencia Wave
-    public static int totalInimigosDerrotados;
+    private static int totalInimigosDerrotados;
+    public static int TotalInimigosDerrotados
+    {
+        get { return totalInimigosDerrotados; }
+        set
+        {
+            totalInimigosDerrotados = value;
+            GUIController.atualizaGUI();
+        }
+    }
+
     private static int totalPontuacao;
     public static int TotalPontuacao
     {

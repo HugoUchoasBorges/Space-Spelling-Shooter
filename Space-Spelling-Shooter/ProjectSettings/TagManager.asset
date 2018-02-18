@@ -21,6 +21,8 @@ TagManager:
   - GUI
   - GUIWave
   - GUIPontos
+  - GUIDerrotados
+  - GUIRestantes
   layers:
   - Default
   - TransparentFX

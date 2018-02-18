@@ -22,7 +22,16 @@ public class GerenciaWaves : MonoBehaviour {
     public static List<int> totalInimigosWave;
     public static List<int> maxInimigosTela;
     public static List<int> inimigosDerrotados;
-    public static int inimigosRestantes;
+    private static int inimigosRestantes;
+    public static int InimigosRestantes
+    {
+        get { return inimigosRestantes; }
+        set
+        {
+            inimigosRestantes = value;
+            GUIController.atualizaGUI();
+        }
+    }
 
     // Informações do player
     public static List<int> pontuacao;
@@ -72,7 +81,7 @@ public class GerenciaWaves : MonoBehaviour {
         int inimigosTela = Wave + 2;
         maxInimigosTela.Add(inimigosTela);
         inimigosDerrotados.Add(0);
-        inimigosRestantes = inimigosWave;
+        InimigosRestantes = inimigosWave;
 
         inimigosTela = 0;
         totalInimigos = 0;
@@ -93,13 +102,15 @@ public class GerenciaWaves : MonoBehaviour {
     public static void removeInimigo()
     {
         inimigosDerrotados[Wave - 1]++;
-        inimigosRestantes--;
+        GlobalVariables.TotalInimigosDerrotados++;
+
+        InimigosRestantes--;
 
         incrementaInimigosTela();
 
         incrementaPontuacao();
         
-        if(inimigosRestantes == 0)
+        if(InimigosRestantes == 0)
             transicaoWaves();
     }
 
@@ -146,11 +157,11 @@ public class GerenciaWaves : MonoBehaviour {
         print("Permite novo inimigo????");
         print("Wave: " + Wave);
         print("MaxInimigosTela: " + maxInimigosTela[Wave - 1]);
-        print("Inimigos Restantes: " + inimigosRestantes);
+        print("Inimigos Restantes: " + InimigosRestantes);
         print("Total Inimigos: " + totalInimigos);
         print("TotalInimigosWave: " + totalInimigosWave[Wave - 1]);
         if ((GerenciadorJogo.Inimigos.Count < maxInimigosTela[Wave - 1]) && 
-            (inimigosRestantes > 0) && totalInimigos < totalInimigosWave[Wave - 1])
+            (InimigosRestantes > 0) && totalInimigos < totalInimigosWave[Wave - 1])
             return true;
         return false;
     }
