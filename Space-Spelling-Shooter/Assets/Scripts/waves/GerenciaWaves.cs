@@ -154,12 +154,6 @@ public class GerenciaWaves : MonoBehaviour {
 
     public static bool permiteNovoInimigo()
     {
-        print("Permite novo inimigo????");
-        print("Wave: " + Wave);
-        print("MaxInimigosTela: " + maxInimigosTela[Wave - 1]);
-        print("Inimigos Restantes: " + InimigosRestantes);
-        print("Total Inimigos: " + totalInimigos);
-        print("TotalInimigosWave: " + totalInimigosWave[Wave - 1]);
         if ((GerenciadorJogo.Inimigos.Count < maxInimigosTela[Wave - 1]) && 
             (InimigosRestantes > 0) && totalInimigos < totalInimigosWave[Wave - 1])
             return true;

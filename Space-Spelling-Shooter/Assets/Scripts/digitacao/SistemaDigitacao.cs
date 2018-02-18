@@ -107,8 +107,6 @@ public class SistemaDigitacao : MonoBehaviour {
 
     public static void retiraAlvo()
     {
-        print("RETIRANDO ALVO");
-
         if (texto)
         {
             texto.color = GlobalVariables.corInimigo;
@@ -132,8 +130,6 @@ public class SistemaDigitacao : MonoBehaviour {
             {
                 StartCoroutine(GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]));
                 retiraAlvo();
-
-                print("Inimigo Destruído!!!");
             }
             return true;
         }

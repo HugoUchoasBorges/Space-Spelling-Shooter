@@ -20,6 +20,11 @@ public class GUIController : MonoBehaviour {
         restantes = GameObject.FindGameObjectWithTag("GUIRestantes").GetComponent<Text>();
     }
 
+    public static void limpaGUI()
+    {
+
+    }
+
     public static void atualizaGUI()
     {
         vidas.text = Player.Vidas.ToString();

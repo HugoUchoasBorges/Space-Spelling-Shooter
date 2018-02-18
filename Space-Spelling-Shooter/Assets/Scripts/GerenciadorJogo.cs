@@ -190,6 +190,14 @@ public class GerenciadorJogo : MonoBehaviour {
         showDeath();
     }
 
+    public static void ResetGlobalVariables()
+    {
+        GlobalVariables.TotalPontuacao = 0;
+        GlobalVariables.mediaAcuracia = 0f;
+        GlobalVariables.mediaPPM = 0f;
+        GlobalVariables.TotalInimigosDerrotados = 0;
+    }
+
     //shows objects with ShowOnDeath tag
     public static void showDeath()
     {

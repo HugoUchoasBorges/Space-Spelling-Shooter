@@ -74,8 +74,6 @@ public class MovimentacaoPlayer : Movimentacao {
         // Destroi o inimigo da colisão
         SistemaDigitacao.destroiInimigo(collision.gameObject);
 
-        print("Inimigo Destruído!!!");
-
         Player.Vidas -= 1;
 
         if (Player.Vidas > 0)
