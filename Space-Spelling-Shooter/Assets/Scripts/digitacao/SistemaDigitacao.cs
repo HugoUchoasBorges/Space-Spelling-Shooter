@@ -6,7 +6,7 @@ public class SistemaDigitacao : MonoBehaviour {
 
     public static GameObject inimigoAlvo = null;
     private static Text texto;
-    private static string palavra;
+    public static string palavra;
     private static Player player;
 
     // Use this for initialization

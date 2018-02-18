@@ -87,6 +87,8 @@ public class GerenciaWaves : MonoBehaviour {
         inimigosRestantes--;
 
         incrementaInimigosTela();
+
+        incrementaPontuacao();
     }
 
     private static void incrementaInimigosTela()
@@ -96,6 +98,12 @@ public class GerenciaWaves : MonoBehaviour {
         {
             maxInimigosTela[wave - 1]++;
         }
+    }
+
+    private static void incrementaPontuacao()
+    {
+        // Aumenta pontuação do jogador
+        pontuacao[wave - 1] += SistemaDigitacao.palavra.Length * 10;
     }
 
     public static void pausaWaves()
