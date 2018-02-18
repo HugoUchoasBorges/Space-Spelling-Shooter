@@ -21,6 +21,7 @@ public class MenuController : Personagem {
         PlayAudioSelect();
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GerenciadorJogo.ResetGlobalVariables();
     }
 
     private void LoadSettings()
@@ -87,6 +88,7 @@ public class MenuController : Personagem {
         PlayAudioSelect();
         Debug.Log("Quit to Main Menu");
         Time.timeScale = 1;
+        GerenciadorJogo.ResetGlobalVariables();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 

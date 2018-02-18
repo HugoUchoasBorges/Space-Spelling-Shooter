@@ -89,8 +89,33 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static List<string> TAGS = new List<string>();
     public static float tempoVerificaTeclas = 0.005f;
 
+    // Gerencia Wave
+    private static int totalInimigosDerrotados;
+    public static int TotalInimigosDerrotados
+    {
+        get { return totalInimigosDerrotados; }
+        set
+        {
+            totalInimigosDerrotados = value;
+            GUIController.atualizaGUI();
+        }
+    }
+
+    private static int totalPontuacao;
+    public static int TotalPontuacao
+    {
+        get { return totalPontuacao; }
+        set
+        {
+            totalPontuacao = value;
+            GUIController.atualizaGUI();
+        }
+    }
+    public static float mediaPPM;
+    public static float mediaAcuracia;
+
     // Spawn de inimigos
-    public static float tempoGeraInimigo = 3f;
+    public static float tempoGeraInimigo = 0.5f;
 
     public static void addTag(string tag)
     {

@@ -7,17 +7,53 @@ using UnityEngine.UI;
 
 public class GerenciadorJogo : MonoBehaviour {
 
-    public static List<GameObject> inimigos { get; private set; }
+    private static List<GameObject> inimigos;
+    public static List<GameObject> Inimigos
+    {
+        get { return inimigos; }
+        private set
+        {
+            if(inimigos != null)
+                GerenciaWaves.adicionaInimigo();
+
+            inimigos = value;
+        }
+    }
 
     public static Player player;
 
-    public static bool JOGO_PAUSADO = false;
+    public static bool JOGO_PAUSADO = true;
 
     // Objetos do menu de pausa
     public static GameObject[] pauseObjects;
 
     // Objetos do menu de morte
     public static GameObject[] deathObjects;
+
+    // Objetos do menu de GUI
+    public static GameObject[] guiObjects;
+
+    // Gerenciador de Waves
+    public static GerenciaWaves gerenciaWaves;
+
+    // Use this for initialization
+    void Start()
+    {
+
+        Time.timeScale = 1;
+        pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
+        hidePaused();
+
+        deathObjects = GameObject.FindGameObjectsWithTag("ShowOnDeath");
+        hideDeath();
+
+        guiObjects = GameObject.FindGameObjectsWithTag("GUI");
+        hideGUI();
+
+        gerenciaWaves = gameObject.AddComponent<GerenciaWaves>();
+
+        iniciaJogo();
+    }
 
     public void iniciaJogo(){
 
@@ -32,21 +68,22 @@ public class GerenciadorJogo : MonoBehaviour {
         // A colisão entre todos os objetos da Layer dos Inimigos será ignorada
         Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
 
-        inimigos = new List<GameObject>();
-        StartCoroutine(GeraInimigos());
+        Inimigos = new List<GameObject>();
+
+        GerenciaWaves.ativaWaves();
+
+        // Mostra a interface de usuário
+        showGUI();
     }
 
-	// Use this for initialization
-	void Start () {
+    public static void pausaJogo()
+    {
+        JOGO_PAUSADO = true;
+    }
 
-        Time.timeScale = 1;
-        pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
-        hidePaused();
-
-        deathObjects = GameObject.FindGameObjectsWithTag("ShowOnDeath");
-        hideDeath();
-
-        iniciaJogo();
+    public static void despausaJogo()
+    {
+        JOGO_PAUSADO = false;
     }
 
     //Reloads the Level
@@ -92,8 +129,11 @@ public class GerenciadorJogo : MonoBehaviour {
 
     public static IEnumerator destroiInimigo(GameObject inimigo, char letraInicial)
     {
+
+        GerenciaWaves.removeInimigo();
+
         GlobalVariables.rmvLetraUsada(letraInicial);
-        inimigos.Remove(inimigo);
+        Inimigos.Remove(inimigo);
         inimigo.transform.localScale = Vector3.zero;
         inimigo.GetComponent<CircleCollider2D>().enabled = false;
         float tamanhoAudio = inimigo.GetComponent<Inimigo>().PlayAudio(GlobalVariables.ENUM_AUDIO.enemy_dying);        
@@ -103,7 +143,7 @@ public class GerenciadorJogo : MonoBehaviour {
 
     public static GameObject buscaAlvo(char c)
     {
-        foreach (GameObject inimigo in inimigos)
+        foreach (GameObject inimigo in Inimigos)
         {
             if (inimigo.GetComponentInChildren<Text>().text[0] == c)
             {
@@ -113,20 +153,33 @@ public class GerenciadorJogo : MonoBehaviour {
         return null;
     }
 
-    private IEnumerator GeraInimigos()
+    public static IEnumerator GeraInimigos()
     {
-        while (!JOGO_PAUSADO)
+        while (true)
         {
+            // Espera
+            yield return new WaitUntil(() => JOGO_PAUSADO == false);
+
             // Espera Existirem letras disponíveis
             if (!GlobalVariables.letrasUsadas.Values.Contains(false))
                 yield return new WaitUntil(() => GlobalVariables.letrasUsadas.Values.Contains(false) == true);
 
-            // Espera por 3 Segundos
+            // Espera
             yield return new WaitForSeconds(GlobalVariables.tempoGeraInimigo);
 
             // Gera um inimigo
-            GameObject inimigo = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.inimigoPadrao]) as GameObject;
-            inimigos.Add(inimigo);
+            if (GerenciaWaves.permiteNovoInimigo())
+            {
+                GameObject inimigo = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.inimigoPadrao]) as GameObject;
+
+                // Adicionando novo inimigo
+                List<GameObject> inimigos = Inimigos;
+                inimigos.Add(inimigo);
+
+                Inimigos = inimigos;
+
+            }
+            
         }
     }
 
@@ -135,6 +188,14 @@ public class GerenciadorJogo : MonoBehaviour {
         player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_dying);
         Time.timeScale = 0;
         showDeath();
+    }
+
+    public static void ResetGlobalVariables()
+    {
+        GlobalVariables.TotalPontuacao = 0;
+        GlobalVariables.mediaAcuracia = 0f;
+        GlobalVariables.mediaPPM = 0f;
+        GlobalVariables.TotalInimigosDerrotados = 0;
     }
 
     //shows objects with ShowOnDeath tag
@@ -155,6 +216,22 @@ public class GerenciadorJogo : MonoBehaviour {
         }
     }
 
+    public static void hideGUI()
+    {
+        foreach (GameObject g in guiObjects)
+        {
+            g.SetActive(false);
+        }
+    }
+
+    public static void showGUI()
+    {
+        foreach (GameObject g in guiObjects)
+        {
+            g.SetActive(true);
+        }
+    }
+
     // Update is called once per frame
     void Update () {
 
@@ -170,7 +247,6 @@ public class GerenciadorJogo : MonoBehaviour {
             else if (Time.timeScale == 0)
             {
                 player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key);
-                Debug.Log("high");
                 Time.timeScale = 1;
                 hidePaused();
             }

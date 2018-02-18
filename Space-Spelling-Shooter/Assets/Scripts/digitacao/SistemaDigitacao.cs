@@ -6,7 +6,7 @@ public class SistemaDigitacao : MonoBehaviour {
 
     public static GameObject inimigoAlvo = null;
     private static Text texto;
-    private static string palavra;
+    public static string palavra;
     private static Player player;
 
     // Use this for initialization
@@ -22,8 +22,12 @@ public class SistemaDigitacao : MonoBehaviour {
 
     private IEnumerator verificaTeclas()
     {
-        while (!GerenciadorJogo.JOGO_PAUSADO)
+        while (true)
         {
+            // Espera se o jogo estiver pausado
+            if (GerenciadorJogo.JOGO_PAUSADO)
+                yield return new WaitUntil(() => GerenciadorJogo.JOGO_PAUSADO == false);
+
             // Espera o player Respawnar
             if (!GlobalVariables.playerAtivo)
                 yield return new WaitUntil(() => GlobalVariables.playerAtivo == true);
@@ -103,8 +107,6 @@ public class SistemaDigitacao : MonoBehaviour {
 
     public static void retiraAlvo()
     {
-        print("RETIRANDO ALVO");
-
         if (texto)
         {
             texto.color = GlobalVariables.corInimigo;
@@ -128,8 +130,6 @@ public class SistemaDigitacao : MonoBehaviour {
             {
                 StartCoroutine(GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]));
                 retiraAlvo();
-
-                print("Inimigo Destruído!!!");
             }
             return true;
         }

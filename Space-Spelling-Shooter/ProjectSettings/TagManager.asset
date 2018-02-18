@@ -17,6 +17,12 @@ TagManager:
   - ApplyButton
   - OptionsMenu
   - ShowOnDeath
+  - GUIVidas
+  - GUI
+  - GUIWave
+  - GUIPontos
+  - GUIDerrotados
+  - GUIRestantes
   layers:
   - Default
   - TransparentFX
