@@ -7,6 +7,7 @@ public class GerenciaWaves : MonoBehaviour {
     // Informações da Wave
     public static int wave;
     public static bool waveAtiva;
+    public static int totalInimigos;
 
     // Informações dos inimigos
     public static List<int> totalInimigosWave;
@@ -63,6 +64,8 @@ public class GerenciaWaves : MonoBehaviour {
         inimigosDerrotados.Add(0);
         inimigosRestantes = totalInimigos;
 
+        inimigosTela = 0;
+
         pontuacao.Add(0);
         ppm.Add(0f);
         acuracia.Add(0f);
@@ -70,8 +73,19 @@ public class GerenciaWaves : MonoBehaviour {
         StartCoroutine(GerenciadorJogo.GeraInimigos());
     }
 
-    public static void OnInimigosChange(List<GameObject> inimigos)
+    public static void adicionaInimigo()
     {
+        totalInimigos++;
+        print("Total de Inimigos: " + totalInimigos);
+    }
+
+    public static void removeInimigo()
+    {
+        print("Wave: " + wave);
+        inimigosDerrotados[wave - 1]++;
+        inimigosRestantes--;
+        print("Inimigos Derrotados: " + inimigosDerrotados[wave - 1]);
+        print("Inimigos Restantes: " + inimigosRestantes);
     }
 
     public static void pausaWaves()
@@ -93,7 +107,7 @@ public class GerenciaWaves : MonoBehaviour {
         print("MaxInimigos: " + maxInimigosTela[wave - 1]);
         print("Inimigos Restantes: " + inimigosRestantes);
         if ((GerenciadorJogo.Inimigos.Count < maxInimigosTela[wave - 1]) && 
-            (inimigosRestantes > 0))
+            (inimigosRestantes > 0) && totalInimigos < totalInimigosWave[wave - 1])
             return true;
         return false;
     }

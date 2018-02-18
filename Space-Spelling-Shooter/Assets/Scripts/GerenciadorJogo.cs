@@ -13,8 +13,10 @@ public class GerenciadorJogo : MonoBehaviour {
         get { return inimigos; }
         private set
         {
+            if(inimigos != null)
+                GerenciaWaves.adicionaInimigo();
+
             inimigos = value;
-            GerenciaWaves.OnInimigosChange(Inimigos);
         }
     }
 
@@ -108,6 +110,9 @@ public class GerenciadorJogo : MonoBehaviour {
 
     public static IEnumerator destroiInimigo(GameObject inimigo, char letraInicial)
     {
+
+        GerenciaWaves.removeInimigo();
+
         GlobalVariables.rmvLetraUsada(letraInicial);
         Inimigos.Remove(inimigo);
         inimigo.transform.localScale = Vector3.zero;
