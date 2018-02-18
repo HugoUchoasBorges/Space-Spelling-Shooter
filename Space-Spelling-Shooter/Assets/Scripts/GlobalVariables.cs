@@ -89,6 +89,12 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static List<string> TAGS = new List<string>();
     public static float tempoVerificaTeclas = 0.005f;
 
+    // Gerencia Wave
+    public static int totalInimigosDerrotados;
+    public static int totalPontuacao;
+    public static float mediaPPM;
+    public static float mediaAcuracia;
+
     // Spawn de inimigos
     public static float tempoGeraInimigo = 3f;
 
