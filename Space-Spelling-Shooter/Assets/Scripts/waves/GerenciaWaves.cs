@@ -23,11 +23,12 @@ public class GerenciaWaves : MonoBehaviour {
 	// Use this for initialization
 	void Awake () {
         wave = 0;
-        waveAtiva = false;
+        desativaWaves();
 
         inicializaVariaveis();
 
         StartCoroutine(gerenciaWaves());
+        StartCoroutine(GerenciadorJogo.GeraInimigos());
     }
 
     private void inicializaVariaveis()
@@ -48,7 +49,7 @@ public class GerenciaWaves : MonoBehaviour {
             yield return new WaitUntil(() => waveAtiva == true);
 
             novaWave();
-            waveAtiva = false;
+            desativaWaves();
         }
     }
 
@@ -56,27 +57,28 @@ public class GerenciaWaves : MonoBehaviour {
     {
         wave++;
 
-        int totalInimigos = (wave + 3) * 3;
-        totalInimigosWave.Add(totalInimigos);
+        int inimigosWave = (wave + 1) * 3;
+        totalInimigosWave.Add(inimigosWave);
 
         int inimigosTela = wave + 2;
         maxInimigosTela.Add(inimigosTela);
         inimigosDerrotados.Add(0);
-        inimigosRestantes = totalInimigos;
+        inimigosRestantes = inimigosWave;
 
         inimigosTela = 0;
+        totalInimigos = 0;
+        
 
         pontuacao.Add(0);
         ppm.Add(0f);
         acuracia.Add(0f);
 
-        StartCoroutine(GerenciadorJogo.GeraInimigos());
+        GerenciadorJogo.despausaJogo();
     }
 
     public static void adicionaInimigo()
     {
         totalInimigos++;
-        print("Total de Inimigos: " + totalInimigos);
     }
 
     public static void removeInimigo()
@@ -89,6 +91,17 @@ public class GerenciaWaves : MonoBehaviour {
         incrementaInimigosTela();
 
         incrementaPontuacao();
+        
+        if(inimigosRestantes == 0)
+            transicaoWaves();
+    }
+
+    private static void transicaoWaves()
+    {
+        GerenciadorJogo.pausaJogo();
+
+        GerenciadorJogo.despausaJogo();
+        ativaWaves();
     }
 
     private static void incrementaInimigosTela()
@@ -105,18 +118,15 @@ public class GerenciaWaves : MonoBehaviour {
         // Aumenta pontuação do jogador
         if(GlobalVariables.playerAtivo == true)
             pontuacao[wave - 1] += SistemaDigitacao.palavra.Length * 10;
-
     }
 
-    public static void pausaWaves()
+    public static void desativaWaves()
     {
-        GerenciadorJogo.JOGO_PAUSADO = true;
         waveAtiva = false;
     }
 
-    public static void iniciaWaves()
+    public static void ativaWaves()
     {
-        GerenciadorJogo.JOGO_PAUSADO = false;
         waveAtiva = true;
     }
 
@@ -124,8 +134,10 @@ public class GerenciaWaves : MonoBehaviour {
     {
         print("Permite novo inimigo????");
         print("Wave: " + wave);
-        print("MaxInimigos: " + maxInimigosTela[wave - 1]);
+        print("MaxInimigosTela: " + maxInimigosTela[wave - 1]);
         print("Inimigos Restantes: " + inimigosRestantes);
+        print("Total Inimigos: " + totalInimigos);
+        print("TotalInimigosWave: " + totalInimigosWave[wave - 1]);
         if ((GerenciadorJogo.Inimigos.Count < maxInimigosTela[wave - 1]) && 
             (inimigosRestantes > 0) && totalInimigos < totalInimigosWave[wave - 1])
             return true;

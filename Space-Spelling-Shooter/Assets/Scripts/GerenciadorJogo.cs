@@ -64,7 +64,17 @@ public class GerenciadorJogo : MonoBehaviour {
 
         Inimigos = new List<GameObject>();
 
-        GerenciaWaves.iniciaWaves();
+        GerenciaWaves.ativaWaves();
+    }
+
+    public static void pausaJogo()
+    {
+        JOGO_PAUSADO = true;
+    }
+
+    public static void despausaJogo()
+    {
+        JOGO_PAUSADO = false;
     }
 
     //Reloads the Level
@@ -204,7 +214,6 @@ public class GerenciadorJogo : MonoBehaviour {
             else if (Time.timeScale == 0)
             {
                 player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key);
-                Debug.Log("high");
                 Time.timeScale = 1;
                 hidePaused();
             }

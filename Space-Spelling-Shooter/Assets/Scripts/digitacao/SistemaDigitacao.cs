@@ -22,8 +22,12 @@ public class SistemaDigitacao : MonoBehaviour {
 
     private IEnumerator verificaTeclas()
     {
-        while (!GerenciadorJogo.JOGO_PAUSADO)
+        while (true)
         {
+            // Espera se o jogo estiver pausado
+            if (GerenciadorJogo.JOGO_PAUSADO)
+                yield return new WaitUntil(() => GerenciadorJogo.JOGO_PAUSADO == false);
+
             // Espera o player Respawnar
             if (!GlobalVariables.playerAtivo)
                 yield return new WaitUntil(() => GlobalVariables.playerAtivo == true);
