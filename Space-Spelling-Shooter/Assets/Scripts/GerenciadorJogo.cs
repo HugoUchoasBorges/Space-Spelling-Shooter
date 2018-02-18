@@ -127,7 +127,7 @@ public class GerenciadorJogo : MonoBehaviour {
         }
     }
 
-    public static IEnumerator destroiInimigo(GameObject inimigo, char letraInicial)
+    public static void destroiInimigo(GameObject inimigo, char letraInicial)
     {
 
         GerenciaWaves.removeInimigo();
@@ -137,8 +137,8 @@ public class GerenciadorJogo : MonoBehaviour {
         inimigo.transform.localScale = Vector3.zero;
         inimigo.GetComponent<CircleCollider2D>().enabled = false;
         float tamanhoAudio = inimigo.GetComponent<Inimigo>().PlayAudio(GlobalVariables.ENUM_AUDIO.enemy_dying);        
-        yield return new WaitForSeconds(tamanhoAudio);
-        Destroy(inimigo);
+
+        Destroy(inimigo, tamanhoAudio);
     }
 
     public static GameObject buscaAlvo(char c)

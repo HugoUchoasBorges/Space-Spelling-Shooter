@@ -128,7 +128,7 @@ public class SistemaDigitacao : MonoBehaviour {
 
             if (texto.text == "")
             {
-                StartCoroutine(GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]));
+                GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]);
                 retiraAlvo();
             }
             return true;
@@ -139,7 +139,7 @@ public class SistemaDigitacao : MonoBehaviour {
     public static void destroiInimigo(GameObject inimigo)
     {
         colocaAlvo(inimigo);
-        GlobalVariables.Instance.StartCoroutine(GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]));
+        GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]);
         retiraAlvo();
     }
 }
