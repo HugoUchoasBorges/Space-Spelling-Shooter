@@ -65,6 +65,8 @@ public class MovimentacaoPlayer : Movimentacao {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // Avisa o jogo que o player foi desativado
+        GlobalVariables.playerAtivo = false;
 
         // Retira o alvo que o player está mirando
         SistemaDigitacao.retiraAlvo();
@@ -90,9 +92,6 @@ public class MovimentacaoPlayer : Movimentacao {
     private IEnumerator Respawn()
     {
         player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_dying);
-
-        // Avisa o jogo que o player foi desativado
-        GlobalVariables.playerAtivo = false;
 
         // Deixa o player invisível
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
