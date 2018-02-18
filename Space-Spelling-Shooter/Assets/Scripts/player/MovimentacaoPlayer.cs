@@ -76,9 +76,9 @@ public class MovimentacaoPlayer : Movimentacao {
 
         print("Inimigo Destruído!!!");
 
-        player.vidas -= 1;
+        Player.Vidas -= 1;
 
-        if (player.vidas > 0)
+        if (Player.Vidas > 0)
             DeathSequence();
         else
             GerenciadorJogo.GameOVer();

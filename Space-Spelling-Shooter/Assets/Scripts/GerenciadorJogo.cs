@@ -30,6 +30,9 @@ public class GerenciadorJogo : MonoBehaviour {
     // Objetos do menu de morte
     public static GameObject[] deathObjects;
 
+    // Objetos do menu de GUI
+    public static GameObject[] guiObjects;
+
     // Gerenciador de Waves
     public static GerenciaWaves gerenciaWaves;
 
@@ -43,6 +46,9 @@ public class GerenciadorJogo : MonoBehaviour {
 
         deathObjects = GameObject.FindGameObjectsWithTag("ShowOnDeath");
         hideDeath();
+
+        guiObjects = GameObject.FindGameObjectsWithTag("GUI");
+        hideGUI();
 
         gerenciaWaves = gameObject.AddComponent<GerenciaWaves>();
 
@@ -65,6 +71,9 @@ public class GerenciadorJogo : MonoBehaviour {
         Inimigos = new List<GameObject>();
 
         GerenciaWaves.ativaWaves();
+
+        // Mostra a interface de usuário
+        showGUI();
     }
 
     public static void pausaJogo()
@@ -196,6 +205,22 @@ public class GerenciadorJogo : MonoBehaviour {
         foreach (GameObject g in deathObjects)
         {
             g.SetActive(false);
+        }
+    }
+
+    public static void hideGUI()
+    {
+        foreach (GameObject g in guiObjects)
+        {
+            g.SetActive(false);
+        }
+    }
+
+    public static void showGUI()
+    {
+        foreach (GameObject g in guiObjects)
+        {
+            g.SetActive(true);
         }
     }
 
