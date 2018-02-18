@@ -54,7 +54,7 @@ public class SettingManager : Personagem {
         {
             PlayAudio(GlobalVariables.ENUM_AUDIO.player_key);
         }
-        catch (System.NullReferenceException e)
+        catch (System.NullReferenceException)
         {
             //Debug.Log(e);
         }
