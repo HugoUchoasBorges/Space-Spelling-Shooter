@@ -83,8 +83,6 @@ public class GerenciaWaves : MonoBehaviour {
 
     public static void removeInimigo()
     {
-        int inimigosTerco = totalInimigosWave[wave - 1] / 3;
-
         inimigosDerrotados[wave - 1]++;
         inimigosRestantes--;
 
