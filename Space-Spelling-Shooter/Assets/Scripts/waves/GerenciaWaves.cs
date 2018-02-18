@@ -21,6 +21,11 @@ public class GerenciaWaves : MonoBehaviour {
 	void Start () {
 		
 	}
+
+    public void iniciaWaves()
+    {
+        StartCoroutine(GerenciadorJogo.GeraInimigos());
+    }
 	
 	// Update is called once per frame
 	void Update () {

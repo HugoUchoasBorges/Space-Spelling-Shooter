@@ -19,6 +19,25 @@ public class GerenciadorJogo : MonoBehaviour {
     // Objetos do menu de morte
     public static GameObject[] deathObjects;
 
+    // Gerenciador de Waves
+    public static GerenciaWaves gerenciaWaves;
+
+    // Use this for initialization
+    void Start()
+    {
+
+        Time.timeScale = 1;
+        pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
+        hidePaused();
+
+        deathObjects = GameObject.FindGameObjectsWithTag("ShowOnDeath");
+        hideDeath();
+
+        gerenciaWaves = gameObject.AddComponent<GerenciaWaves>();
+
+        iniciaJogo();
+    }
+
     public void iniciaJogo(){
 
         gameObject.AddComponent<GeradorDeArestas>();
@@ -33,20 +52,8 @@ public class GerenciadorJogo : MonoBehaviour {
         Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
 
         inimigos = new List<GameObject>();
-        StartCoroutine(GeraInimigos());
-    }
 
-	// Use this for initialization
-	void Start () {
-
-        Time.timeScale = 1;
-        pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
-        hidePaused();
-
-        deathObjects = GameObject.FindGameObjectsWithTag("ShowOnDeath");
-        hideDeath();
-
-        iniciaJogo();
+        gerenciaWaves.iniciaWaves();
     }
 
     //Reloads the Level
@@ -113,7 +120,7 @@ public class GerenciadorJogo : MonoBehaviour {
         return null;
     }
 
-    private IEnumerator GeraInimigos()
+    public static IEnumerator GeraInimigos()
     {
         while (!JOGO_PAUSADO)
         {
