@@ -74,12 +74,12 @@ public class MovimentacaoPlayer : Movimentacao {
 
         print("Inimigo Destruído!!!");
 
-        if (--player.vidas == 0)
-        {
-            GerenciadorJogo.GameOVer();
-        }
+        player.vidas -= 1;
 
-        DeathSequence();
+        if (player.vidas > 0)
+            DeathSequence();
+        else
+            GerenciadorJogo.GameOVer();
     }
 
     private void DeathSequence()
