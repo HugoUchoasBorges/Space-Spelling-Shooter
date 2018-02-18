@@ -35,9 +35,9 @@ public class MovimentacaoPlayer : Movimentacao {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (--GlobalVariables.totalVidas == 0)
+        if (--player.vidas == 0)
         {
-            GlobalVariables.GameOVer();
+            GerenciadorJogo.GameOVer();
         }
 
         DeathSequence();
@@ -45,12 +45,13 @@ public class MovimentacaoPlayer : Movimentacao {
 
     private void DeathSequence()
     {
-        player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_dying);
         StartCoroutine(Respawn());
     }
 
     private IEnumerator Respawn()
     {
+        player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_dying);
+
         // Avisa o jogo que o player foi desativado
         GlobalVariables.playerAtivo = false;
 

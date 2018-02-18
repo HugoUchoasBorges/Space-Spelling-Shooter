@@ -16,6 +16,9 @@ public class GerenciadorJogo : MonoBehaviour {
     // Objetos do menu de pausa
     public static GameObject[] pauseObjects;
 
+    // Objetos do menu de morte
+    public static GameObject[] deathObjects;
+
     public void iniciaJogo(){
 
         gameObject.AddComponent<GeradorDeArestas>();
@@ -39,6 +42,9 @@ public class GerenciadorJogo : MonoBehaviour {
         Time.timeScale = 1;
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
         hidePaused();
+
+        deathObjects = GameObject.FindGameObjectsWithTag("ShowOnDeath");
+        hideDeath();
 
         iniciaJogo();
     }
@@ -123,9 +129,34 @@ public class GerenciadorJogo : MonoBehaviour {
             inimigos.Add(inimigo);
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    public static void GameOVer()
+    {
+        player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_dying);
+        Time.timeScale = 0;
+        showDeath();
+    }
+
+    //shows objects with ShowOnDeath tag
+    public static void showDeath()
+    {
+        foreach (GameObject g in deathObjects)
+        {
+            g.SetActive(true);
+        }
+    }
+
+    //hides objects with ShowOnPause tag
+    public static void hideDeath()
+    {
+        foreach (GameObject g in deathObjects)
+        {
+            g.SetActive(false);
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
 
         // Uses the ESC Key to pause and unpause the game
         if (Input.GetKeyDown(KeyCode.Escape))
