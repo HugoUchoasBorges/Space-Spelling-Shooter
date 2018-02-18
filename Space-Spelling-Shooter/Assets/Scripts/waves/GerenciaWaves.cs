@@ -81,11 +81,21 @@ public class GerenciaWaves : MonoBehaviour {
 
     public static void removeInimigo()
     {
-        print("Wave: " + wave);
+        int inimigosTerco = totalInimigosWave[wave - 1] / 3;
+
         inimigosDerrotados[wave - 1]++;
         inimigosRestantes--;
-        print("Inimigos Derrotados: " + inimigosDerrotados[wave - 1]);
-        print("Inimigos Restantes: " + inimigosRestantes);
+
+        incrementaInimigosTela();
+    }
+
+    private static void incrementaInimigosTela()
+    {
+        // Há cada totalInimigosWave/3 inimigos derrotados
+        if (inimigosDerrotados[wave - 1] % (totalInimigosWave[wave - 1] / 3) == 0)
+        {
+            maxInimigosTela[wave - 1]++;
+        }
     }
 
     public static void pausaWaves()
