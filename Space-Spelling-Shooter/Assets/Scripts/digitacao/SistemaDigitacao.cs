@@ -4,10 +4,10 @@ using UnityEngine.UI;
 
 public class SistemaDigitacao : MonoBehaviour {
 
-    public GameObject inimigoAlvo = null;
-    private Text texto;
-    private string palavra;
-    private Player player;
+    public static GameObject inimigoAlvo = null;
+    private static Text texto;
+    private static string palavra;
+    private static Player player;
 
     // Use this for initialization
     void Start () {
@@ -90,7 +90,7 @@ public class SistemaDigitacao : MonoBehaviour {
         }
     }
 
-    private void colocaAlvo(GameObject alvo)
+    private static void colocaAlvo(GameObject alvo)
     {
         // Setando o novo alvo
         inimigoAlvo = alvo;
@@ -101,7 +101,7 @@ public class SistemaDigitacao : MonoBehaviour {
         texto.color = GlobalVariables.corInimigoAlvo;
     }
 
-    private void retiraAlvo()
+    private static void retiraAlvo()
     {
         print("RETIRANDO ALVO");
 
@@ -134,5 +134,12 @@ public class SistemaDigitacao : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    public static void destroiInimigo(GameObject inimigo)
+    {
+        colocaAlvo(inimigo);
+        GlobalVariables.Instance.StartCoroutine(GerenciadorJogo.destroiInimigo(inimigoAlvo, palavra[0]));
+        retiraAlvo();
     }
 }
