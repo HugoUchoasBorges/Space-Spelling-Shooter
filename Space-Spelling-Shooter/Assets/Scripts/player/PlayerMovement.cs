@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovimentacaoPlayer : Movimentacao {
+public class PlayerMovement : Movement {
 
     private Player player;
-    public float velocidade;
+    public float speed;
 
     // Use this for initialization
     protected override void Start () {
@@ -13,9 +13,9 @@ public class MovimentacaoPlayer : Movimentacao {
         base.Start();
         player = gameObject.GetComponent<Player>();
 
-        velocidade = GlobalVariables.playerSpeed;
+        speed = GlobalVariables.defaultPlayerSpeed;
         // Centraliza o player no cenário
-        Centraliza();
+        Centralize();
 
     }
 
@@ -23,7 +23,6 @@ public class MovimentacaoPlayer : Movimentacao {
     protected override void Update()
     {
         base.Update();
-
     }
 
     protected override void FixedUpdate()
@@ -45,7 +44,7 @@ public class MovimentacaoPlayer : Movimentacao {
             movement = movement.normalized;
         
         // Applies speed to the movement
-        movement *= velocidade;
+        movement *= speed;
 
         // Move the player
         transform.Translate(movement * Time.deltaTime, Space.World);
@@ -65,21 +64,21 @@ public class MovimentacaoPlayer : Movimentacao {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        // Avisa o jogo que o player foi desativado
-        GlobalVariables.playerAtivo = false;
+        // Tells the game the player is deactivated
+        GlobalVariables.playerIsActive = false;
 
-        // Retira o alvo que o player está mirando
-        SistemaDigitacao.retiraAlvo();
+        // Remove the locked target
+        TypingSystem.RemoveTarget();
 
-        // Destroi o inimigo da colisão
-        SistemaDigitacao.destroiInimigo(collision.gameObject);
+        // Destroys the collided enemy
+        TypingSystem.destroiInimigo(collision.gameObject);
 
-        Player.Vidas -= 1;
+        Player.Lifes -= 1;
 
-        if (Player.Vidas > 0)
+        if (Player.Lifes > 0)
             DeathSequence();
         else
-            GerenciadorJogo.GameOVer();
+            GameManager.GameOVer();
     }
 
     private void DeathSequence()
@@ -91,42 +90,42 @@ public class MovimentacaoPlayer : Movimentacao {
     {
         player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_dying);
 
-        // Deixa o player invisível
+        // Turns player Invisible 
         gameObject.GetComponent<SpriteRenderer>().enabled = false;
 
-        // Deixa player intangível
+        // Turns player intangible
         gameObject.layer = GlobalVariables.LAYER_INIMIGOS;
 
-        // Espera por 3 Segundos
-        yield return new WaitForSeconds(GlobalVariables.tempoRespawn);
+        // Wait for respawn
+        yield return new WaitForSeconds(GlobalVariables.respawnTime);
 
-        // Centraliza o player no cenário
-        Centraliza();
+        // Centralizes player
+        Centralize();
 
-        // Deixa o player visível
+        // Turns player visible
         gameObject.GetComponent<SpriteRenderer>().enabled = true;
 
-        // Muda a cor do player
+        // Changes player color
         Color oldColor = GetComponent<SpriteRenderer>().color;
-        GetComponent<SpriteRenderer>().color = GlobalVariables.corInvulneravel;
+        GetComponent<SpriteRenderer>().color = GlobalVariables.invulnerableColor;
 
-        //Espera por 3 segundos
-        yield return new WaitForSeconds(GlobalVariables.tempoInvulneravel);
+        // Wait
+        yield return new WaitForSeconds(GlobalVariables.invulnerableTime);
 
-        // Deixa player Tangível
+        // Turns player tangible
         GetComponent<CircleCollider2D>().enabled = true;
         gameObject.layer = 0;
 
-        // Volta a cor original
+        // Changes player color back
         GetComponent<SpriteRenderer>().color = oldColor;
 
-        // Avisa o jogo que o player está ativo
-        GlobalVariables.playerAtivo = true;
+        // Tells the game the player is actived
+        GlobalVariables.playerIsActive = true;
     }
 
-    protected void Centraliza()
+    protected void Centralize()
     {
-        // Seta o player ESTÁTICO no centro do cenário
+        // Statically centers the player
         transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         rigidBody2D.angularVelocity = 0;
         rigidBody2D.velocity = Vector2.zero;

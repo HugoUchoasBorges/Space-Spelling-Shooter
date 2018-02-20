@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Personagem : MonoBehaviour {
+public class GameCharacter : MonoBehaviour {
 
     public Dictionary<GlobalVariables.ENUM_AUDIO, GameObject> audioSources;
     public Dictionary<GlobalVariables.ENUM_AUDIO, AudioController> audioControllers;
@@ -12,7 +12,7 @@ public class Personagem : MonoBehaviour {
         
     }
 
-    protected virtual void inicializaAudios(Dictionary<GlobalVariables.ENUM_AUDIO, AudioClip> dict)
+    protected virtual void InitializesAudios(Dictionary<GlobalVariables.ENUM_AUDIO, AudioClip> dict)
     {
         audioSources = new Dictionary<GlobalVariables.ENUM_AUDIO, GameObject>();
         audioControllers = new Dictionary<GlobalVariables.ENUM_AUDIO, AudioController>();

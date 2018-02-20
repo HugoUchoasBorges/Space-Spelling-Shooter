@@ -5,8 +5,8 @@ public class GlobalVariables : Singleton<GlobalVariables> {
 
     protected GlobalVariables() { } // guarantee this will be always a singleton only - can't use the constructor!
 
-    // Áudios
-    public static float VOLUME = 1f;
+    // Audios
+    public static float AUDIO_VOLUME = 1f;
 
     public enum ENUM_AUDIO
     {
@@ -44,80 +44,80 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public enum ENUM_PREFAB
     {
         canvas,
-        inimigoPadrao,
+        defaultEnemy,
         background1,
-        nave1Player,
-        nave2Player,
-        nave3Player,
+        spaceship1Player,
+        spaceship2Player,
+        spaceship3Player,
         audioSource,
     }
     public static Dictionary<ENUM_PREFAB, GameObject> prefab_dict = new Dictionary<ENUM_PREFAB, GameObject>(){
         { ENUM_PREFAB.canvas, Resources.Load<GameObject>("Prefabs/inimigos/Canvas") },
-        { ENUM_PREFAB.inimigoPadrao, Resources.Load<GameObject>("Prefabs/inimigos/InimigoPadrao") },
+        { ENUM_PREFAB.defaultEnemy, Resources.Load<GameObject>("Prefabs/inimigos/InimigoPadrao") },
         { ENUM_PREFAB.background1, Resources.Load<GameObject>("Prefabs/background/background1") },
-        { ENUM_PREFAB.nave1Player, Resources.Load<GameObject>("Prefabs/player/Nave1Player") },
-        { ENUM_PREFAB.nave2Player, Resources.Load<GameObject>("Prefabs/player/Nave2Player") },
-        { ENUM_PREFAB.nave3Player, Resources.Load<GameObject>("Prefabs/player/Nave3Player") },
+        { ENUM_PREFAB.spaceship1Player, Resources.Load<GameObject>("Prefabs/player/Nave1Player") },
+        { ENUM_PREFAB.spaceship2Player, Resources.Load<GameObject>("Prefabs/player/Nave2Player") },
+        { ENUM_PREFAB.spaceship3Player, Resources.Load<GameObject>("Prefabs/player/Nave3Player") },
         { ENUM_PREFAB.audioSource, Resources.Load<GameObject>("Prefabs/audio/AudioSource") },
     };
 
     // Layers
     public const int LAYER_INIMIGOS = 8;
 
-    // Movimentação Geral
+    // Geral Movement
     public static float angularDrag = 0.8f;
     public static float linearDrag = 0.3f;
     public static float impulseThreshold = 50;
     public static float rotationThreshold = 8;
 
     // Player
-    public static int totalVidas = 3;
-    public static Color corInvulneravel = Color.red;
-    public static float tempoRespawn = 3f;
-    public static float tempoInvulneravel = 3f;
-    public static bool playerAtivo = true;
-    public static float playerSpeed = 4f;
+    public static int defaultLifeCount = 3;
+    public static Color invulnerableColor = Color.red;
+    public static float invulnerableTime = 3f;
+    public static float respawnTime = 3f;
+    public static bool playerIsActive = true;
+    public static float defaultPlayerSpeed = 4f;
 
-    // Inimigos
+    // Enemies
     public static float inputImpulse = 2f;
     public static float inputRotation = 0f;
-    public static Color corInimigo = Color.white;
-    public static Color corInimigoAlvo = Color.red;
+    public static Color enemyColor = Color.white;
+    public static Color targetColor = Color.red;
 
-    // Sistema de Digitação
-    public static Dictionary<char, bool> letrasUsadas = new Dictionary<char, bool>();
+    // Typing System
+    public static Dictionary<char, bool> usedChars = new Dictionary<char, bool>();
     public static List<string> TAGS = new List<string>();
-    public static float tempoVerificaTeclas = 0.005f;
+    public static float checkKeysTime = 0.005f;
 
-    // Gerencia Wave
-    private static int totalInimigosDerrotados;
-    public static int TotalInimigosDerrotados
+    // Wave Management
+    private static int defeatedEnemiesCount;
+    public static int DefeatedEnemiesCount
     {
-        get { return totalInimigosDerrotados; }
+        get { return defeatedEnemiesCount; }
         set
         {
-            totalInimigosDerrotados = value;
-            GUIController.atualizaGUI();
+            defeatedEnemiesCount = value;
+            GUIController.RefreshGUI();
         }
     }
 
-    private static int totalPontuacao;
-    public static int TotalPontuacao
+    private static int scoreCount;
+    public static int ScoreCount
     {
-        get { return totalPontuacao; }
+        get { return scoreCount; }
         set
         {
-            totalPontuacao = value;
-            GUIController.atualizaGUI();
+            scoreCount = value;
+            GUIController.RefreshGUI();
         }
     }
-    public static float mediaPPM;
-    public static float mediaAcuracia;
+    public static float averageWPM;
+    public static float averageAccuracy;
 
-    // Spawn de inimigos
-    public static float tempoGeraInimigo = 0.5f;
+    // Enemies Spawn
+    public static float spawnEnemyTime = 0.5f;
 
-    public static void addTag(string tag)
+    public static void AddTag(string tag)
     {
         if (!TAGS.Contains(tag))
         {
@@ -125,13 +125,13 @@ public class GlobalVariables : Singleton<GlobalVariables> {
         }
     }
 
-    public static void addLetraUsada(char letra)
+    public static void AddUsedChar(char letter)
     {
-        letrasUsadas[letra] = true;
+        usedChars[letter] = true;
     }
 
-    public static void rmvLetraUsada(char letra)
+    public static void RemoveUsedChar(char letter)
     {
-        letrasUsadas[letra] = false;
+        usedChars[letter] = false;
     }
 }

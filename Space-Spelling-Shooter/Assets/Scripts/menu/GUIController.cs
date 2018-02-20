@@ -1,36 +1,29 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class GUIController : MonoBehaviour {
 
-    public static Text vidas;
+    public static Text lifes;
     public static Text wave;
-    public static Text pontos;
-    public static Text derrotados;
-    public static Text restantes;
+    public static Text score;
+    public static Text defeated;
+    public static Text remaining;
 
     public void OnEnable()
     {
-        vidas = GameObject.FindGameObjectWithTag("GUIVidas").GetComponent<Text>();
+        lifes = GameObject.FindGameObjectWithTag("GUIVidas").GetComponent<Text>();
         wave = GameObject.FindGameObjectWithTag("GUIWave").GetComponent<Text>();
-        pontos = GameObject.FindGameObjectWithTag("GUIPontos").GetComponent<Text>();
-        derrotados = GameObject.FindGameObjectWithTag("GUIDerrotados").GetComponent<Text>();
-        restantes = GameObject.FindGameObjectWithTag("GUIRestantes").GetComponent<Text>();
+        score = GameObject.FindGameObjectWithTag("GUIPontos").GetComponent<Text>();
+        defeated = GameObject.FindGameObjectWithTag("GUIDerrotados").GetComponent<Text>();
+        remaining = GameObject.FindGameObjectWithTag("GUIRestantes").GetComponent<Text>();
     }
 
-    public static void limpaGUI()
+    public static void RefreshGUI()
     {
-
-    }
-
-    public static void atualizaGUI()
-    {
-        vidas.text = Player.Vidas.ToString();
-        wave.text = GerenciaWaves.Wave.ToString();
-        pontos.text = GlobalVariables.TotalPontuacao.ToString();
-        derrotados.text = GlobalVariables.TotalInimigosDerrotados.ToString();
-        restantes.text = GerenciaWaves.InimigosRestantes.ToString();
+        lifes.text = Player.Lifes.ToString();
+        wave.text = WaveManager.Wave.ToString();
+        score.text = GlobalVariables.ScoreCount.ToString();
+        defeated.text = GlobalVariables.DefeatedEnemiesCount.ToString();
+        remaining.text = WaveManager.RemainingEnemies.ToString();
     }
 }

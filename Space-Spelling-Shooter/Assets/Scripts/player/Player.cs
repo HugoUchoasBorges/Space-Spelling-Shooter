@@ -1,21 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿public class Player : GameCharacter {
 
-public class Player : Personagem {
+    public TypingSystem typingSystem;
+    public PlayerMovement movement;
 
-    public SistemaDigitacao sistemaDigitacao;
-    public MovimentacaoPlayer movimentacao;
-
-    private static int vidas;
-    public static int Vidas
+    private static int lifes;
+    public static int Lifes
     {
-        get { return vidas; }
+        get { return lifes; }
         set
         {
-            vidas = value;
+            lifes = value;
 
-            GUIController.atualizaGUI();
+            GUIController.RefreshGUI();
         }
     }
 
@@ -24,12 +20,12 @@ public class Player : Personagem {
 
         base.Start();
 
-        Vidas = GlobalVariables.totalVidas;
+        Lifes = GlobalVariables.defaultLifeCount;
 
-        movimentacao = gameObject.AddComponent<MovimentacaoPlayer>();
-        sistemaDigitacao = gameObject.AddComponent<SistemaDigitacao>();
+        movement = gameObject.AddComponent<PlayerMovement>();
+        typingSystem = gameObject.AddComponent<TypingSystem>();
 
-        inicializaAudios(GlobalVariables.audio_player);
+        InitializesAudios(GlobalVariables.audio_player);
 
         PlayAudio(GlobalVariables.ENUM_AUDIO.game_start);
     }
