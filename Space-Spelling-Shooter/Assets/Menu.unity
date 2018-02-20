@@ -210,22 +210,12 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114720372409626916, guid: 82ed753e54607c146a1b1b9eed17d3f3,
+    - target: {fileID: 114005912669118134, guid: 82ed753e54607c146a1b1b9eed17d3f3,
         type: 2}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114720372409626916, guid: 82ed753e54607c146a1b1b9eed17d3f3,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114604088909513754, guid: 82ed753e54607c146a1b1b9eed17d3f3,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114604088909513754, guid: 82ed753e54607c146a1b1b9eed17d3f3,
+    - target: {fileID: 114005912669118134, guid: 82ed753e54607c146a1b1b9eed17d3f3,
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
@@ -240,12 +230,22 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114005912669118134, guid: 82ed753e54607c146a1b1b9eed17d3f3,
+    - target: {fileID: 114604088909513754, guid: 82ed753e54607c146a1b1b9eed17d3f3,
         type: 2}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114005912669118134, guid: 82ed753e54607c146a1b1b9eed17d3f3,
+    - target: {fileID: 114604088909513754, guid: 82ed753e54607c146a1b1b9eed17d3f3,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114720372409626916, guid: 82ed753e54607c146a1b1b9eed17d3f3,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114720372409626916, guid: 82ed753e54607c146a1b1b9eed17d3f3,
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
