@@ -210,32 +210,12 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114467762298239582, guid: acaccc74223d458499f26e77b96fbf0c,
+    - target: {fileID: 114552646317830126, guid: acaccc74223d458499f26e77b96fbf0c,
         type: 2}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114467762298239582, guid: acaccc74223d458499f26e77b96fbf0c,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114248873172777576, guid: acaccc74223d458499f26e77b96fbf0c,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114248873172777576, guid: acaccc74223d458499f26e77b96fbf0c,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114438778508693434, guid: acaccc74223d458499f26e77b96fbf0c,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114438778508693434, guid: acaccc74223d458499f26e77b96fbf0c,
+    - target: {fileID: 114552646317830126, guid: acaccc74223d458499f26e77b96fbf0c,
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
@@ -250,12 +230,32 @@ Prefab:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114552646317830126, guid: acaccc74223d458499f26e77b96fbf0c,
+    - target: {fileID: 114438778508693434, guid: acaccc74223d458499f26e77b96fbf0c,
         type: 2}
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114552646317830126, guid: acaccc74223d458499f26e77b96fbf0c,
+    - target: {fileID: 114438778508693434, guid: acaccc74223d458499f26e77b96fbf0c,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114248873172777576, guid: acaccc74223d458499f26e77b96fbf0c,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114248873172777576, guid: acaccc74223d458499f26e77b96fbf0c,
+        type: 2}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114467762298239582, guid: acaccc74223d458499f26e77b96fbf0c,
+        type: 2}
+      propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114467762298239582, guid: acaccc74223d458499f26e77b96fbf0c,
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1
@@ -407,7 +407,7 @@ GameObject:
   - component: {fileID: 952270214}
   - component: {fileID: 952270213}
   m_Layer: 0
-  m_Name: Parede
+  m_Name: Wall
   m_TagString: Parede
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

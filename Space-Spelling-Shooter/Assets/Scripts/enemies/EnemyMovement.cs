@@ -2,40 +2,39 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class MovimentacaoInimigos : Movimentacao {
+public class EnemyMovement : Movement {
 
-    Inimigo inimigo;
+    Enemy enemy;
 
     protected override void Awake()
     {
-        //Definindo uma posição, direção e sentido iniciais
-        SetaPosicaoDirecaoInicial();
+        // Setting up a start position a direction
+        SetStartPositionDirection();
     }
 
     // Use this for initialization
     protected override void Start () {
 
-        inimigo = gameObject.GetComponent<Inimigo>();
+        enemy = gameObject.GetComponent<Enemy>();
 
         base.Start();
 
-        //Valores gerados para movimentação do inimigo
         inputImpulse = GlobalVariables.inputImpulse;
         inputRotation = GlobalVariables.inputRotation;
 
-        float additionalImpulse = (Mathf.Min(inimigo.texto.text.Length, 12)) / 6.67f;
+        float additionalImpulse = (Mathf.Min(enemy.text.text.Length, 12)) / 6.67f;
 
-        // Velocidade do inimigo diminui conforme tamanho da palavra
+        // Enemy's speed decreases according to the word's length
         inputImpulse -= additionalImpulse;
     }
 
-    protected void SetaPosicaoDirecaoInicial()
+    protected void SetStartPositionDirection()
     {
         transform.Rotate(Vector3.forward, Random.Range(0.0f, 360.0f));
         transform.position = 
             new Vector3(
-                Random.Range(GeradorDeArestas.bottomLeftCorner.x, GeradorDeArestas.bottomRightCorner.x),
-                Random.Range(GeradorDeArestas.bottomRightCorner.y, GeradorDeArestas.upperRightCorner.y),
+                Random.Range(EdgeGenerator.bottomLeftCorner.x, EdgeGenerator.bottomRightCorner.x),
+                Random.Range(EdgeGenerator.bottomRightCorner.y, EdgeGenerator.upperRightCorner.y),
                 0);
     }
 

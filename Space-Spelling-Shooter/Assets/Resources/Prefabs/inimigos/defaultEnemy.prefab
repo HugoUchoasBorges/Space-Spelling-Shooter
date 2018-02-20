@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 50374885690371330}
   - component: {fileID: 114414879470104674}
   m_Layer: 8
-  m_Name: InimigoPadrao
+  m_Name: defaultEnemy
   m_TagString: inimigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

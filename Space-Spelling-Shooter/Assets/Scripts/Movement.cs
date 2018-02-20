@@ -1,23 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Movimentacao : MonoBehaviour {
+public class Movement : MonoBehaviour {
 
-    //Declaração das Variáveis
-
-    //É o tamanho da zona fora da tela onde objetos podem se movimentar
+    // OffScreen zone where objects can move
     protected float deadZone;
 
     protected Rigidbody2D rigidBody2D;
 
-    //Variáveis para controle do personagem
+    // Player control variables
     public float impulseThreshold;
     public float rotationThreshold;
     protected float inputImpulse;
     protected float inputRotation;
 
-    //Variável de ajuste para aceleração
     protected float deltaTime;
 
     protected virtual void Awake()
@@ -32,7 +27,6 @@ public class Movimentacao : MonoBehaviour {
 
         rigidBody2D = GetComponent<Rigidbody2D>();
 
-        //Definindo alguns valores iniciais de variáveis
         rigidBody2D.angularDrag = GlobalVariables.angularDrag;
         rigidBody2D.drag = GlobalVariables.linearDrag;
         impulseThreshold = GlobalVariables.impulseThreshold;
@@ -44,26 +38,24 @@ public class Movimentacao : MonoBehaviour {
     // Update is called once per frame
     protected virtual void Update () {
 
-        //Tratamento das bordas do cenário
-        verificaBordas();
+        checkScreenEdges();
     }
 
-    private void verificaBordas()
+    private void checkScreenEdges()
     {
         Vector2 newPosition = transform.position;
 
-        // Lidando com os limites do cenário
-        if (Mathf.Abs(transform.position.x) > GeradorDeArestas.bottomRightCorner.x + deadZone)
+        if (Mathf.Abs(transform.position.x) > EdgeGenerator.bottomRightCorner.x + deadZone)
             if (transform.position.x > 0)
-                newPosition.x = GeradorDeArestas.bottomLeftCorner.x - deadZone / 2;
+                newPosition.x = EdgeGenerator.bottomLeftCorner.x - deadZone / 2;
             else
-                newPosition.x = GeradorDeArestas.bottomRightCorner.x + deadZone / 2;
+                newPosition.x = EdgeGenerator.bottomRightCorner.x + deadZone / 2;
 
-        if (Mathf.Abs(transform.position.y) > GeradorDeArestas.upperRightCorner.y + deadZone)
+        if (Mathf.Abs(transform.position.y) > EdgeGenerator.upperRightCorner.y + deadZone)
             if (transform.position.y > 0)
-                newPosition.y = GeradorDeArestas.bottomRightCorner.y - deadZone / 2;
+                newPosition.y = EdgeGenerator.bottomRightCorner.y - deadZone / 2;
             else
-                newPosition.y = GeradorDeArestas.upperRightCorner.y + deadZone / 2;
+                newPosition.y = EdgeGenerator.upperRightCorner.y + deadZone / 2;
 
         transform.position = newPosition;
 

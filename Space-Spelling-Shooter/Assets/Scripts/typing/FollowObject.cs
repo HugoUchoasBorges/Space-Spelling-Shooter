@@ -8,12 +8,12 @@ public class FollowObject : MonoBehaviour {
     protected GameObject trackObject;
     protected Dictionary<string,Vector3> offset;
 
-    private float raio;
+    private float radius;
 
     private void Awake()
     {
         trackObject = gameObject.transform.parent.transform.parent.gameObject;
-        raio = trackObject.GetComponent<CircleCollider2D>().radius;
+        radius = trackObject.GetComponent<CircleCollider2D>().radius;
         gameObject.transform.position = Camera.main.WorldToScreenPoint(trackObject.GetComponent<CircleCollider2D>().bounds.center);
     }
 
@@ -22,11 +22,11 @@ public class FollowObject : MonoBehaviour {
 
         offset = new Dictionary<string, Vector3>()
         {
-            {"left", Vector3.left * 2*raio},
-            {"right", Vector3.right * 2*raio},
-            {"up", Vector3.up * raio},
-            {"down", Vector3.down * raio},
-            {"default", Vector3.down * raio}
+            {"left", Vector3.left * 2*radius},
+            {"right", Vector3.right * 2*radius},
+            {"up", Vector3.up * radius},
+            {"down", Vector3.down * radius},
+            {"default", Vector3.down * radius}
 
         };
 
@@ -37,17 +37,16 @@ public class FollowObject : MonoBehaviour {
     void Update () {
         gameObject.transform.position = Camera.main.WorldToScreenPoint(trackObject.GetComponent<CircleCollider2D>().bounds.center + offset["default"]/1.5f);
 
-        verificaVisibilidade();
+        CheckVisibility();
     }
 
-    // Método para manter o texto do inimigo visível na tela
-    private void verificaVisibilidade()
+    // Keeps text on Screen
+    private void CheckVisibility()
     {
-        //Vector2 posicao = Camera.main.ScreenToWorldPoint(transform.position);
-        Vector2 posicao = trackObject.transform.position;
+        Vector2 position = trackObject.transform.position;
         
-        if (Mathf.Abs(posicao.x) >= GeradorDeArestas.bottomRightCorner.x - raio / 2)
-            if (posicao.x >= 0)
+        if (Mathf.Abs(position.x) >= EdgeGenerator.bottomRightCorner.x - radius / 2)
+            if (position.x >= 0)
             {
                 offset["default"] = offset["left"];
                 GetComponent<RectTransform>().rotation = Quaternion.identity;
@@ -60,8 +59,8 @@ public class FollowObject : MonoBehaviour {
                 GetComponent<RectTransform>().Rotate(Vector3.forward, -90);
             }
 
-        else if (Mathf.Abs(posicao.y) >= GeradorDeArestas.upperRightCorner.y - raio / 2)
-            if (posicao.y >= 0)
+        else if (Mathf.Abs(position.y) >= EdgeGenerator.upperRightCorner.y - radius / 2)
+            if (position.y >= 0)
             {
                 offset["default"] = offset["down"];
                 GetComponent<RectTransform>().rotation = Quaternion.identity;

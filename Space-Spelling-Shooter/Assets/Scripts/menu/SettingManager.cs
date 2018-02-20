@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-public class SettingManager : Personagem {
+public class SettingManager : GameCharacter {
 
     public Toggle fullScreenToggle;
     public Dropdown resolutionDropdown;
@@ -18,7 +16,7 @@ public class SettingManager : Personagem {
     protected override void Start()
     {
         base.Start();
-        inicializaAudios(GlobalVariables.audio_game);
+        InitializesAudios(GlobalVariables.audio_game);
     }
 
     public void OnEnable()
@@ -77,7 +75,7 @@ public class SettingManager : Personagem {
     public void OnMusicVolumeChange()
     {
         PlayAudioSelect();
-        GlobalVariables.VOLUME = gameSettings.musicVolume = musicVolumeSlider.value; 
+        GlobalVariables.AUDIO_VOLUME = gameSettings.musicVolume = musicVolumeSlider.value; 
     }
 
     public void OnAntiAliasingToggle()
@@ -112,7 +110,7 @@ public class SettingManager : Personagem {
         catch (System.Exception e)
         {
             Debug.Log(e);
-            Debug.Log("Gerando configurações padrão");
+            Debug.Log("Generating default configuration values.");
 
             gameSettings.musicVolume = 1f;
             gameSettings.fullScreen = true;

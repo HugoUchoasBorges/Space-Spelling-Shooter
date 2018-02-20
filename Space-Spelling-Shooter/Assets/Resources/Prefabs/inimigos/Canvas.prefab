@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 114319003131590378}
   - component: {fileID: 114478309561826092}
   m_Layer: 8
-  m_Name: Texto
+  m_Name: text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 114478736141172474}
   - component: {fileID: 114918214944384060}
   m_Layer: 8
-  m_Name: Vida
+  m_Name: Life
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

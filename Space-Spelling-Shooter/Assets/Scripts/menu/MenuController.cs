@@ -1,17 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuController : Personagem {
+public class MenuController : GameCharacter {
 
     private GameSetting gameSettings;
 
     void OnEnable()
     {
         gameSettings = new GameSetting();
-
         LoadSettings();
 
     }
@@ -21,7 +18,7 @@ public class MenuController : Personagem {
         PlayAudioSelect();
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        GerenciadorJogo.ResetGlobalVariables();
+        GameManager.ResetGlobalVariables();
     }
 
     private void LoadSettings()
@@ -35,7 +32,7 @@ public class MenuController : Personagem {
         catch (System.Exception e)
         {
             Debug.Log(e);
-            Debug.Log("Gerando configurações padrão");
+            Debug.Log("Generating default configuration values.");
 
             gameSettings.musicVolume = 1f;
             gameSettings.fullScreen = true;
@@ -43,7 +40,7 @@ public class MenuController : Personagem {
             gameSettings.resolutionIndex = resolutions.Length - 1;
         }
 
-        GlobalVariables.VOLUME = gameSettings.musicVolume;
+        GlobalVariables.AUDIO_VOLUME = gameSettings.musicVolume;
         Screen.SetResolution(resolutions[gameSettings.resolutionIndex].width, resolutions[gameSettings.resolutionIndex].height, Screen.fullScreen);
         Screen.fullScreen = gameSettings.fullScreen;
 
@@ -51,13 +48,12 @@ public class MenuController : Personagem {
             QualitySettings.antiAliasing = (int)Mathf.Pow(2f, 4f);
         else
             QualitySettings.antiAliasing = (int)Mathf.Pow(2f, 1f);
-
     }
 
     protected override void Start()
     {
         base.Start();
-        inicializaAudios(GlobalVariables.audio_game);
+        InitializesAudios(GlobalVariables.audio_game);
     }
 
     public void PlayGame()
@@ -88,7 +84,7 @@ public class MenuController : Personagem {
         PlayAudioSelect();
         Debug.Log("Quit to Main Menu");
         Time.timeScale = 1;
-        GerenciadorJogo.ResetGlobalVariables();
+        GameManager.ResetGlobalVariables();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
@@ -96,6 +92,6 @@ public class MenuController : Personagem {
     public void Resume()
     {
         PlayAudioSelect();
-        GerenciadorJogo.pauseControl();
+        GameManager.PauseControl();
     }
 }
