@@ -188,15 +188,19 @@ public class WaveManager : MonoBehaviour {
     public static void UpdateGlobalStatistics()
     {
         float globalAccuracy = 0;
+        int globalWPM = 0;
 
         for (int w = 0; w < Wave; w++)
         {
             globalAccuracy += accuracy[w];
+            globalWPM += wpm[w];
         }
 
         globalAccuracy /= Wave;
+        globalWPM /= Wave;
 
         GlobalVariables.averageAccuracy = globalAccuracy;
+        GlobalVariables.averageWPM = globalWPM;
     }
 
     public static void AddEnemy()
