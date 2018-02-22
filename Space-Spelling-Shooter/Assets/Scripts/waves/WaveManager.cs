@@ -35,8 +35,13 @@ public class WaveManager : MonoBehaviour {
     public static List<float> wpm;
     public static List<float> accuracy;
 
-	// Use this for initialization
-	void Awake () {
+    public static List<int> typedLetters { get; private set; }
+    public static List<int> typedCorrectLetters { get; private set; }
+
+    private int statisticsCount;
+
+    // Use this for initialization
+    void Awake () {
         Wave = 0;
         StopWaves();
 
@@ -44,6 +49,7 @@ public class WaveManager : MonoBehaviour {
 
         StartCoroutine(manageWaves());
         StartCoroutine(GameManager.SpawnEnemies());
+        StartCoroutine(GetTypingStatistics());
     }
 
     private void initializesVariables()
@@ -54,6 +60,9 @@ public class WaveManager : MonoBehaviour {
         score = new List<int>();
         wpm = new List<float>();
         accuracy = new List<float>();
+
+        typedLetters = new List<int>();
+        typedCorrectLetters = new List<int>();
     }
 
     private IEnumerator manageWaves()
@@ -87,7 +96,65 @@ public class WaveManager : MonoBehaviour {
         wpm.Add(0f);
         accuracy.Add(0f);
 
+        typedLetters.Add(0);
+        typedCorrectLetters.Add(0);
+        statisticsCount = 0;
+
         GameManager.ResumeGame();
+    }
+
+    public IEnumerator GetTypingStatistics()
+    {
+        while (true)
+        {
+            if(GameManager.GAME_ISPAUSED == true)
+                yield return new WaitUntil(() => GameManager.GAME_ISPAUSED == false);
+
+            yield return new WaitForSeconds(GlobalVariables.spawnEnemyTime);
+            UpdateAccuracy();
+        }
+    }
+
+    public static void AddTypedLetter(bool correct = false)
+    {
+        typedLetters[Wave - 1]++;
+
+        if(correct == true)
+        {
+            typedCorrectLetters[Wave - 1]++;
+        }
+    }
+
+    public void UpdateAccuracy()
+    {
+        if (typedLetters[Wave - 1] == 0)
+            return;
+
+        statisticsCount++;
+
+        float newAccuracy = 100f * typedCorrectLetters[Wave - 1] / typedLetters[Wave - 1];
+        accuracy[Wave - 1] = (accuracy[Wave - 1] * (statisticsCount - 1) + newAccuracy) / statisticsCount;
+
+        // NaN verification
+        if (accuracy[Wave - 1] != accuracy[Wave - 1])
+            accuracy[Wave - 1] = 0f;
+
+        typedCorrectLetters[Wave - 1] = 0;
+        typedLetters[Wave - 1] = 0;
+    }
+
+    public static void UpdateGlobalStatistics()
+    {
+        float globalAccuracy = 0;
+
+        for (int w = 0; w < Wave; w++)
+        {
+            globalAccuracy += accuracy[w];
+        }
+
+        globalAccuracy /= Wave;
+
+        GlobalVariables.averageAccuracy = globalAccuracy;
     }
 
     public static void AddEnemy()
@@ -113,6 +180,8 @@ public class WaveManager : MonoBehaviour {
     private static void WaveTransition()
     {
         GameManager.PauseGame();
+
+        UpdateGlobalStatistics();
 
         GameManager.ResumeGame();
         StartWaves();

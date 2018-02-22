@@ -78,15 +78,18 @@ public class TypingSystem : MonoBehaviour {
         {
             if (ConsumeLetter(c))
             {
+                WaveManager.AddTypedLetter(true);
                 player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key);
             }
             else
             {
+                WaveManager.AddTypedLetter();
                 player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_lock);
             }
         }
         else
         {
+            WaveManager.AddTypedLetter();
             player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_lock);
         }
     }
