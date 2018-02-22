@@ -141,7 +141,13 @@ public class WaveManager : MonoBehaviour {
         accuracyTimeCount++;
 
         float newAccuracy = 100f * typedCorrectLetters[Wave - 1] / typedLetters[Wave - 1];
+        float oldAccuracy = accuracy[Wave - 1];
         accuracy[Wave - 1] = (accuracy[Wave - 1] * (accuracyTimeCount - 1) + newAccuracy) / accuracyTimeCount;
+
+        if ((newAccuracy != oldAccuracy) || (accuracyTimeCount == 1))
+        {
+            GUIController.RefreshGUI();
+        }
 
         // NaN verification
         if (accuracy[Wave - 1] != accuracy[Wave - 1])
