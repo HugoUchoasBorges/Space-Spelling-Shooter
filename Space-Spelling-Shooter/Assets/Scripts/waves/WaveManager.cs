@@ -116,6 +116,8 @@ public class WaveManager : MonoBehaviour {
         typedCorrectLetters.Add(0);
         accuracyTimeCount = 0;
 
+        wpmTimeCount = 0;
+
         startTime = 0f;
 
         GameManager.ResumeGame();
