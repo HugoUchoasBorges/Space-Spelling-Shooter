@@ -35,10 +35,20 @@ public class WaveManager : MonoBehaviour {
     public static List<float> wpm;
     public static List<float> accuracy;
 
-    public static List<int> typedLetters { get; private set; }
+    private static List<int> typedLetters; 
+    public static List<int> TypedLetters
+    {
+        get { return typedLetters; }
+
+        private set
+        {
+            typedLetters = value;
+            UpdateAccuracy();
+        }
+    }
     public static List<int> typedCorrectLetters { get; private set; }
 
-    private int statisticsCount;
+    private static int statisticsCount;
 
     // Use this for initialization
     void Awake () {
@@ -49,7 +59,6 @@ public class WaveManager : MonoBehaviour {
 
         StartCoroutine(manageWaves());
         StartCoroutine(GameManager.SpawnEnemies());
-        StartCoroutine(GetTypingStatistics());
     }
 
     private void initializesVariables()
@@ -103,29 +112,19 @@ public class WaveManager : MonoBehaviour {
         GameManager.ResumeGame();
     }
 
-    public IEnumerator GetTypingStatistics()
-    {
-        while (true)
-        {
-            if(GameManager.GAME_ISPAUSED == true)
-                yield return new WaitUntil(() => GameManager.GAME_ISPAUSED == false);
-
-            yield return new WaitForSeconds(GlobalVariables.spawnEnemyTime);
-            UpdateAccuracy();
-        }
-    }
-
     public static void AddTypedLetter(bool correct = false)
     {
-        typedLetters[Wave - 1]++;
-
         if(correct == true)
         {
             typedCorrectLetters[Wave - 1]++;
         }
+
+        List<int> letters = TypedLetters;
+        letters[Wave - 1]++;
+        TypedLetters = letters;
     }
 
-    public void UpdateAccuracy()
+    public static void UpdateAccuracy()
     {
         if (typedLetters[Wave - 1] == 0)
             return;
