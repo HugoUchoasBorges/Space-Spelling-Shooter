@@ -33,6 +33,7 @@ public class WaveManager : MonoBehaviour {
 
     public static List<int> score;
     public static List<int> wpm;
+    public static float dynamicWPM;
     private static float startTime;
     public static List<float> accuracy;
 
@@ -176,9 +177,9 @@ public class WaveManager : MonoBehaviour {
         wpmTimeCount++;
 
         //float newWPM = 60f / (GlobalVariables.averageWordLength * deltaTime);
-        float newWPM = 60f / (5 * deltaTime);
+        dynamicWPM = 60f / (5 * deltaTime);
 
-        wpm[Wave - 1] = (int)(wpm[Wave - 1] * (wpmTimeCount - 1) + newWPM) / (wpmTimeCount);
+        wpm[Wave - 1] = (int)(wpm[Wave - 1] * (wpmTimeCount - 1) + dynamicWPM) / (wpmTimeCount);
 
         // NaN verification
         if (wpm[Wave - 1] != wpm[Wave - 1])
