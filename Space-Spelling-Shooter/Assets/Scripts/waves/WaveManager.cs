@@ -32,7 +32,8 @@ public class WaveManager : MonoBehaviour {
     }
 
     public static List<int> score;
-    public static List<float> wpm;
+    public static List<int> wpm;
+    private static float startTime;
     public static List<float> accuracy;
 
     private static List<int> typedLetters; 
@@ -43,12 +44,15 @@ public class WaveManager : MonoBehaviour {
         private set
         {
             typedLetters = value;
+            UpdateWPM();
             UpdateAccuracy();
         }
     }
     public static List<int> typedCorrectLetters { get; private set; }
 
-    private static int statisticsCount;
+    private static int accuracyTimeCount;
+    private static int wpmTimeCount;
+    private
 
     // Use this for initialization
     void Awake () {
@@ -67,7 +71,7 @@ public class WaveManager : MonoBehaviour {
         maxOnScreenEnemiesCount = new List<int>();
         defeatedEnemies = new List<int>();
         score = new List<int>();
-        wpm = new List<float>();
+        wpm = new List<int>();
         accuracy = new List<float>();
 
         typedLetters = new List<int>();
@@ -102,12 +106,14 @@ public class WaveManager : MonoBehaviour {
         
 
         score.Add(0);
-        wpm.Add(0f);
+        wpm.Add(0);
         accuracy.Add(0f);
 
         typedLetters.Add(0);
         typedCorrectLetters.Add(0);
-        statisticsCount = 0;
+        accuracyTimeCount = 0;
+
+        startTime = 0f;
 
         GameManager.ResumeGame();
     }
@@ -129,10 +135,10 @@ public class WaveManager : MonoBehaviour {
         if (typedLetters[Wave - 1] == 0)
             return;
 
-        statisticsCount++;
+        accuracyTimeCount++;
 
         float newAccuracy = 100f * typedCorrectLetters[Wave - 1] / typedLetters[Wave - 1];
-        accuracy[Wave - 1] = (accuracy[Wave - 1] * (statisticsCount - 1) + newAccuracy) / statisticsCount;
+        accuracy[Wave - 1] = (accuracy[Wave - 1] * (accuracyTimeCount - 1) + newAccuracy) / accuracyTimeCount;
 
         // NaN verification
         if (accuracy[Wave - 1] != accuracy[Wave - 1])
@@ -140,6 +146,41 @@ public class WaveManager : MonoBehaviour {
 
         typedCorrectLetters[Wave - 1] = 0;
         typedLetters[Wave - 1] = 0;
+    }
+
+    public static void pauseWPMTimeCount()
+    {
+        startTime = 0f;
+    }
+
+    public static void UpdateWPM()
+    {
+        if (typedCorrectLetters[Wave - 1] == 0)
+        {
+            return;
+        }    
+
+        float deltaTime = 0;
+
+        if (startTime == 0)
+        {
+            startTime = Time.time;
+            return;
+        }
+
+        deltaTime = Time.time - startTime;
+        startTime = Time.time;
+
+        wpmTimeCount++;
+
+        //float newWPM = 60f / (GlobalVariables.averageWordLength * deltaTime);
+        float newWPM = 60f / (5 * deltaTime);
+
+        wpm[Wave - 1] = (int)(wpm[Wave - 1] * (wpmTimeCount - 1) + newWPM) / (wpmTimeCount);
+
+        // NaN verification
+        if (wpm[Wave - 1] != wpm[Wave - 1])
+            wpm[Wave - 1] = 0;
     }
 
     public static void UpdateGlobalStatistics()
