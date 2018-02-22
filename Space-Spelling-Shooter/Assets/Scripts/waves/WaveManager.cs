@@ -52,7 +52,6 @@ public class WaveManager : MonoBehaviour {
 
     private static int accuracyTimeCount;
     private static int wpmTimeCount;
-    private
 
     // Use this for initialization
     void Awake () {
@@ -106,7 +105,10 @@ public class WaveManager : MonoBehaviour {
         
 
         score.Add(0);
-        wpm.Add(0);
+        if (Wave == 1)
+            wpm.Add(0);
+        else
+            wpm.Add(wpm[Wave - 2]);
         accuracy.Add(0f);
 
         typedLetters.Add(0);
