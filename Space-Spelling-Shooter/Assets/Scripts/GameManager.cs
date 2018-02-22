@@ -76,6 +76,7 @@ public class GameManager : MonoBehaviour {
     public static void PauseGame()
     {
         GAME_ISPAUSED = true;
+        WaveManager.pauseWPMTimeCount();
     }
 
     public static void ResumeGame()
@@ -109,6 +110,7 @@ public class GameManager : MonoBehaviour {
     //hides objects with ShowOnPause tag
     public static void HidePaused()
     {
+        GameManager.ResumeGame();
         foreach (GameObject g in pauseObjects)
         {
             g.SetActive(false);
@@ -118,6 +120,8 @@ public class GameManager : MonoBehaviour {
     //shows objects with ShowOnPause tag
     public static void ShowPaused()
     {
+        GameManager.PauseGame();
+
         foreach (GameObject g in pauseObjects)
         {
             g.SetActive(true);
