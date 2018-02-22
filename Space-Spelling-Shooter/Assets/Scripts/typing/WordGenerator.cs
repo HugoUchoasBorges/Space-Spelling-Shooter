@@ -16,6 +16,9 @@ public class WordGenerator : Singleton<WordGenerator> {
 
     public static void FillWords(string path = "Assets/Resources/Words/")
     {
+        float averageWordLength = 0;
+        int wordCount = 0;
+
         words = new List<Word>();
         taggedWords = new Dictionary<string, List<Word>>();
 
@@ -40,8 +43,13 @@ public class WordGenerator : Singleton<WordGenerator> {
 
                     if (!GlobalVariables.usedChars.ContainsKey(newWord.text[0]))
                         GlobalVariables.usedChars[newWord.text[0]] = false;
+
+                    wordCount++;
+                    averageWordLength = (averageWordLength * (wordCount - 1) + word.Length) / wordCount;
                 }
             }
+
+            GlobalVariables.averageWordLength = (int)averageWordLength;
         }
         catch (System.Exception e)
         {

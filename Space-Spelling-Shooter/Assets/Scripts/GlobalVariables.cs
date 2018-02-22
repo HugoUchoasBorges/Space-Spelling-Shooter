@@ -113,6 +113,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     }
     public static float averageWPM;
     public static float averageAccuracy;
+    public static int averageWordLength; 
 
     // Enemies Spawn
     public static float spawnEnemyTime = 0.5f;

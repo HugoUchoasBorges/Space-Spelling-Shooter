@@ -32,11 +32,30 @@ public class WaveManager : MonoBehaviour {
     }
 
     public static List<int> score;
-    public static List<float> wpm;
+    public static List<int> wpm;
+    public static float dynamicWPM;
+    private static float startTime;
     public static List<float> accuracy;
 
-	// Use this for initialization
-	void Awake () {
+    private static List<int> typedLetters; 
+    public static List<int> TypedLetters
+    {
+        get { return typedLetters; }
+
+        private set
+        {
+            typedLetters = value;
+            UpdateWPM();
+            UpdateAccuracy();
+        }
+    }
+    public static List<int> typedCorrectLetters { get; private set; }
+
+    private static int accuracyTimeCount;
+    private static int wpmTimeCount;
+
+    // Use this for initialization
+    void Awake () {
         Wave = 0;
         StopWaves();
 
@@ -52,8 +71,11 @@ public class WaveManager : MonoBehaviour {
         maxOnScreenEnemiesCount = new List<int>();
         defeatedEnemies = new List<int>();
         score = new List<int>();
-        wpm = new List<float>();
+        wpm = new List<int>();
         accuracy = new List<float>();
+
+        typedLetters = new List<int>();
+        typedCorrectLetters = new List<int>();
     }
 
     private IEnumerator manageWaves()
@@ -62,12 +84,12 @@ public class WaveManager : MonoBehaviour {
         {
             yield return new WaitUntil(() => activedWave == true);
 
-            novaWave();
+            NewWave();
             StopWaves();
         }
     }
 
-    private void novaWave()
+    private void NewWave()
     {
         Wave += 1;
 
@@ -84,10 +106,102 @@ public class WaveManager : MonoBehaviour {
         
 
         score.Add(0);
-        wpm.Add(0f);
+        if (Wave == 1)
+            wpm.Add(0);
+        else
+            wpm.Add(wpm[Wave - 2]);
         accuracy.Add(0f);
 
+        typedLetters.Add(0);
+        typedCorrectLetters.Add(0);
+        accuracyTimeCount = 0;
+
+        startTime = 0f;
+
         GameManager.ResumeGame();
+    }
+
+    public static void AddTypedLetter(bool correct = false)
+    {
+        if(correct == true)
+        {
+            typedCorrectLetters[Wave - 1]++;
+        }
+
+        List<int> letters = TypedLetters;
+        letters[Wave - 1]++;
+        TypedLetters = letters;
+    }
+
+    public static void UpdateAccuracy()
+    {
+        if (typedLetters[Wave - 1] == 0)
+            return;
+
+        accuracyTimeCount++;
+
+        float newAccuracy = 100f * typedCorrectLetters[Wave - 1] / typedLetters[Wave - 1];
+        accuracy[Wave - 1] = (accuracy[Wave - 1] * (accuracyTimeCount - 1) + newAccuracy) / accuracyTimeCount;
+
+        // NaN verification
+        if (accuracy[Wave - 1] != accuracy[Wave - 1])
+            accuracy[Wave - 1] = 0f;
+
+        typedCorrectLetters[Wave - 1] = 0;
+        typedLetters[Wave - 1] = 0;
+    }
+
+    public static void pauseWPMTimeCount()
+    {
+        startTime = 0f;
+    }
+
+    public static void UpdateWPM()
+    {
+        if (typedCorrectLetters[Wave - 1] == 0)
+        {
+            return;
+        }    
+
+        float deltaTime = 0;
+
+        if (startTime == 0)
+        {
+            startTime = Time.time;
+            return;
+        }
+
+        deltaTime = Time.time - startTime;
+        startTime = Time.time;
+
+        wpmTimeCount++;
+
+        //float newWPM = 60f / (GlobalVariables.averageWordLength * deltaTime);
+        dynamicWPM = 60f / (5 * deltaTime);
+
+        wpm[Wave - 1] = (int)(wpm[Wave - 1] * (wpmTimeCount - 1) + dynamicWPM) / (wpmTimeCount);
+
+        // NaN verification
+        if (wpm[Wave - 1] != wpm[Wave - 1])
+            wpm[Wave - 1] = 0;
+    }
+
+    public static void UpdateGlobalStatistics()
+    {
+        float globalAccuracy = 0;
+        int globalWPM = 0;
+
+        for (int w = 0; w < Wave; w++)
+        {
+            globalAccuracy += accuracy[w];
+            globalWPM += wpm[w];
+        }
+
+        globalAccuracy /= Wave;
+        globalWPM /= Wave;
+
+        GlobalVariables.averageAccuracy = globalAccuracy;
+        GlobalVariables.averageWPM = globalWPM;
     }
 
     public static void AddEnemy()
@@ -113,6 +227,8 @@ public class WaveManager : MonoBehaviour {
     private static void WaveTransition()
     {
         GameManager.PauseGame();
+
+        UpdateGlobalStatistics();
 
         GameManager.ResumeGame();
         StartWaves();
