@@ -62,12 +62,12 @@ public class WaveManager : MonoBehaviour {
         {
             yield return new WaitUntil(() => activedWave == true);
 
-            novaWave();
+            NewWave();
             StopWaves();
         }
     }
 
-    private void novaWave()
+    private void NewWave()
     {
         Wave += 1;
 
