@@ -316,7 +316,7 @@ public class WaveManager : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if(!GameManager.GAME_ISPAUSED && typedLettersWPM != null)
+        if(!GameManager.GAME_ISPAUSED && typedLettersWPM != null && Wave != 0)
             UpdateWPM();
     }
 }

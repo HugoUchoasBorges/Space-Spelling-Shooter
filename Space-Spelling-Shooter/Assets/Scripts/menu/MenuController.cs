@@ -19,6 +19,7 @@ public class MenuController : GameCharacter {
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         GameManager.ResetGlobalVariables();
+        GameManager.ResumeGame();
     }
 
     private void LoadSettings()
