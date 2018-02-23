@@ -45,11 +45,13 @@ public class WaveManager : MonoBehaviour {
         private set
         {
             typedLetters = value;
-            UpdateWPM();
             UpdateAccuracy();
         }
     }
     public static List<int> typedCorrectLetters { get; private set; }
+
+    private static int[] typedCorrectLettersAccuracy;
+    private static int[] typedLettersAccuracy;
 
     private static int accuracyTimeCount;
     private static int wpmTimeCount;
@@ -110,7 +112,10 @@ public class WaveManager : MonoBehaviour {
             wpm.Add(0);
         else
             wpm.Add(wpm[Wave - 2]);
+
         accuracy.Add(0f);
+        typedCorrectLettersAccuracy = new int[2] { 0, 0 };
+        typedLettersAccuracy = new int[2] { 0, 0 };
 
         typedLetters.Add(0);
         typedCorrectLetters.Add(0);
@@ -142,7 +147,10 @@ public class WaveManager : MonoBehaviour {
 
         accuracyTimeCount++;
 
-        float newAccuracy = 100f * typedCorrectLetters[Wave - 1] / typedLetters[Wave - 1];
+        typedCorrectLettersAccuracy[1] = typedCorrectLetters[Wave - 1] - typedCorrectLettersAccuracy[0];
+        typedLettersAccuracy[1] = typedLetters[Wave - 1] - typedLettersAccuracy[0];
+
+        float newAccuracy = 100f * typedCorrectLettersAccuracy[1] / typedLettersAccuracy[1];
         float oldAccuracy = accuracy[Wave - 1];
         accuracy[Wave - 1] = (accuracy[Wave - 1] * (accuracyTimeCount - 1) + newAccuracy) / accuracyTimeCount;
 
@@ -155,8 +163,8 @@ public class WaveManager : MonoBehaviour {
         if (accuracy[Wave - 1] != accuracy[Wave - 1])
             accuracy[Wave - 1] = 0f;
 
-        typedCorrectLetters[Wave - 1] = 0;
-        typedLetters[Wave - 1] = 0;
+        typedCorrectLettersAccuracy[0] = typedCorrectLettersAccuracy[1];
+        typedLettersAccuracy[0] = typedLettersAccuracy[1];
     }
 
     public static void pauseWPMTimeCount()
@@ -171,16 +179,16 @@ public class WaveManager : MonoBehaviour {
             return;
         }    
 
-        float deltaTime = 0;
-
         if (startTime == 0)
         {
             startTime = Time.time;
             return;
         }
 
-        deltaTime = Time.time - startTime;
+        float deltaTime = Time.time - startTime;
         startTime = Time.time;
+
+        print("Delta: " + deltaTime);
 
         wpmTimeCount++;
 
@@ -284,4 +292,9 @@ public class WaveManager : MonoBehaviour {
     void Update () {
 
 	}
+
+    void FixedUpdate()
+    {
+        //UpdateWPM();
+    }
 }
