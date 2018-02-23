@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour {
 
     public static Player player;
 
-    public static bool GAME_ISPAUSED = true;
+    public static bool GAME_ISPAUSED { get; private set; }
 
     // Pause Menu Objects
     public static GameObject[] pauseObjects;
@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        PauseGame();
+
         Time.timeScale = 1;
         pauseObjects = GameObject.FindGameObjectsWithTag("ShowOnPause");
         HidePaused();
