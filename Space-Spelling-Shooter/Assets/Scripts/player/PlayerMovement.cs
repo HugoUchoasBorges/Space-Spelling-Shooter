@@ -88,6 +88,8 @@ public class PlayerMovement : Movement {
 
     private IEnumerator Respawn()
     {
+        GameManager.PauseGame();
+
         player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_dying);
 
         // Turns player Invisible 
@@ -121,6 +123,8 @@ public class PlayerMovement : Movement {
 
         // Tells the game the player is actived
         GlobalVariables.playerIsActive = true;
+
+        GameManager.ResumeGame();
     }
 
     protected void Centralize()
