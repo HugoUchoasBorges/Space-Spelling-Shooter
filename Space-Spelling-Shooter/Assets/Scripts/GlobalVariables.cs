@@ -117,6 +117,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
 
     // Enemies Spawn
     public static float spawnEnemyTime = 0.5f;
+    public static EnemyMovement.ENUM_INITIALEDGE ENUM_INITIALEDGE = EnemyMovement.ENUM_INITIALEDGE.right;
 
     public static void AddTag(string tag)
     {
@@ -134,5 +135,10 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static void RemoveUsedChar(char letter)
     {
         usedChars[letter] = false;
+    }
+
+    public static void SetDefaultEnemySpawnEdge(EnemyMovement.ENUM_INITIALEDGE e)
+    {
+        ENUM_INITIALEDGE = e;
     }
 }
