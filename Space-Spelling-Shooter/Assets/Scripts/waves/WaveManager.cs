@@ -258,14 +258,16 @@ public class WaveManager : MonoBehaviour {
         IncreaseScore();
         
         if(RemainingEnemies == 0)
-            WaveTransition();
+            GlobalVariables.Instance.StartCoroutine(WaveTransition());
     }
 
-    private static void WaveTransition()
+    private static IEnumerator WaveTransition()
     {
         GameManager.PauseGame();
-
+        
         UpdateGlobalStatistics();
+
+        yield return new WaitForSeconds(3);
 
         GameManager.ResumeGame();
         StartWaves();
