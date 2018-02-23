@@ -118,7 +118,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
 
     // Enemies Spawn
     public static float spawnEnemyTime = 0.5f;
-    public static EnemyMovement.ENUM_INITIALEDGE ENUM_INITIALEDGE = EnemyMovement.ENUM_INITIALEDGE.right;
+    public static EnemyMovement.ENUM_INITIALEDGE ENUM_INITIALEDGE = EnemyMovement.ENUM_INITIALEDGE.top;
 
     public static void AddTag(string tag)
     {
