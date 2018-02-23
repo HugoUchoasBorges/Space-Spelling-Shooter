@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour {
 
@@ -256,20 +257,29 @@ public class WaveManager : MonoBehaviour {
         AddOnScreenEnemy();
 
         IncreaseScore();
-        
-        if(RemainingEnemies == 0)
-            GlobalVariables.Instance.StartCoroutine(WaveTransition());
+
+        if (RemainingEnemies == 0)
+            GlobalVariables.Instance.StartCoroutine(WaveTransition(GlobalVariables.waveTransitionTime));
     }
 
-    private static IEnumerator WaveTransition()
+    private static IEnumerator WaveTransition(float countdownTime)
     {
         GameManager.PauseGame();
-        
         UpdateGlobalStatistics();
 
-        yield return new WaitForSeconds(3);
+        GameManager.ShowWaveTransition();
+        yield return new WaitForSeconds(1);
+        
+        Text countdown = GameObject.FindGameObjectWithTag("GUITimeCountDown").GetComponent<Text>();
+        for (int i = (int)countdownTime; i > 0; i--)
+        {
+            countdown.text = i.ToString() + "...";
+            yield return new WaitForSeconds(1);
+        }
 
+        GameManager.HideWaveTransition();
         GameManager.ResumeGame();
+
         StartWaves();
     }
 

@@ -25,6 +25,8 @@ TagManager:
   - GUIRestantes
   - GUIWPM
   - GUIAccuracy
+  - GUITimeCountDown
+  - ShowOnWaveTransition
   layers:
   - Default
   - TransparentFX
