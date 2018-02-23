@@ -85,6 +85,7 @@ public class MenuController : GameCharacter {
         Debug.Log("Quit to Main Menu");
         Time.timeScale = 1;
         GameManager.ResetGlobalVariables();
+        GameManager.PauseGame();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 

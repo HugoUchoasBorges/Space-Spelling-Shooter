@@ -45,11 +45,16 @@ public class WaveManager : MonoBehaviour {
         private set
         {
             typedLetters = value;
-            UpdateWPM();
             UpdateAccuracy();
         }
     }
     public static List<int> typedCorrectLetters { get; private set; }
+
+    private static int[] typedCorrectLettersAccuracy;
+    private static int[] typedLettersAccuracy;
+
+    private static int[] typedCorrectLettersWPM;
+    private static int[] typedLettersWPM;
 
     private static int accuracyTimeCount;
     private static int wpmTimeCount;
@@ -103,18 +108,25 @@ public class WaveManager : MonoBehaviour {
 
         onScreenEnemiesCount = 0;
         enemiesCount = 0;
-        
 
         score.Add(0);
-        if (Wave == 1)
-            wpm.Add(0);
-        else
-            wpm.Add(wpm[Wave - 2]);
+
         accuracy.Add(0f);
+        typedCorrectLettersAccuracy = new int[2] { 0, 0 };
+        typedLettersAccuracy = new int[2] { 0, 0 };
 
         typedLetters.Add(0);
         typedCorrectLetters.Add(0);
         accuracyTimeCount = 0;
+
+        if (Wave == 1)
+            wpm.Add(0);
+        else
+            wpm.Add(wpm[Wave - 2]);
+
+        wpmTimeCount = 0;
+        typedCorrectLettersWPM = new int[2] { 0, 0 };
+        typedLettersWPM = new int[2] { 0, 0 };
 
         startTime = 0f;
 
@@ -140,15 +152,24 @@ public class WaveManager : MonoBehaviour {
 
         accuracyTimeCount++;
 
-        float newAccuracy = 100f * typedCorrectLetters[Wave - 1] / typedLetters[Wave - 1];
+        typedCorrectLettersAccuracy[1] = typedCorrectLetters[Wave - 1] - typedCorrectLettersAccuracy[0];
+        typedLettersAccuracy[1] = typedLetters[Wave - 1] - typedLettersAccuracy[0];
+
+        float newAccuracy = 100f * typedCorrectLettersAccuracy[1] / typedLettersAccuracy[1];
+        float oldAccuracy = accuracy[Wave - 1];
         accuracy[Wave - 1] = (accuracy[Wave - 1] * (accuracyTimeCount - 1) + newAccuracy) / accuracyTimeCount;
+
+        if ((newAccuracy != oldAccuracy) || (accuracyTimeCount == 1))
+        {
+            GUIController.RefreshGUI();
+        }
 
         // NaN verification
         if (accuracy[Wave - 1] != accuracy[Wave - 1])
             accuracy[Wave - 1] = 0f;
 
-        typedCorrectLetters[Wave - 1] = 0;
-        typedLetters[Wave - 1] = 0;
+        typedCorrectLettersAccuracy[0] = typedCorrectLettersAccuracy[1];
+        typedLettersAccuracy[0] = typedLettersAccuracy[1];
     }
 
     public static void pauseWPMTimeCount()
@@ -158,32 +179,48 @@ public class WaveManager : MonoBehaviour {
 
     public static void UpdateWPM()
     {
-        if (typedCorrectLetters[Wave - 1] == 0)
+
+        if(typedLetters[Wave - 1] == 0)
         {
             return;
-        }    
-
-        float deltaTime = 0;
+        }
 
         if (startTime == 0)
         {
             startTime = Time.time;
+            typedLettersWPM[0] = typedLetters[Wave - 1];
+            typedCorrectLettersWPM[0] = typedCorrectLetters[Wave - 1];
             return;
         }
 
-        deltaTime = Time.time - startTime;
-        startTime = Time.time;
+        float deltaTime = Time.time - startTime;
+
+        if(deltaTime < 1f)
+        {
+            return;
+        }
 
         wpmTimeCount++;
 
-        //float newWPM = 60f / (GlobalVariables.averageWordLength * deltaTime);
-        dynamicWPM = 60f / (5 * deltaTime);
+        typedLettersWPM[1] = typedLetters[Wave - 1];
+        typedCorrectLettersWPM[1] = typedCorrectLetters[Wave - 1];
+
+        int deltaTypedLettersWPM = typedLettersWPM[1] - typedLettersWPM[0];
+        int deltaTypedCorrectLettersWPM = typedCorrectLettersWPM[1] - typedCorrectLettersWPM[0];
+
+        //dynamicWPM = 60f * deltaTypedCorrectLettersWPM / (GlobalVariables.averageWordLength * deltaTime);
+        dynamicWPM = 60f * deltaTypedCorrectLettersWPM / (5f * deltaTime);
 
         wpm[Wave - 1] = (int)(wpm[Wave - 1] * (wpmTimeCount - 1) + dynamicWPM) / (wpmTimeCount);
 
         // NaN verification
         if (wpm[Wave - 1] != wpm[Wave - 1])
             wpm[Wave - 1] = 0;
+
+        typedCorrectLettersWPM[0] = typedCorrectLettersWPM[1];
+        typedLettersWPM[0] = typedLettersWPM[1];
+
+        startTime = Time.time;
     }
 
     public static void UpdateGlobalStatistics()
@@ -276,4 +313,10 @@ public class WaveManager : MonoBehaviour {
     void Update () {
 
 	}
+
+    void FixedUpdate()
+    {
+        if(!GameManager.GAME_ISPAUSED && typedLettersWPM != null)
+            UpdateWPM();
+    }
 }

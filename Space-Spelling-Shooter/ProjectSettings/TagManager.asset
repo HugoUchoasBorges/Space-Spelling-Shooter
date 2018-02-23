@@ -23,6 +23,8 @@ TagManager:
   - GUIPontos
   - GUIDerrotados
   - GUIRestantes
+  - GUIWPM
+  - GUIAccuracy
   layers:
   - Default
   - TransparentFX
