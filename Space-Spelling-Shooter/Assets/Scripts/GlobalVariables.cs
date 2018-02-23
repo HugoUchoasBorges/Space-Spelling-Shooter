@@ -80,6 +80,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
 
     // Enemies
     public static float inputImpulse = 2f;
+    public static float minInputImpulse = 0.2f;
     public static float inputRotation = 0f;
     public static Color enemyColor = Color.white;
     public static Color targetColor = Color.red;

@@ -28,13 +28,18 @@ public class EnemyMovement : Movement {
 
         base.Start();
 
-        inputImpulse = GlobalVariables.inputImpulse;
+        inputImpulse = GlobalVariables.minInputImpulse;
         inputRotation = GlobalVariables.inputRotation;
 
-        float additionalImpulse = (Mathf.Min(enemy.text.text.Length, 12)) / 6.67f;
+        SetStartSpeed();
+    }
 
-        // Enemy's speed decreases according to the word's length
-        inputImpulse -= additionalImpulse;
+    public void SetStartSpeed()
+    {
+        float additionalImpulse = (inputImpulse - GlobalVariables.minInputImpulse) / Mathf.Min(enemy.text.text.Length, 12);
+
+        // Enemy's speed increases according to the word's length
+        inputImpulse += additionalImpulse;
     }
 
     public void SetStartPositionDirection()
