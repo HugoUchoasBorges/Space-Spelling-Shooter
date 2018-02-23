@@ -31,11 +31,23 @@ public class EnemyMovement : Movement {
     protected void SetStartPositionDirection()
     {
         transform.Rotate(Vector3.forward, Random.Range(0.0f, 360.0f));
-        transform.position = 
-            new Vector3(
+        Vector3 position = new Vector3
+            (
                 Random.Range(EdgeGenerator.bottomLeftCorner.x, EdgeGenerator.bottomRightCorner.x),
                 Random.Range(EdgeGenerator.bottomRightCorner.y, EdgeGenerator.upperRightCorner.y),
-                0);
+                0
+            );
+
+        if (Random.value < 0.25f)
+            position.x = EdgeGenerator.bottomLeftCorner.x;
+        else if (Random.value < 0.5f)
+            position.x = EdgeGenerator.bottomRightCorner.x;
+        else if (Random.value < 0.75f)
+            position.y = EdgeGenerator.bottomRightCorner.y;
+        else
+            position.y = EdgeGenerator.upperRightCorner.y;
+
+        transform.position = position;
     }
 
     // Update is called once per frame
