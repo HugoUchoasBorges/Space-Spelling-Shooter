@@ -677,7 +677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b69367f595a680749a84f6d2fbe29ea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &1954177640
+--- !u!1001 &1819114569
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -800,16 +800,6 @@ Prefab:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114738843131842684, guid: 1afbd7876b020fc4eb5329aed2e507ef,
-        type: 2}
-      propertyPath: m_isInputParsingRequired
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114267769769163352, guid: 1afbd7876b020fc4eb5329aed2e507ef,
-        type: 2}
-      propertyPath: m_havePropertiesChanged
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114267769769163352, guid: 1afbd7876b020fc4eb5329aed2e507ef,
         type: 2}
       propertyPath: m_isInputParsingRequired
       value: 1

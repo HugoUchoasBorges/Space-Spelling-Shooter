@@ -194,15 +194,37 @@ public class GameManager : MonoBehaviour {
         GlobalVariables.averageAccuracy = 0f;
         GlobalVariables.averageWPM = 0f;
         GlobalVariables.DefeatedEnemiesCount = 0;
+        GlobalVariables.playerIsActive = true;
     }
 
     //shows objects with ShowOnDeath tag
     public static void ShowGameOver()
     {
+        HideGUI();
+
         foreach (GameObject g in deathObjects)
         {
             g.SetActive(true);
         }
+        WaveManager.UpdateGlobalStatistics();
+        RefreshDeathGUI();
+    }
+
+    public static void RefreshDeathGUI()
+    {
+        Text wave = GameObject.FindGameObjectWithTag("GUIWave").GetComponent<Text>();
+        Text score = GameObject.FindGameObjectWithTag("GUIPontos").GetComponent<Text>();
+        Text defeated = GameObject.FindGameObjectWithTag("GUIDerrotados").GetComponent<Text>();
+        Text wpm = GameObject.FindGameObjectWithTag("GUIWPM").GetComponent<Text>();
+        Text accuracy = GameObject.FindGameObjectWithTag("GUIAccuracy").GetComponent<Text>();
+
+        wave.text = WaveManager.Wave.ToString();
+        score.text = GlobalVariables.ScoreCount.ToString();
+        defeated.text = GlobalVariables.DefeatedEnemiesCount.ToString();
+
+        wpm.text = GlobalVariables.averageWPM.ToString();
+        accuracy.text = ((int)GlobalVariables.averageAccuracy).ToString() + "%";
+        
     }
 
     //hides objects with ShowOnDeath tag
