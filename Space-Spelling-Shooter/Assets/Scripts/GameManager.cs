@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour {
 
     // WaveManager
     public static WaveManager manageWaves;
+    public static GameObject[] waveTransitionObjects;
 
     // Use this for initialization
     void Start()
@@ -52,6 +53,8 @@ public class GameManager : MonoBehaviour {
         HideGUI();
 
         manageWaves = gameObject.AddComponent<WaveManager>();
+        waveTransitionObjects = GameObject.FindGameObjectsWithTag("ShowOnWaveTransition");
+        HideWaveTransition();
 
         StartGame();
     }
@@ -128,6 +131,45 @@ public class GameManager : MonoBehaviour {
         {
             g.SetActive(true);
         }
+    }
+
+    //hides objects with ShowOnWaveTransition tag
+    public static void HideWaveTransition()
+    {
+        foreach (GameObject g in waveTransitionObjects)
+        {
+            g.SetActive(false);
+        }
+    }
+
+    //shows objects with ShowOnWaveTransition tag
+    public static void ShowWaveTransition()
+    {
+        HideGUI();
+
+        foreach (GameObject g in waveTransitionObjects)
+        {
+            g.SetActive(true);
+        }
+
+        RefreshWaveTransition();
+
+        ShowGUI();
+    }
+
+    public static void RefreshWaveTransition()
+    {
+        Text wave = GameObject.FindGameObjectWithTag("GUIWave").GetComponent<Text>();
+        Text score = GameObject.FindGameObjectWithTag("GUIPontos").GetComponent<Text>();
+        Text defeated = GameObject.FindGameObjectWithTag("GUIDerrotados").GetComponent<Text>();
+        Text wpm = GameObject.FindGameObjectWithTag("GUIWPM").GetComponent<Text>();
+        Text accuracy = GameObject.FindGameObjectWithTag("GUIAccuracy").GetComponent<Text>();
+
+        wave.text = WaveManager.Wave.ToString();
+        score.text = WaveManager.score[WaveManager.Wave - 1].ToString();
+        defeated.text = WaveManager.defeatedEnemies[WaveManager.Wave - 1].ToString();
+        wpm.text = WaveManager.wpm[WaveManager.Wave - 1].ToString();
+        accuracy.text = ((int)WaveManager.accuracy[WaveManager.Wave - 1]).ToString() + "%";
     }
 
     public static void DestroyEnemy(GameObject enemy, char firstChar)
