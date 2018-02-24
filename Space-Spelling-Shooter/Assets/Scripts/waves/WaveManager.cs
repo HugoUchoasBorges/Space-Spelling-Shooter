@@ -265,6 +265,7 @@ public class WaveManager : MonoBehaviour {
     private static IEnumerator WaveTransition(float countdownTime)
     {
         GameManager.PauseGame();
+        GameManager.HideGUI();
         UpdateGlobalStatistics();
 
         GameManager.ShowWaveTransition();
@@ -278,6 +279,7 @@ public class WaveManager : MonoBehaviour {
         }
 
         GameManager.HideWaveTransition();
+        GameManager.ShowGUI();
         GameManager.ResumeGame();
 
         StartWaves();

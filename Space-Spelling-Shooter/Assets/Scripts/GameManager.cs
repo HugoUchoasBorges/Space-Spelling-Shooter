@@ -145,16 +145,12 @@ public class GameManager : MonoBehaviour {
     //shows objects with ShowOnWaveTransition tag
     public static void ShowWaveTransition()
     {
-        HideGUI();
-
         foreach (GameObject g in waveTransitionObjects)
         {
             g.SetActive(true);
         }
 
         RefreshWaveTransition();
-
-        ShowGUI();
     }
 
     public static void RefreshWaveTransition()
