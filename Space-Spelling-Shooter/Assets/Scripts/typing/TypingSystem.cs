@@ -80,6 +80,7 @@ public class TypingSystem : MonoBehaviour {
             {
                 WaveManager.AddTypedLetter(true);
                 player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key);
+                player.Shoot();
             }
             else
             {

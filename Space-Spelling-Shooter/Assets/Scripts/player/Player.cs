@@ -1,7 +1,11 @@
-﻿public class Player : GameCharacter {
+﻿using UnityEngine;
+
+public class Player : GameCharacter {
 
     public TypingSystem typingSystem;
     public PlayerMovement movement;
+
+    GameObject playerBullet;
 
     private static int lifes;
     public static int Lifes
@@ -28,5 +32,11 @@
         InitializesAudios(GlobalVariables.audio_player);
 
         PlayAudio(GlobalVariables.ENUM_AUDIO.game_start);
+    }
+
+    public void Shoot()
+    {
+        GameObject playerBullet = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.playerBullet]);
+        playerBullet.transform.position = transform.position;
     }
 }
