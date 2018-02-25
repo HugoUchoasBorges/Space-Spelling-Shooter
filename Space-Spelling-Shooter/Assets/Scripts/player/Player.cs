@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class Player : GameCharacter {
 
     public TypingSystem typingSystem;
     public PlayerMovement movement;
 
-    GameObject playerBullet;
+    public BulletController bulletController;
 
     private static int lifes;
     public static int Lifes
@@ -34,9 +36,10 @@ public class Player : GameCharacter {
         PlayAudio(GlobalVariables.ENUM_AUDIO.game_start);
     }
 
-    public void Shoot()
+    public void Shoot(Enemy target)
     {
         GameObject playerBullet = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.playerBullet]);
-        playerBullet.transform.position = transform.position;
+        BulletController bulletController = playerBullet.GetComponent<BulletController>();
+        bulletController.target = target;
     }
 }

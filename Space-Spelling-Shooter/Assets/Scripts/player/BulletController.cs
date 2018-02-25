@@ -4,18 +4,36 @@ using UnityEngine;
 
 public class BulletController : MonoBehaviour {
 
-    public static float bulletSpeed = 8f;
-    public static GameObject target;
+    public static float bulletSpeed;
+    public Enemy target;
+
+    public Player player;
+
+    public bool hit;
+
+    void Awake()
+    {
+        player = GameManager.player;
+        player.bulletController = this;
+    }
 
     // Use this for initialization
     void Start () {
-        bulletSpeed = 20f;
-        target = TypingSystem.target;
+
+        bulletSpeed = 15f;
+        hit = false;
+
+        transform.position = player.transform.position;
     }
-	
-	// Update is called once per frame
-	void Update () {
-        
+
+    void OnDestroy()
+    {
+        hit = true;
+    }
+
+    // Update is called once per frame
+    void Update () {
+
         // Get the bullet's current position
         Vector2 position = transform.position;
 
@@ -28,10 +46,7 @@ public class BulletController : MonoBehaviour {
         // update the bullet's position
         transform.position = position;
 
-        // this is the top-right point of the screen
-        Vector2 max = Camera.main.ViewportToWorldPoint(new Vector2(1, 1));
-
-        // if the bullet went outside the screen on the top, then destroy it
+        // if the bullet reaches the target
         if (transform.position == target.transform.position)
         {
             Destroy(gameObject);

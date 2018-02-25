@@ -206,7 +206,7 @@ public class WaveManager : MonoBehaviour {
         typedLettersWPM[1] = typedLetters[Wave - 1];
         typedCorrectLettersWPM[1] = typedCorrectLetters[Wave - 1];
 
-        int deltaTypedLettersWPM = typedLettersWPM[1] - typedLettersWPM[0];
+        //int deltaTypedLettersWPM = typedLettersWPM[1] - typedLettersWPM[0];
         int deltaTypedCorrectLettersWPM = typedCorrectLettersWPM[1] - typedCorrectLettersWPM[0];
 
         //dynamicWPM = 60f * deltaTypedCorrectLettersWPM / (GlobalVariables.averageWordLength * deltaTime);
@@ -247,7 +247,7 @@ public class WaveManager : MonoBehaviour {
         enemiesCount++;
     }
 
-    public static void RemoveEnemy()
+    public static void EnemyDestroyed()
     {
         defeatedEnemies[Wave - 1]++;
         GlobalVariables.DefeatedEnemiesCount++;
@@ -264,6 +264,9 @@ public class WaveManager : MonoBehaviour {
 
     private static IEnumerator WaveTransition(float countdownTime)
     {
+        BulletController bullet = GameManager.player.bulletController;
+        yield return new WaitUntil(() => bullet.hit == true);
+
         GameManager.PauseGame();
         GameManager.HideGUI();
         UpdateGlobalStatistics();
@@ -296,13 +299,19 @@ public class WaveManager : MonoBehaviour {
 
     private static void IncreaseScore()
     {
-        // Aumenta pontuação do jogador
         if(GlobalVariables.playerIsActive == true)
         {
-            score[Wave - 1] += TypingSystem.word.Length * 10;
-            GlobalVariables.ScoreCount += score[Wave - 1];
-        }
+            foreach(Enemy enemy in GameManager.Enemies)
+            {
+                if (enemy.IsTarget())
+                {
+                    score[Wave - 1] += enemy.word.length * 10;
+                    GlobalVariables.ScoreCount += score[Wave - 1];
 
+                    break;
+                }
+            }
+        }
     }
 
     public static void StopWaves()
@@ -322,11 +331,6 @@ public class WaveManager : MonoBehaviour {
             return true;
         return false;
     }
-
-    // Update is called once per frame
-    void Update () {
-
-	}
 
     void FixedUpdate()
     {

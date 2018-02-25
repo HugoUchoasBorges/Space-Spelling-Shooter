@@ -1,24 +1,37 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TypingSystem : MonoBehaviour {
 
-    public static GameObject target = null;
-    private static Text text;
-    public static string word;
     private static Player player;
+    public static List<Enemy> targets;
 
     // Use this for initialization
     void Start () {
         player = gameObject.GetComponent<Player>();
         StartCoroutine(CheckKeys());
-    }
-	
-	// Update is called once per frame
-	void Update () {
 
-	}
+        targets = new List<Enemy>();
+    }
+
+    public static void AddTarget(Enemy enemy)
+    {
+        targets.Add(enemy);
+    }
+
+    public static void RemoveTarget(Enemy enemy)
+    {
+        targets.Remove(enemy);
+    }
+
+    public static Enemy GetLastTarget()
+    {
+        if(targets.Count > 0)
+            return targets[targets.Count - 1];
+        return null;
+    }
 
     private IEnumerator CheckKeys()
     {
@@ -35,7 +48,6 @@ public class TypingSystem : MonoBehaviour {
                 switch (c)
                 {
                     case '\b': // backspace/delete
-                        print("Backspace");
                         player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_space);
                         break;
 
@@ -44,16 +56,62 @@ public class TypingSystem : MonoBehaviour {
                         break;
 
                     case '\r': // return
-                        print("Return");
-                        if (target)
+
+                        foreach(Enemy enemy in targets)
                         {
-                            RemoveTarget();
-                            player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_return);
+                            if (enemy.IsTarget())
+                            {
+                                RestoreTarget(enemy);
+                                UnlockTarget(enemy);
+                                player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_return);
+
+                                break;
+                            }
                         }
+
                         break;
 
                     default:
-                        FindTarget(c);
+                        Enemy target = null;
+
+                        if (GetLastTarget() != null && GetLastTarget().IsTarget())
+                        {
+                            target = GetLastTarget();
+                        }
+                        else
+                        {
+                            target = FindTarget(c);
+
+                            if(target!= null)
+                            {
+                                LockTarget(target);
+                            }
+                        }
+
+                        if(target != null)
+                        {
+
+                            if (target.text.text != null || target.text.text != "")
+                            {
+                                if (CheckLetter(c, target))
+                                {
+                                    WaveManager.AddTypedLetter(true);
+                                    ConsumeLetter(c, target);
+                                    player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key);
+                                }
+                                else
+                                {
+                                    WaveManager.AddTypedLetter();
+                                    player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_lock);
+                                }
+                            }
+                            else
+                            {
+                                WaveManager.AddTypedLetter();
+                                player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_lock);
+                            }
+                        }
+
                         break;
                 }
             }
@@ -62,82 +120,95 @@ public class TypingSystem : MonoBehaviour {
         }
     }
 
-    private void FindTarget(char c)
+    private Enemy FindTarget(char c)
     {
-        if (!target)
+        foreach(Enemy enemy in targets)
         {
-            GameObject target;
-
-            if (target = GameManager.FindTarget(c))
+            if (enemy.IsTarget())
             {
-                LockTarget(target);
+                return enemy;
             }
         }
 
-        if (target)
+        Enemy targetEnemy = null;
+
+        foreach (Enemy enemy in GameManager.Enemies)
         {
-            if (ConsumeLetter(c))
+            if (targets.Contains(enemy))
+                continue;
+
+            if (enemy.text.text.StartsWith("" + c))
             {
-                WaveManager.AddTypedLetter(true);
-                player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key);
-                player.Shoot();
-            }
-            else
-            {
-                WaveManager.AddTypedLetter();
-                player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_lock);
+                targetEnemy = enemy;
+                break;
             }
         }
-        else
-        {
-            WaveManager.AddTypedLetter();
-            player.PlayAudio(GlobalVariables.ENUM_AUDIO.player_key_lock);
-        }
+
+        return targetEnemy;
     }
 
-    private static void LockTarget(GameObject target)
+    public static void LockTarget(Enemy target)
     {
-        TypingSystem.target = target;
-        text = TypingSystem.target.GetComponentInChildren<Text>();
-        word = text.text;
-        text.color = GlobalVariables.targetColor;
+        AddTarget(target);
+        target.SetAsTarget();
+        target.text.color = GlobalVariables.targetColor;
     }
 
-    public static void RemoveTarget()
+    public static void UnlockTarget(Enemy target = null)
     {
-        if (text)
+        if(target == null)
         {
-            text.color = GlobalVariables.enemyColor;
-            text.text = word;
+            target = GetLastTarget();
         }
 
-        target = null;
-        text = null;
-        word = null;
+        RemoveTarget(target);
+        target.SetAsNotTarget();
     }
 
-    private bool ConsumeLetter(char c)
+    public static void RestoreTarget(Enemy enemy = null)
     {
-        Text text = target.GetComponentInChildren<Text>();
-
-        if (text.text[0] == c)
+        if(enemy == null)
         {
-            text.text = text.text.Remove(0, 1);
+            enemy = GetLastTarget();
+        }
+        enemy.text.color = GlobalVariables.enemyColor;
+        enemy.text.text = enemy.word.text;
+    }
 
-            if (text.text == "")
-            {
-                GameManager.DestroyEnemy(target, word[0]);
-                RemoveTarget();
-            }
+    private bool CheckLetter(char c, Enemy target = null)
+    {
+        if(target == null)
+        {
+            target = GetLastTarget();
+        }
+
+        if (target.text.text.StartsWith("" + c))
             return true;
-        }
+        
         return false;
     }
 
-    public static void destroiInimigo(GameObject enemy)
+    private void ConsumeLetter(char c, Enemy target = null)
     {
-        LockTarget(enemy);
-        GameManager.DestroyEnemy(target, word[0]);
-        RemoveTarget();
+        if(target == null)
+        {
+            target = GetLastTarget();
+        }
+
+        player.Shoot(target);
+        target.text.text = target.text.text.Remove(0, 1);
+
+        if (target.text.text == "")
+        {
+            StartCoroutine(GameManager.DestroyEnemy(target));
+
+            WaveManager.EnemyDestroyed();
+
+            GlobalVariables.RemoveUsedChar(target.word.text[0]);
+
+            WaveManager.AddTypedLetter(true);
+
+            UnlockTarget(target);
+        }
     }
 }

@@ -7,8 +7,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
-    private static List<GameObject> enemies;
-    public static List<GameObject> Enemies
+    private static List<Enemy> enemies;
+    public static List<Enemy> Enemies
     {
         get { return enemies; }
         private set
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour {
         // Ignore collisions between enemies
         Physics2D.IgnoreLayerCollision(GlobalVariables.LAYER_INIMIGOS, GlobalVariables.LAYER_INIMIGOS);
 
-        Enemies = new List<GameObject>();
+        Enemies = new List<Enemy>();
 
         WaveManager.StartWaves();
 
@@ -168,30 +168,18 @@ public class GameManager : MonoBehaviour {
         accuracy.text = ((int)WaveManager.accuracy[WaveManager.Wave - 1]).ToString() + "%";
     }
 
-    public static void DestroyEnemy(GameObject enemy, char firstChar)
+    public static IEnumerator DestroyEnemy(Enemy target)
     {
+        BulletController bullet = player.bulletController;
+        yield return new WaitUntil(() => bullet.hit == true);
 
-        WaveManager.RemoveEnemy();
+        Enemies.Remove(target);
 
-        GlobalVariables.RemoveUsedChar(firstChar);
-        Enemies.Remove(enemy);
-        enemy.transform.localScale = Vector3.zero;
-        enemy.GetComponent<CircleCollider2D>().enabled = false;
-        float audioTimeLength = enemy.GetComponent<Enemy>().PlayAudio(GlobalVariables.ENUM_AUDIO.enemy_dying);        
+        target.Hide();
 
-        Destroy(enemy, audioTimeLength);
-    }
+        float audioTimeLength = target.GetComponent<Enemy>().PlayAudio(GlobalVariables.ENUM_AUDIO.enemy_dying);        
 
-    public static GameObject FindTarget(char c)
-    {
-        foreach (GameObject enemy in Enemies)
-        {
-            if (enemy.GetComponentInChildren<Text>().text[0] == c)
-            {
-                return enemy;
-            }
-        }
-        return null;
+        Destroy(target.gameObject, audioTimeLength);
     }
 
     public static IEnumerator SpawnEnemies()
@@ -207,13 +195,12 @@ public class GameManager : MonoBehaviour {
 
             if (WaveManager.AllowNewEnemy())
             {
-                GameObject enemy = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.defaultEnemy]) as GameObject;
+                Enemy enemy = (Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.defaultEnemy]) as GameObject).GetComponent<Enemy>();
 
-                List<GameObject> enemies = Enemies;
+                List<Enemy> enemies = Enemies;
                 enemies.Add(enemy);
 
                 Enemies = enemies;
-
             }
             
         }
