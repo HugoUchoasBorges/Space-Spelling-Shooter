@@ -67,11 +67,24 @@ public class PlayerMovement : Movement {
         // Tells the game the player is deactivated
         GlobalVariables.playerIsActive = false;
 
+        Enemy target = collision.gameObject.GetComponent<Enemy>();
+
         // Remove the locked target
-        TypingSystem.RemoveTarget();
+        TypingSystem.UnlockTarget(target);
 
         // Destroys the collided enemy
-        TypingSystem.destroiInimigo(collision.gameObject);
+        TypingSystem.LockTarget(target);
+        GameManager.DestroyEnemy(target);
+
+        // Restore\Unlock all other Locked Enemies
+        foreach(Enemy enemy in GameManager.Enemies)
+        {
+            if (enemy.IsTarget())
+            {
+                TypingSystem.RestoreTarget(enemy);
+                TypingSystem.UnlockTarget(enemy);
+            }
+        }
 
         Player.Lifes -= 1;
 

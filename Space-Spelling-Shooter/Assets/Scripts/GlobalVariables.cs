@@ -16,6 +16,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
         player_key_space,
         player_key_return,
         enemy_hit,
+        enemy_hit2,
         enemy_dying,
         game_start,
     }
@@ -37,6 +38,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
     public static Dictionary<ENUM_AUDIO, AudioClip> audio_enemy = new Dictionary<ENUM_AUDIO, AudioClip>()
     {
         { ENUM_AUDIO.enemy_hit, Resources.Load<AudioClip>("Audios/inimigos/enemy_hit")},
+        { ENUM_AUDIO.enemy_hit2, Resources.Load<AudioClip>("Audios/inimigos/enemy_hit2")},
         { ENUM_AUDIO.enemy_dying, Resources.Load<AudioClip>("Audios/inimigos/enemy_dying")},
     };
 
@@ -50,6 +52,8 @@ public class GlobalVariables : Singleton<GlobalVariables> {
         spaceship2Player,
         spaceship3Player,
         audioSource,
+        playerBullet,
+        projectile,
     }
     public static Dictionary<ENUM_PREFAB, GameObject> prefab_dict = new Dictionary<ENUM_PREFAB, GameObject>(){
         { ENUM_PREFAB.canvas, Resources.Load<GameObject>("Prefabs/inimigos/Canvas") },
@@ -59,6 +63,8 @@ public class GlobalVariables : Singleton<GlobalVariables> {
         { ENUM_PREFAB.spaceship2Player, Resources.Load<GameObject>("Prefabs/player/Ship2Player") },
         { ENUM_PREFAB.spaceship3Player, Resources.Load<GameObject>("Prefabs/player/Ship3Player") },
         { ENUM_PREFAB.audioSource, Resources.Load<GameObject>("Prefabs/audio/AudioSource") },
+        { ENUM_PREFAB.playerBullet, Resources.Load<GameObject>("Prefabs/player/PlayerBullet") },
+        { ENUM_PREFAB.projectile, Resources.Load<GameObject>("Prefabs/player/Projectile") },
     };
 
     // Layers

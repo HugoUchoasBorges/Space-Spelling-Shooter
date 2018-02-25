@@ -12,8 +12,12 @@ public class Enemy : GameCharacter {
 
     protected EnemyMovement movement;
 
+    private bool target;
+
     protected void Spawn()
     {
+        target = false;
+
         // Getting a word
         word = WordGenerator.RequestsWord();
 
@@ -43,6 +47,27 @@ public class Enemy : GameCharacter {
 
         Spawn();
         InitializesAudios(GlobalVariables.audio_enemy);
+    }
+
+    public bool IsTarget()
+    {
+        return target;
+    }
+
+    public void SetAsTarget()
+    {
+        target = true;
+    }
+
+    public void SetAsNotTarget()
+    {
+        target = false;
+    }
+
+    public void Hide()
+    {
+        transform.localScale = Vector3.zero;
+        GetComponent<CircleCollider2D>().enabled = false;
     }
 	
 	// Update is called once per frame
