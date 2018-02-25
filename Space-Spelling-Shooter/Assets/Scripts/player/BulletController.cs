@@ -30,6 +30,7 @@ public class BulletController : MonoBehaviour {
     void OnDestroy()
     {
         hit = true;
+        target.PlayAudio(GlobalVariables.ENUM_AUDIO.enemy_hit);
     }
 
     // Update is called once per frame
