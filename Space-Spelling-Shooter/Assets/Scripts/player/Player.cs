@@ -38,7 +38,7 @@ public class Player : GameCharacter {
 
     public void Shoot(Enemy target)
     {
-        GameObject playerBullet = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.playerBullet]);
+        GameObject playerBullet = Instantiate(GlobalVariables.prefab_dict[GlobalVariables.ENUM_PREFAB.projectile], transform.position, transform.rotation);
         BulletController bulletController = playerBullet.GetComponent<BulletController>();
         bulletController.target = target;
     }

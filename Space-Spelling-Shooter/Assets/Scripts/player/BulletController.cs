@@ -15,6 +15,8 @@ public class BulletController : MonoBehaviour {
     {
         player = GameManager.player;
         player.bulletController = this;
+
+        //GetComponentInChildren<TrailRenderer>().enabled = false;
     }
 
     // Use this for initialization
@@ -23,7 +25,6 @@ public class BulletController : MonoBehaviour {
         bulletSpeed = 15f;
         hit = false;
 
-        transform.position = player.transform.position;
     }
 
     void OnDestroy()

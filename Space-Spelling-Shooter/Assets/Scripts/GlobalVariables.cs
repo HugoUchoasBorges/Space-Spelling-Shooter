@@ -51,6 +51,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
         spaceship3Player,
         audioSource,
         playerBullet,
+        projectile,
     }
     public static Dictionary<ENUM_PREFAB, GameObject> prefab_dict = new Dictionary<ENUM_PREFAB, GameObject>(){
         { ENUM_PREFAB.canvas, Resources.Load<GameObject>("Prefabs/inimigos/Canvas") },
@@ -61,6 +62,7 @@ public class GlobalVariables : Singleton<GlobalVariables> {
         { ENUM_PREFAB.spaceship3Player, Resources.Load<GameObject>("Prefabs/player/Ship3Player") },
         { ENUM_PREFAB.audioSource, Resources.Load<GameObject>("Prefabs/audio/AudioSource") },
         { ENUM_PREFAB.playerBullet, Resources.Load<GameObject>("Prefabs/player/PlayerBullet") },
+        { ENUM_PREFAB.projectile, Resources.Load<GameObject>("Prefabs/player/Projectile") },
     };
 
     // Layers
