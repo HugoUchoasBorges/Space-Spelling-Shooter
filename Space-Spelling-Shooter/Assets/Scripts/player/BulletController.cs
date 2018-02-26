@@ -16,7 +16,7 @@ public class BulletController : MonoBehaviour {
         player = GameManager.player;
         player.bulletController = this;
 
-        //GetComponentInChildren<TrailRenderer>().enabled = false;
+        Physics2D.IgnoreCollision(GetComponentInChildren<Collider2D>(), player.GetComponent<Collider2D>());
     }
 
     // Use this for initialization
@@ -42,14 +42,15 @@ public class BulletController : MonoBehaviour {
         float step = bulletSpeed * Time.deltaTime;
 
         // compute the bullet's new position
+        Rigidbody2D rigidBody2D = target.gameObject.GetComponent<Rigidbody2D>();
         position = new Vector2(position.x, position.y + bulletSpeed * Time.deltaTime);
-        position = Vector2.MoveTowards(transform.position, target.transform.position, step);
+        position = Vector2.MoveTowards(transform.position, rigidBody2D.worldCenterOfMass, step);
 
         // update the bullet's position
         transform.position = position;
 
         // if the bullet reaches the target
-        if (transform.position == target.transform.position)
+        if (new Vector2(transform.position.x, transform.position.y) == rigidBody2D.worldCenterOfMass)
         {
             Destroy(gameObject);
         }
