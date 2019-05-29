@@ -6,8 +6,8 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Variables
 
-    [Range(1f, 20f)] public float speed;
-    [Range(1f, 20f)] public float rotationSlerp;
+    [Range(1f, 20f)] public float speed = 5f;
+    [Range(1f, 20f)] public float rotationSlerp = 7f;
 
     #endregion
 
