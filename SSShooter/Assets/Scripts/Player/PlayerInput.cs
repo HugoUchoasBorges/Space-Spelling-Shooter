@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class PlayerInput : MonoBehaviour
 {
 
     #region Variables
+
+    // Components
+    [HideInInspector]
+    public PlayerMovement playerMovement;
 
     private string input = "";
 
@@ -16,13 +21,13 @@ public class PlayerInput : MonoBehaviour
     private float inputAxisX;
     private float inputAxisY;
 
-    private
-
     #endregion
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    private void Awake()
+    {
+        playerMovement = GetComponent<PlayerMovement>();
+
+        Assert.IsNotNull(playerMovement, "No PlayerMovement script found within the Player.");
     }
 
     public void ReadMovementInput()
@@ -30,29 +35,11 @@ public class PlayerInput : MonoBehaviour
         inputAxisX = Input.GetAxis(inputNameAxisX);
         inputAxisY = Input.GetAxis(inputNameAxisY);
 
+        Vector2 inputAxis = new Vector2(inputAxisX, inputAxisY);
 
-        if (Mathf.Abs(inputAxisX) > 0.2f)
+        if (playerMovement)
         {
-            if (inputAxisX > 0)
-            {
-                Debug.Log(inputNameAxisX);
-            }
-            else if (inputAxisX < 0)
-            {
-                Debug.Log("-" + inputNameAxisX);
-            }
-        }
-
-        if (Mathf.Abs(inputAxisY) > 0.2f)
-        {
-            if (inputAxisY > 0)
-            {
-                Debug.Log(inputNameAxisY);
-            }
-            else if (inputAxisY < 0)
-            {
-                Debug.Log("-" + inputNameAxisY);
-            }
+            playerMovement.Move(inputAxis);
         }
     }
 

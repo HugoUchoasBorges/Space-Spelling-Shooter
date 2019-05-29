@@ -4,15 +4,37 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    #region Variables
 
-    // Update is called once per frame
-    void Update()
+    [Range(1f, 20f)] public float speed;
+    [Range(1f, 20f)] public float rotationSlerp;
+
+    #endregion
+
+    public void Move(Vector2 inputAxis)
     {
-        
+        Vector2 movement = inputAxis;
+
+        // Normalizes the Movement Vector 
+
+        movement = movement.magnitude > 1 ? movement.normalized : movement;
+
+        // Applies speed to the movement
+        movement *= speed;
+
+        // Move the player
+        transform.Translate(movement * Time.deltaTime, Space.World);
+
+        // Rotates the player
+        if (movement.magnitude != 0)
+        {
+            Quaternion angle = Quaternion.Euler(0, 0, Vector3.Angle(Vector3.up, movement));
+            if (movement.x > 0)
+            {
+                angle.z = -angle.z;
+            }
+
+            transform.rotation = Quaternion.Slerp(transform.rotation, angle, rotationSlerp * Time.deltaTime);
+        }
     }
 }
