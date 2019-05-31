@@ -11,7 +11,8 @@ public class ScreenBoundaries : MonoBehaviour
     // Components
     private SpriteRenderer spriteRenderer;
 
-    private Vector2 screenBounds;
+    public static Vector2 screenBounds;
+    public static Vector2 screenBoundsOffset;
     private Vector2 objectDimensions;
 
     #endregion
@@ -31,19 +32,19 @@ public class ScreenBoundaries : MonoBehaviour
         if (spriteRenderer)
         {
             objectDimensions = spriteRenderer.bounds.size;
-            screenBounds.x += 0.3f * objectDimensions.x;
-            screenBounds.y += 0.3f * objectDimensions.y;
+            screenBoundsOffset.x = 0.3f * objectDimensions.x;
+            screenBoundsOffset.y = 0.3f * objectDimensions.y;
         }
     }
 
-    private void limitMovement()
+    private void LimitMovement()
     {
         Vector3 objectPos = transform.position;
 
-        if (Mathf.Abs(objectPos.x) > screenBounds.x)
+        if (Mathf.Abs(objectPos.x) > screenBounds.x + screenBoundsOffset.x)
             objectPos.x = -objectPos.x;
 
-        if (Mathf.Abs(objectPos.y) > screenBounds.y)
+        if (Mathf.Abs(objectPos.y) > screenBounds.y + screenBoundsOffset.y)
             objectPos.y = -objectPos.y;
 
         transform.position = objectPos;
@@ -51,6 +52,6 @@ public class ScreenBoundaries : MonoBehaviour
 
     void LateUpdate()
     {
-        limitMovement();
+        LimitMovement();
     }
 }

@@ -188,7 +188,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -860294091
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &102052177
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 259562567}
   - component: {fileID: 259562569}
   - component: {fileID: 259562568}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -599,6 +599,9 @@ GameObject:
   - component: {fileID: 1189158608}
   - component: {fileID: 1189158607}
   - component: {fileID: 1189158609}
+  - component: {fileID: 1189158611}
+  - component: {fileID: 1189158612}
+  - component: {fileID: 1189158610}
   m_Layer: 9
   m_Name: Enemy
   m_TagString: Enemy
@@ -640,8 +643,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 831369449
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: bb2de7499f30db046bef4e2d21b220de, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -683,6 +686,51 @@ MonoBehaviour:
   enemy: {fileID: 11400000, guid: c05c6677c444a3d42bd60e1a2d708dd4, type: 2}
   panel: {fileID: 1895079767}
   text: {fileID: 730367131}
+--- !u!50 &1189158610
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189158606}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1189158611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189158606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0b4bc693b9f408faa160ffb54aad22a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1189158612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1189158606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c7a0bd7cf0e8f54283250b1829d348b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1895079765
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,6 +742,7 @@ GameObject:
   - component: {fileID: 1895079766}
   - component: {fileID: 1895079768}
   - component: {fileID: 1895079767}
+  - component: {fileID: 1895079769}
   m_Layer: 5
   m_Name: EnemyPanel
   m_TagString: Untagged
@@ -718,7 +767,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.16992188, y: -5.909973}
+  m_AnchoredPosition: {x: 0.16992188, y: 0.5}
   m_SizeDelta: {x: -1221.58, y: -648.87}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1895079767
@@ -758,6 +807,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1895079765}
   m_CullTransparentMesh: 0
+--- !u!223 &1895079769
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895079765}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 0
+  m_SortingLayerID: 831369449
+  m_SortingOrder: 1
+  m_TargetDisplay: 0
 --- !u!1001 &4710676140480638949
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -824,6 +894,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4710676140913262340, guid: a2f7750415ac7ab46bae7c65a9d55ae0,
+        type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1225165837
+      objectReference: {fileID: 0}
+    - target: {fileID: 4710676140913262340, guid: a2f7750415ac7ab46bae7c65a9d55ae0,
+        type: 3}
+      propertyPath: m_SortingLayer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2f7750415ac7ab46bae7c65a9d55ae0, type: 3}

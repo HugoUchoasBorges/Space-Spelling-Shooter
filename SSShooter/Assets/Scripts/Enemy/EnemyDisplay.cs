@@ -41,7 +41,10 @@ public class EnemyDisplay : MonoBehaviour
 
     private void SetEnemyScale()
     {
-        transform.localScale = enemy.scale * Vector3.one;
-        panel.rectTransform.localScale = transform.localScale;
+        Transform enemyTransform = transform;
+        
+        enemyTransform.localScale = enemy.scale * Vector3.one;
+        panel.rectTransform.localScale = enemyTransform.localScale;
     }
+    
 }
