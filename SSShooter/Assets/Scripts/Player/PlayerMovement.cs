@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -26,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
         transform.Translate(movement * Time.deltaTime, Space.World);
 
         // Rotates the player
-        if (movement.magnitude != 0)
+        if (Math.Abs(movement.magnitude) > 0.05f)
         {
             Quaternion angle = Quaternion.Euler(0, 0, Vector3.Angle(Vector3.up, movement));
             if (movement.x > 0)

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 public class ScreenBoundaries : MonoBehaviour
@@ -9,31 +7,33 @@ public class ScreenBoundaries : MonoBehaviour
     #region Variables
 
     // Components
-    private SpriteRenderer spriteRenderer;
-
-    public static Vector2 screenBounds;
-    public static Vector2 screenBoundsOffset;
-    private Vector2 objectDimensions;
+    private SpriteRenderer _spriteRenderer;
+    
+    public static Vector2 ScreenBounds;
+    public static Vector2 ScreenBoundsOffset;
+    private Vector2 _objectDimensions;
 
     #endregion
 
     private void Awake()
     {
-        spriteRenderer = transform.GetComponent<SpriteRenderer>();
+        _spriteRenderer = transform.GetComponent<SpriteRenderer>();
 
-        Assert.IsNotNull(spriteRenderer, "The GameObject " + gameObject.name + "must have a SpriteRenderer for the ScreenBoundaries script to work.");
+        Assert.IsNotNull(_spriteRenderer, "The GameObject " + gameObject.name + "must have a SpriteRenderer for the ScreenBoundaries script to work.");
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        if (Camera.main != null)
+            ScreenBounds = Camera.main.ScreenToWorldPoint(
+                new Vector3(Screen.width, Screen.height,Camera.main.transform.position.z));
 
-        if (spriteRenderer)
+        if (_spriteRenderer)
         {
-            objectDimensions = spriteRenderer.bounds.size;
-            screenBoundsOffset.x = 0.3f * objectDimensions.x;
-            screenBoundsOffset.y = 0.3f * objectDimensions.y;
+            _objectDimensions = _spriteRenderer.bounds.size;
+            ScreenBoundsOffset.x = 0.3f * _objectDimensions.x;
+            ScreenBoundsOffset.y = 0.3f * _objectDimensions.y;
         }
     }
 
@@ -41,16 +41,16 @@ public class ScreenBoundaries : MonoBehaviour
     {
         Vector3 objectPos = transform.position;
 
-        if (Mathf.Abs(objectPos.x) > screenBounds.x + screenBoundsOffset.x)
+        if (Mathf.Abs(objectPos.x) > ScreenBounds.x + ScreenBoundsOffset.x)
             objectPos.x = -objectPos.x;
 
-        if (Mathf.Abs(objectPos.y) > screenBounds.y + screenBoundsOffset.y)
+        if (Mathf.Abs(objectPos.y) > ScreenBounds.y + ScreenBoundsOffset.y)
             objectPos.y = -objectPos.y;
 
         transform.position = objectPos;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         LimitMovement();
     }

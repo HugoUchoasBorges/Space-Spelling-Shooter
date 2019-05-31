@@ -12,14 +12,14 @@ public class PlayerInput : MonoBehaviour
     [HideInInspector]
     public PlayerMovement playerMovement;
 
-    private string input = "";
+    private string _input = "";
 
     // Movement Button Names
     public string inputNameAxisX = "Horizontal";
     public string inputNameAxisY = "Vertical";
 
-    private float inputAxisX;
-    private float inputAxisY;
+    private float _inputAxisX;
+    private float _inputAxisY;
 
     #endregion
 
@@ -30,12 +30,12 @@ public class PlayerInput : MonoBehaviour
         Assert.IsNotNull(playerMovement, "No PlayerMovement script found within the Player.");
     }
 
-    public void ReadMovementInput()
+    private void ReadMovementInput()
     {
-        inputAxisX = Input.GetAxis(inputNameAxisX);
-        inputAxisY = Input.GetAxis(inputNameAxisY);
+        _inputAxisX = Input.GetAxis(inputNameAxisX);
+        _inputAxisY = Input.GetAxis(inputNameAxisY);
 
-        Vector2 inputAxis = new Vector2(inputAxisX, inputAxisY);
+        Vector2 inputAxis = new Vector2(_inputAxisX, _inputAxisY);
 
         if (playerMovement)
         {
@@ -43,15 +43,15 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
-    public void ReadTypingInput()
+    private void ReadTypingInput()
     {
         if (Input.anyKeyDown)
         {
-            input = Input.inputString;
-            if (input == "")
+            _input = Input.inputString;
+            if (_input == "")
                 return;
 
-            Debug.Log("Input: " + input);
+            Debug.Log("Input: " + _input);
         }
     }
 

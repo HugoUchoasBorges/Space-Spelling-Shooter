@@ -25,7 +25,7 @@ public class EnemyDisplay : MonoBehaviour
         Assert.IsNotNull(text, "The Enemy " + gameObject.name + " must have an Canvas Text reference");
     }
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         if (enemy && text && panel)
         {
