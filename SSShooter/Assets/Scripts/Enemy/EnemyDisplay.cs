@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
 
@@ -44,7 +45,8 @@ public class EnemyDisplay : MonoBehaviour
         Transform enemyTransform = transform;
         
         enemyTransform.localScale = enemy.scale * Vector3.one;
-        panel.rectTransform.localScale = enemyTransform.localScale;
+
+        // TODO: Scale Panel
     }
     
 }
