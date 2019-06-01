@@ -69,7 +69,7 @@ public class EnemyMovement : MonoBehaviour
     
     private void LateUpdate()
     {
-        if (_enemyDisplay)
+        if (_enemyDisplay.CheckForRun())
         {
             UpdateCanvasPosition();
         }
