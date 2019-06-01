@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net.Sockets;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -8,7 +9,8 @@ public class PlayerMovement : MonoBehaviour
 
     // Components
     private Rigidbody2D _rigidbody2D;
-    
+    private Camera _camera;
+
     [Space] [Header("Attributes________________")]
     [Range(1f, 20f)] public float speed = 5f;
     
@@ -30,6 +32,26 @@ public class PlayerMovement : MonoBehaviour
         
         Assert.IsNotNull(_rigidbody2D);
     }
+
+    private void Start()
+    {
+        _camera = Camera.main;
+        SetStartPosition();
+    }
+
+    public void SetStartPosition()
+    {
+        Vector3 centerPosition = _camera.ScreenToWorldPoint( 
+            new Vector3(Screen.width/2f, Screen.height/2f, _camera.nearClipPlane) );
+
+        transform.SetPositionAndRotation(centerPosition, Quaternion.identity);
+        
+        if (_rigidbody2D)
+        {
+            _rigidbody2D.velocity = Vector2.zero;
+        }
+    }
+    
 
     #region Move Methods
 
