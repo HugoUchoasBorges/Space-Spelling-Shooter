@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4710676140913262343}
   - component: {fileID: 4710676140913262340}
+  - component: {fileID: 594041441}
+  - component: {fileID: 594041440}
   - component: {fileID: 978014433}
   - component: {fileID: 978014434}
   - component: {fileID: 978014435}
@@ -82,6 +84,58 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &594041441
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710676140913262341}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0.5
+  m_AngularDrag: 1
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!60 &594041440
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710676140913262341}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.85333335, y: 0.85333335}
+    newSize: {x: 1.28, y: 1.28}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.35505182, y: -0.25682163}
+      - {x: -0.0564982, y: -0.068267345}
+      - {x: 0.04576698, y: -0.062995434}
+      - {x: 0.35782972, y: -0.2613821}
+      - {x: 0.05251696, y: 0.28517985}
+      - {x: -0.038242884, y: 0.2915249}
 --- !u!114 &978014433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,6 +150,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   rotationSlerp: 7
+  thrust: 2.5
+  inverseThrust: 1
+  turnThrust: 0.2
 --- !u!114 &978014434
 MonoBehaviour:
   m_ObjectHideFlags: 0

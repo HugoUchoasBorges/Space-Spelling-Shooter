@@ -1,18 +1,61 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class PlayerMovement : MonoBehaviour
 {
     #region Variables
 
+    // Components
+    private Rigidbody2D _rigidbody2D;
+    
+    [Space] [Header("Attributes________________")]
     [Range(1f, 20f)] public float speed = 5f;
+    
+    [Space] [Header("Arcade Style Control________________")]
+    // Arcade Style Control Variables
     [Range(1f, 20f)] public float rotationSlerp = 7f;
+
+    [Space] [Header("Thrust Style Control________________")]
+    // Thrust Style Control Variables
+    [Range(0.5f, 3f)] public float thrust = 2.5f;
+    [Range(0.2f, 1f)] public float inverseThrust = 1f;
+    [Range(0.1f, 0.5f)] public float turnThrust = 0.2f;
 
     #endregion
 
+    private void Awake()
+    {
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+        
+        Assert.IsNotNull(_rigidbody2D);
+    }
+
+    #region Move Methods
+
     public void Move(Vector2 inputAxis)
+    {
+        if(!_rigidbody2D)
+            MoveArcadeStyle(inputAxis);
+        
+        MoveThrustStyle(inputAxis);
+    }
+    
+    private void MoveThrustStyle(Vector2 inputAxis)
+    {
+        Vector2 relativeForce = inputAxis.y * Vector2.up;
+        if (inputAxis.y > 0)
+            relativeForce *= thrust;
+        else 
+            relativeForce *= inverseThrust;
+        
+        _rigidbody2D.AddRelativeForce(relativeForce);
+
+        float torque = -(turnThrust * inputAxis.x);
+        _rigidbody2D.AddTorque(torque);
+    }
+
+    private void MoveArcadeStyle(Vector2 inputAxis)
     {
         Vector2 movement = inputAxis;
 
@@ -38,4 +81,7 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, angle, rotationSlerp * Time.deltaTime);
         }
     }
+
+    #endregion
+    
 }

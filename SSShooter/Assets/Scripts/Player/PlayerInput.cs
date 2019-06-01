@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
@@ -56,9 +57,13 @@ public class PlayerInput : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
+    {
+        ReadTypingInput();
+    }
+
+    private void FixedUpdate()
     {
         ReadMovementInput();
-        ReadTypingInput();
     }
 }
