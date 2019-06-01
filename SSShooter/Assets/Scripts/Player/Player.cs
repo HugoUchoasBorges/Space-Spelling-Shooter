@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Serialization;
 
 
 public class Player : MonoBehaviour
@@ -57,7 +56,13 @@ public class Player : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("GameOver");
-        throw new NotImplementedException();
+#if UNITY_EDITOR
+        // Application.Quit() does not work in the editor so
+        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif
     }
 
     private IEnumerator Respawn()
@@ -65,7 +70,7 @@ public class Player : MonoBehaviour
         GameObject gObject = gameObject;
         
         int oldLayer = gObject.layer;
-        gObject.layer = LayerMask.GetMask();
+        gObject.layer = (int) (Mathf.Log(intangibleLayer.value) / Mathf.Log(2));
         
         Color oldColor = _spriteRenderer.color;
         _spriteRenderer.enabled = false;
