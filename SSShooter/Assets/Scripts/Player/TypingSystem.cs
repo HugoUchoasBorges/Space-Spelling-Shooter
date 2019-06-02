@@ -26,10 +26,24 @@ public class TypingSystem : MonoBehaviour
 
     public void TypeChar(string input)
     {
+        // Return key
+        if (input == "\r")
+        {
+            DeselectEnemy();
+        }
         if (!_selectedEnemy)
             FindEnemy(input);
         
         Shoot(input);
+    }
+
+    public void DeselectEnemy()
+    {
+        if (!_selectedEnemy)
+            return;
+        
+        _selectedEnemy.FillEnemyWord();
+        _selectedEnemy = null;
     }
 
     private void FindEnemy(string input)
@@ -48,10 +62,7 @@ public class TypingSystem : MonoBehaviour
     {
         if (!_selectedEnemy)
             return;
-        
-        // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-        if(_selectedEnemy.ConsumeLetter(input))
-            // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
-            Debug.Log("Shoot: " + input + " at: " + _selectedEnemy.Word);
+
+        _selectedEnemy.ConsumeLetter(input);
     }
 }

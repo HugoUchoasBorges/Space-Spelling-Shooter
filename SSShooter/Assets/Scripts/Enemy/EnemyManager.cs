@@ -29,7 +29,6 @@ public class EnemyManager : MonoBehaviour
 
     public void DestroyEnemy(GameObject enemy)
     {
-        // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
         EnemyDisplay enemyDisplay = enemy.GetComponent<EnemyDisplay>();
         activeEnemies.Remove(enemyDisplay);
         Destroy(enemyDisplay.panel);

@@ -59,7 +59,7 @@ public class EnemyDisplay : MonoBehaviour
 
     #region Initializing Methods
 
-    private void FillEnemyWord()
+    public void FillEnemyWord()
     {
         Word = enemy.word.ToUpper();
         _text.text = Word;
@@ -87,7 +87,6 @@ public class EnemyDisplay : MonoBehaviour
 
         if (Word == "")
         {
-            // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
             EnemyManager.DestroyEnemy(gameObject);
         }
         

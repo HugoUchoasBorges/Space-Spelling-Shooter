@@ -41,10 +41,11 @@ public class PlayerInput : MonoBehaviour
 
         Vector2 inputAxis = new Vector2(_inputAxisX, _inputAxisY);
 
-        if (playerMovement)
-        {
-            playerMovement.Move(inputAxis);
-        }
+        if (!playerMovement)
+            return;
+        
+        playerMovement.Move(inputAxis);
+        
     }
 
     private void ReadTypingInput()

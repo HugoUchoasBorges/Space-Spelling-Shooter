@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     // Components
     private SpriteRenderer _spriteRenderer;
     private PlayerMovement _playerMovement;
+    private TypingSystem _typingSystem;
     
     [Space] [Header("Base Configuration________________")]
     [SerializeField]
@@ -38,9 +39,11 @@ public class Player : MonoBehaviour
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerMovement = GetComponent<PlayerMovement>();
+        _typingSystem = GetComponent<TypingSystem>();
         
         Assert.IsNotNull(_spriteRenderer);
         Assert.IsNotNull(_playerMovement);
+        Assert.IsNotNull(_typingSystem);
     }
 
     public void Death()
@@ -51,6 +54,7 @@ public class Player : MonoBehaviour
             return;
 
         StartCoroutine(Respawn());
+        _typingSystem.DeselectEnemy();
     }
 
     private void GameOver()
