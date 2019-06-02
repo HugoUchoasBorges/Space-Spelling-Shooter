@@ -32,7 +32,7 @@ public class PlayerCollision : MonoBehaviour
             _player.Death();
         }
 
-        EnemyManager enemyManager = enemy.EnemyManager;
+        EnemyManager enemyManager = enemy.enemyManager;
         if (!enemyManager)
             return;
 

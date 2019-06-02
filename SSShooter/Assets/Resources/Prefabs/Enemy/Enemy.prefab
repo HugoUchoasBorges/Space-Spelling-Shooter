@@ -96,7 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7770c3a020be2fb41b977310e9ea7abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 11400000, guid: c05c6677c444a3d42bd60e1a2d708dd4, type: 2}
+  enemy: {fileID: 0}
+  enemyTemplate: {fileID: 11400000, guid: c05c6677c444a3d42bd60e1a2d708dd4, type: 2}
+  enemyManager: {fileID: 0}
+  wordLoader: {fileID: 0}
   panel: {fileID: 4081234545726654006, guid: 073fd284d73884c4b850048c4adf3269, type: 3}
 --- !u!114 &4301561109391634078
 MonoBehaviour:

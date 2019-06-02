@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -8,13 +9,17 @@ public class EnemyManager : MonoBehaviour
     private const string EnemyPath = "Prefabs/Enemy/Enemy";
 
     public List<EnemyDisplay> activeEnemies;
+    [FormerlySerializedAs("EnemiesFrequency")]
+    [SerializeField]
+    [Range(1f, 10f)] 
+    private float enemiesFrequency = 2f;
 
     #endregion
 
     private void Start()
     {
         activeEnemies = new List<EnemyDisplay>();
-        InvokeRepeating(nameof(SpawnEnemy), 2f, 2f);
+        InvokeRepeating(nameof(SpawnEnemy), enemiesFrequency , enemiesFrequency );
     }
 
     private void SpawnEnemy()

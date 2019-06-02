@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Animations;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class EnemyDisplay : MonoBehaviour
 {
@@ -12,9 +9,11 @@ public class EnemyDisplay : MonoBehaviour
 
     // Scriptable Enemy Reference
     public Enemy enemy;
+    public Enemy enemyTemplate;
     
     // Components
-    public EnemyManager EnemyManager;
+    public EnemyManager enemyManager;
+    public WordLoader wordLoader;
 
     [Space]
     [Header("Canvas Components")]
@@ -28,7 +27,14 @@ public class EnemyDisplay : MonoBehaviour
 
     private void Awake()
     {
-        EnemyManager = GetComponentInParent<EnemyManager>();
+        enemyManager = GetComponentInParent<EnemyManager>();
+        wordLoader = GetComponentInParent<WordLoader>();
+        
+        if (enemyTemplate)
+        {
+            enemy = ScriptableObject.CreateInstance<Enemy>().Init(enemyTemplate);
+        }
+        
         _canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
         if (_canvas)
         {
@@ -40,7 +46,9 @@ public class EnemyDisplay : MonoBehaviour
         Assert.IsNotNull(enemy, "The Enemy " + gameObject.name + " must have an EnemyObject reference");
         Assert.IsNotNull(panel, "The Enemy " + gameObject.name + " must have an Canvas Panel reference");
         Assert.IsNotNull(_text, "The Enemy " + gameObject.name + " must have an Canvas Text reference");
-        Assert.IsNotNull(EnemyManager, "The Enemy " + gameObject.name + " must have an EnemyManager reference");
+        Assert.IsNotNull(enemyManager, "The Enemy " + gameObject.name + " must have an EnemyManager reference");
+        Assert.IsNotNull(enemyTemplate, "The Enemy " + gameObject.name + " must have an EnemyTemplate reference");
+        Assert.IsNotNull(wordLoader, "The Enemy " + gameObject.name + " must have an WordLoader reference");
     }
     
     private void Start()
@@ -61,7 +69,7 @@ public class EnemyDisplay : MonoBehaviour
 
     public void FillEnemyWord()
     {
-        Word = enemy.word.ToUpper();
+        Word = enemy.word.text.ToUpper();
         _text.text = Word;
     }
 
@@ -87,7 +95,7 @@ public class EnemyDisplay : MonoBehaviour
 
         if (Word == "")
         {
-            EnemyManager.DestroyEnemy(gameObject);
+            enemyManager.DestroyEnemy(gameObject);
         }
         
         _text.text = Word;
