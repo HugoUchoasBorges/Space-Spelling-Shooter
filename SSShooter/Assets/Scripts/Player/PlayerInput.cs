@@ -12,6 +12,7 @@ public class PlayerInput : MonoBehaviour
     // Components
     [HideInInspector]
     public PlayerMovement playerMovement;
+    private TypingSystem _typingSystem;
 
     private string _input = "";
 
@@ -27,8 +28,10 @@ public class PlayerInput : MonoBehaviour
     private void Awake()
     {
         playerMovement = GetComponent<PlayerMovement>();
+        _typingSystem = GetComponent<TypingSystem>();
 
         Assert.IsNotNull(playerMovement, "No PlayerMovement script found within the Player.");
+        Assert.IsNotNull(_typingSystem, "No TypingSystem script found within the Player.");
     }
 
     private void ReadMovementInput()
@@ -52,7 +55,10 @@ public class PlayerInput : MonoBehaviour
             if (_input == "")
                 return;
 
-            Debug.Log("Input: " + _input);
+            if (!_typingSystem)
+                return;
+
+            _typingSystem.TypeChar(_input.ToUpper());
         }
     }
 

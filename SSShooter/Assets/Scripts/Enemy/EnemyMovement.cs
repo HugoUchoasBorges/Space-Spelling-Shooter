@@ -58,7 +58,7 @@ public class EnemyMovement : MonoBehaviour
                 startImpulse *= _enemyDisplay.enemy.speed;
             }
             _rigidbody2D.AddForce(startImpulse, ForceMode2D.Impulse);
-            _rigidbody2D.AddTorque(Random.Range(0.1f, 0.2f), ForceMode2D.Impulse);
+            _rigidbody2D.AddTorque(Random.Range(-0.1f, 0.1f), ForceMode2D.Impulse);
         }
     }
 

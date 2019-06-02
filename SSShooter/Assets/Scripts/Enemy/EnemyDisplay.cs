@@ -12,6 +12,9 @@ public class EnemyDisplay : MonoBehaviour
 
     // Scriptable Enemy Reference
     public Enemy enemy;
+    
+    // Components
+    public EnemyManager EnemyManager;
 
     [Space]
     [Header("Canvas Components")]
@@ -19,10 +22,13 @@ public class EnemyDisplay : MonoBehaviour
     private Text _text;
     private Canvas _canvas;
 
+    public string Word { get; private set; } = "";
+
     #endregion
 
     private void Awake()
     {
+        EnemyManager = GetComponentInParent<EnemyManager>();
         _canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
         if (_canvas)
         {
@@ -34,8 +40,9 @@ public class EnemyDisplay : MonoBehaviour
         Assert.IsNotNull(enemy, "The Enemy " + gameObject.name + " must have an EnemyObject reference");
         Assert.IsNotNull(panel, "The Enemy " + gameObject.name + " must have an Canvas Panel reference");
         Assert.IsNotNull(_text, "The Enemy " + gameObject.name + " must have an Canvas Text reference");
+        Assert.IsNotNull(EnemyManager, "The Enemy " + gameObject.name + " must have an EnemyManager reference");
     }
-    // Start is called before the first frame update
+    
     private void Start()
     {
         if (CheckForRun())
@@ -50,9 +57,12 @@ public class EnemyDisplay : MonoBehaviour
         return _canvas && enemy && panel && _text;
     }
 
+    #region Initializing Methods
+
     private void FillEnemyWord()
     {
-        _text.text = enemy.word.ToUpper();
+        Word = enemy.word.ToUpper();
+        _text.text = Word;
     }
 
     private void SetEnemyScale()
@@ -63,5 +73,29 @@ public class EnemyDisplay : MonoBehaviour
 
         // TODO: Scale Panel
     }
+
+    #endregion
+
+    #region Action Methods
+
+    public bool ConsumeLetter(string letter)
+    {
+        if (!Word.StartsWith(letter))
+            return false;
+
+        Word = Word.Substring(1);
+
+        if (Word == "")
+        {
+            // ReSharper disable once Unity.PerformanceCriticalCodeInvocation
+            EnemyManager.DestroyEnemy(gameObject);
+        }
+        
+        _text.text = Word;
+        
+        return true;
+    }
+
+    #endregion
     
 }
