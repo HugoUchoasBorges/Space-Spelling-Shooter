@@ -32,7 +32,10 @@ public class EnemyDisplay : MonoBehaviour
         
         if (enemyTemplate)
         {
-            enemy = ScriptableObject.CreateInstance<Enemy>().Init(enemyTemplate);
+            string[] availableLetters = enemyManager.GetAvailableLetters();
+            
+            string letter = availableLetters[Random.Range(0, availableLetters.Length)];
+            enemy = ScriptableObject.CreateInstance<Enemy>().Init(enemyTemplate, letter);
         }
         
         _canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();

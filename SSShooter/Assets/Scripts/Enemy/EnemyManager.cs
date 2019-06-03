@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -24,9 +25,12 @@ public class EnemyManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        if (GetAvailableLetters().Length == 0)
+            return;
+     
         GameObject enemyObject = Resources.Load<GameObject>(EnemyPath);
         GameObject newEnemy = Instantiate(enemyObject, transform);
-
+        
         EnemyDisplay enemyDisplay = newEnemy.GetComponent<EnemyDisplay>();
         if(enemyDisplay)
             activeEnemies.Add(enemyDisplay);
@@ -38,5 +42,19 @@ public class EnemyManager : MonoBehaviour
         activeEnemies.Remove(enemyDisplay);
         Destroy(enemyDisplay.panel);
         Destroy(enemy);
+    }
+
+    
+    public string[] GetAvailableLetters()
+    {
+        string[] allLetters = WordLoader.WordCollection.allLetters;
+        
+        List<string> usingLetters = new List<string>();
+        foreach (EnemyDisplay enemy in activeEnemies)
+        {
+            usingLetters.Add(enemy.enemy.word.text.Substring(0, 1));
+        }
+
+        return allLetters.Where(x=>!usingLetters.ToArray().Contains(x)).ToArray();
     }
 }

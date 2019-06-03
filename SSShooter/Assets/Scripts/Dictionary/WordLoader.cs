@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using UnityEngine;
 
 
@@ -13,7 +10,7 @@ public class WordLoader : MonoBehaviour
     private readonly string _jsonFileName = "wordCollection.json";
     
     // Components
-    private static WordCollection _wordCollection;
+    public static WordCollection WordCollection;
 
     #endregion
 
@@ -52,7 +49,7 @@ public class WordLoader : MonoBehaviour
         GenerateSampleWords();
         using (StreamWriter stream = new StreamWriter(_jsonPath + _jsonFileName))
         {
-            string json = JsonUtility.ToJson(_wordCollection);
+            string json = JsonUtility.ToJson(WordCollection);
 
             stream.Write(json);
         }
@@ -65,7 +62,7 @@ public class WordLoader : MonoBehaviour
         sampleWords[1] = new Word {text = "Amigo"};
         sampleWords[2] = new Word {text = "Americano"};
 
-        _wordCollection = new WordCollection(sampleWords);
+        WordCollection = new WordCollection(sampleWords);
     }
     
     [ContextMenu("Load Words")]
@@ -74,27 +71,11 @@ public class WordLoader : MonoBehaviour
         using (StreamReader stream = new StreamReader(_jsonPath + _jsonFileName))
         {
             string json = stream.ReadToEnd();
-            _wordCollection = JsonUtility.FromJson<WordCollection>(json);
+            WordCollection = JsonUtility.FromJson<WordCollection>(json);
         }
 
-        return _wordCollection != null;
+        return WordCollection != null;
     }
 
     #endregion
-
-    #region Words Handling Methods
-
-    public Word[] GetAllWords()
-    {
-        return _wordCollection.words;
-    }
-
-    public static Word GetRandomWord()
-    {
-        Word[] words = _wordCollection.words;
-        return words[Random.Range(0, words.Length)];
-    }
-
-    #endregion
-    
 }

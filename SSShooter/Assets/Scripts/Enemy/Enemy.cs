@@ -24,12 +24,7 @@ public class Enemy : ScriptableObject
 
     #endregion
 
-    private void OnEnable()
-    {
-//        LoadRandomWord();
-    }
-
-    public Enemy Init(Enemy template)
+    public Enemy Init(Enemy template, string letter="")
     {
         
         // Template initialization
@@ -40,19 +35,14 @@ public class Enemy : ScriptableObject
         speed = template.speed;
         scale = template.scale;
         
-        LoadRandomWord();
+        LoadRandomWord(letter);
         
         return this;
     }
 
-    public Enemy Init(Enemy template, string letter)
+    private void LoadRandomWord(string letter="")
     {
-        throw new NotImplementedException();
-    }
-
-    private void LoadRandomWord()
-    {
-        word = WordLoader.GetRandomWord();
+        word = WordLoader.WordCollection.GetRandomWordWithLetter(letter);
     }
         
 }
