@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 
@@ -11,30 +13,30 @@ public class WordLoader : MonoBehaviour
     private readonly string _jsonFileName = "wordCollection.json";
     
     // Components
-    private Dictionary<string, WordCollection> _wordCollectionDict;
-    public static WordCollection WordCollection;
+    private static WordCollection _wordCollection;
 
     #endregion
 
     private void Awake()
     {
         _jsonPath = Application.dataPath + "/Resources/";
-        if(CreateJsonFile())
+
+        CreateJsonFile("Assets/Resources/", _jsonFileName);
+
+        if (!LoadWords())
             WriteSampleWords();
-        LoadWords();
+
     }
 
     #region JSon Handling Methods
 
-    private bool CreateJsonFile()
+    private void CreateJsonFile(string path, string filename)
     {
-        string path = "Assets/Resources/" + _jsonFileName;
-
-        if (Resources.Load<TextAsset>(_jsonFileName.Replace(".json", "")) != null)
-            return false;
+        if (Resources.Load<TextAsset>(filename.Replace(".json", "")) != null)
+            return;
         
-        string str = "";
-        using (FileStream fs = new FileStream(path, FileMode.Create)){
+        const string str = "";
+        using (FileStream fs = new FileStream(path + filename, FileMode.Create)){
             using (StreamWriter writer = new StreamWriter(fs)){
                 writer.Write(str);
             }
@@ -42,40 +44,40 @@ public class WordLoader : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.AssetDatabase.Refresh ();
 #endif
-
-        return true;
-    }
-
-    [ContextMenu("Load Words")]
-    private void LoadWords()
-    {
-        using (StreamReader stream = new StreamReader(_jsonPath + _jsonFileName))
-        {
-            string json = stream.ReadToEnd();
-            WordCollection = JsonUtility.FromJson<WordCollection>(json);
-        }
     }
 
     [ContextMenu("Write Sample Words")]
     private void WriteSampleWords()
     {
-        GenerateSameWords();
+        GenerateSampleWords();
         using (StreamWriter stream = new StreamWriter(_jsonPath + _jsonFileName))
         {
-            string json = JsonUtility.ToJson(WordCollection);
-            
+            string json = JsonUtility.ToJson(_wordCollection);
+
             stream.Write(json);
         }
     }
 
-    private void GenerateSameWords()
+    private void GenerateSampleWords()
     {
-        Word[] sampleWords = new Word[2];
+        Word[] sampleWords = new Word[3];
         sampleWords[0] = new Word {text = "Inimigo"};
         sampleWords[1] = new Word {text = "Amigo"};
+        sampleWords[2] = new Word {text = "Americano"};
 
-        WordCollection = new WordCollection {words = sampleWords};
+        _wordCollection = new WordCollection(sampleWords);
+    }
+    
+    [ContextMenu("Load Words")]
+    private bool LoadWords()
+    {
+        using (StreamReader stream = new StreamReader(_jsonPath + _jsonFileName))
+        {
+            string json = stream.ReadToEnd();
+            _wordCollection = JsonUtility.FromJson<WordCollection>(json);
+        }
 
+        return _wordCollection != null;
     }
 
     #endregion
@@ -84,12 +86,12 @@ public class WordLoader : MonoBehaviour
 
     public Word[] GetAllWords()
     {
-        return WordCollection.words;
+        return _wordCollection.words;
     }
 
     public static Word GetRandomWord()
     {
-        Word[] words = WordCollection.words;
+        Word[] words = _wordCollection.words;
         return words[Random.Range(0, words.Length)];
     }
 

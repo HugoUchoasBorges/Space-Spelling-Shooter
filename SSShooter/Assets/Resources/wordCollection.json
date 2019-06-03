@@ -1,7 +1,1 @@
-{"words":[
-  {"text":"Inimigo"},
-  {"text":"Meteoro"},
-  {"text":"Pegasus"},
-  {"text":"Ação"},
-  {"text":"Amigo"}
-]}
+{"words":[{"text":"Inimigo"},{"text":"Amigo"},{"text":"Americano"}, {"text":"Ameixa"}],"subCollections":[{"letter":"I","words":[{"text":"Inimigo"}]},{"letter":"A","words":[{"text":"Amigo"},{"text":"Americano"}]}]}

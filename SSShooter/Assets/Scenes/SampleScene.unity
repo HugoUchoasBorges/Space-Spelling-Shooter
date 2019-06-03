@@ -478,7 +478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeEnemies: []
-  enemiesFrequency: 10
+  enemiesFrequency: 2
 --- !u!114 &1208505337
 MonoBehaviour:
   m_ObjectHideFlags: 0
