@@ -21,15 +21,15 @@ public class WordLoader : MonoBehaviour
         CreateJsonFile("Assets/Resources/", _jsonFileName);
 
         if (!LoadWords())
-            WriteSampleWords();
+            WriteToJsonFile();
 
     }
 
     #region JSon Handling Methods
 
-    private void CreateJsonFile(string path, string filename)
+    private void CreateJsonFile(string path, string filename, bool force=false)
     {
-        if (Resources.Load<TextAsset>(filename.Replace(".json", "")) != null)
+        if (force || (Resources.Load<TextAsset>(filename.Replace(".json", "")) != null))
             return;
         
         const string str = "";
@@ -44,9 +44,10 @@ public class WordLoader : MonoBehaviour
     }
 
     [ContextMenu("Write Sample Words")]
-    private void WriteSampleWords()
+    private void WriteToJsonFile(bool sample=true)
     {
-        GenerateSampleWords();
+        if(sample)
+            GenerateSampleWords();
         using (StreamWriter stream = new StreamWriter(_jsonPath + _jsonFileName))
         {
             string json = JsonUtility.ToJson(WordCollection);
@@ -74,7 +75,21 @@ public class WordLoader : MonoBehaviour
             WordCollection = JsonUtility.FromJson<WordCollection>(json);
         }
 
-        return WordCollection != null;
+        if (WordCollection == null)
+            return false;
+
+        int subCollectionWordCount = 0;
+        foreach (WordCollection.SubCollection subCollection in WordCollection.subCollections)
+        {
+            subCollectionWordCount += subCollection.words.Count;
+        }
+
+        if (subCollectionWordCount != WordCollection.words.Length)
+        {
+            WordCollection.FillSubCollections();
+            WriteToJsonFile(false);
+        }
+        return true;
     }
 
     #endregion

@@ -45,7 +45,7 @@ public class WordCollection
         return result;
     }
     
-    private void FillSubCollections()
+    public void FillSubCollections()
     {
         Dictionary<string, List<Word>> mappedWords = new Dictionary<string, List<Word>>();
         List<string> letters = new List<string>();
