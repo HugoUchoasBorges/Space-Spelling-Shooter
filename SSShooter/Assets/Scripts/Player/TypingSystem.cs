@@ -63,6 +63,7 @@ public class TypingSystem : MonoBehaviour
         if (!_selectedEnemy)
             return;
 
+        _selectedEnemy.GetComponent<SpriteRenderer>().color = Color.red;
         _selectedEnemy.ConsumeLetter(input);
     }
 }

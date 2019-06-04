@@ -10,7 +10,7 @@ public class WordLoader : MonoBehaviour
     private readonly string _jsonFileName = "wordCollection.json";
     
     // Components
-    public static WordCollection WordCollection;
+    public WordCollection wordCollection;
 
     #endregion
 
@@ -50,7 +50,7 @@ public class WordLoader : MonoBehaviour
             GenerateSampleWords();
         using (StreamWriter stream = new StreamWriter(_jsonPath + _jsonFileName))
         {
-            string json = JsonUtility.ToJson(WordCollection);
+            string json = JsonUtility.ToJson(wordCollection);
 
             stream.Write(json);
         }
@@ -63,7 +63,7 @@ public class WordLoader : MonoBehaviour
         sampleWords[1] = new Word {text = "Amigo"};
         sampleWords[2] = new Word {text = "Americano"};
 
-        WordCollection = new WordCollection(sampleWords);
+        wordCollection = new WordCollection(sampleWords);
     }
     
     [ContextMenu("Load Words")]
@@ -72,21 +72,21 @@ public class WordLoader : MonoBehaviour
         using (StreamReader stream = new StreamReader(_jsonPath + _jsonFileName))
         {
             string json = stream.ReadToEnd();
-            WordCollection = JsonUtility.FromJson<WordCollection>(json);
+            wordCollection = JsonUtility.FromJson<WordCollection>(json);
         }
 
-        if (WordCollection == null)
+        if (wordCollection == null)
             return false;
 
         int subCollectionWordCount = 0;
-        foreach (WordCollection.SubCollection subCollection in WordCollection.subCollections)
+        foreach (WordCollection.SubCollection subCollection in wordCollection.subCollections)
         {
             subCollectionWordCount += subCollection.words.Count;
         }
 
-        if (subCollectionWordCount != WordCollection.words.Length)
+        if (subCollectionWordCount != wordCollection.words.Length)
         {
-            WordCollection.FillSubCollections();
+            wordCollection.FillSubCollections();
             WriteToJsonFile(false);
         }
         return true;

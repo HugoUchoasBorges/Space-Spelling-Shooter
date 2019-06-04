@@ -8,6 +8,9 @@ using Random = UnityEngine.Random;
 public class Enemy : ScriptableObject
 {
     #region Variables
+    
+    // Components
+    private WordLoader _wordLoader;
 
     // Basic Info
     [Header("Basic Info________________")]
@@ -24,7 +27,7 @@ public class Enemy : ScriptableObject
 
     #endregion
 
-    public Enemy Init(Enemy template, string letter="")
+    public Enemy Init(Enemy template, string letter="", WordLoader wordLoader=null)
     {
         
         // Template initialization
@@ -34,6 +37,8 @@ public class Enemy : ScriptableObject
 
         speed = template.speed;
         scale = template.scale;
+
+        _wordLoader = wordLoader;
         
         LoadRandomWord(letter);
         
@@ -42,7 +47,8 @@ public class Enemy : ScriptableObject
 
     private void LoadRandomWord(string letter="")
     {
-        word = WordLoader.WordCollection.GetRandomWordWithLetter(letter);
+        if (_wordLoader != null) 
+            word = _wordLoader.wordCollection.GetRandomWordWithLetter(letter);
     }
         
 }

@@ -1,11 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 
 public class EnemyManager : MonoBehaviour
 {
     #region Variables
+    
+    // Components
+    private WordLoader _wordLoader;
 
     private const string EnemyPath = "Prefabs/Enemy/Enemy";
 
@@ -17,6 +21,13 @@ public class EnemyManager : MonoBehaviour
 
     #endregion
 
+    private void Awake()
+    {
+        _wordLoader = GetComponent<WordLoader>();
+        
+        Assert.IsNotNull(_wordLoader);
+    }
+
     private void Start()
     {
         activeEnemies = new List<EnemyDisplay>();
@@ -25,7 +36,7 @@ public class EnemyManager : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if (GetAvailableLetters().Length == 0)
+        if (!_wordLoader || GetAvailableLetters().Length == 0)
             return;
      
         GameObject enemyObject = Resources.Load<GameObject>(EnemyPath);
@@ -46,8 +57,8 @@ public class EnemyManager : MonoBehaviour
 
     
     public string[] GetAvailableLetters()
-    {
-        string[] allLetters = WordLoader.WordCollection.allLetters;
+    {   
+        string[] allLetters = _wordLoader.wordCollection.allLetters;
         
         List<string> usingLetters = new List<string>();
         foreach (EnemyDisplay enemy in activeEnemies)
