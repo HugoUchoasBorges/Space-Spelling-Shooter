@@ -6,19 +6,21 @@ public class WordLoader : MonoBehaviour
 {
     #region Variables
 
-    private string _jsonPath = "";
-    private readonly string _jsonFileName = "wordCollection.json";
-    
+//    private string _jsonPath = "";
+    private const string JsonFileName = "wordCollection";
+
     // Components
     public WordCollection wordCollection;
+    
+    [HideInInspector] public TextAsset textAsset;
 
     #endregion
 
     private void Awake()
     {
-        _jsonPath = Application.dataPath + "/Resources/";
-
-        CreateJsonFile("Assets/Resources/", _jsonFileName);
+//        _jsonPath = Application.dataPath + "/Resources/";
+//
+//        CreateJsonFile("Assets/Resources/", JsonFileName);
 
         if (!LoadWords())
             WriteToJsonFile();
@@ -48,12 +50,17 @@ public class WordLoader : MonoBehaviour
     {
         if(sample)
             GenerateSampleWords();
-        using (StreamWriter stream = new StreamWriter(_jsonPath + _jsonFileName))
-        {
-            string json = JsonUtility.ToJson(wordCollection);
 
-            stream.Write(json);
-        }
+        string json = JsonUtility.ToJson(wordCollection);
+
+        textAsset = new TextAsset(json);
+        
+//        using (StreamWriter stream = new StreamWriter(_jsonPath + JsonFileName))
+//        {
+//            string json = JsonUtility.ToJson(wordCollection);
+//
+//            stream.Write(json);
+//        }
     }
 
     private void GenerateSampleWords()
@@ -69,11 +76,14 @@ public class WordLoader : MonoBehaviour
     [ContextMenu("Load Words")]
     private bool LoadWords()
     {
-        using (StreamReader stream = new StreamReader(_jsonPath + _jsonFileName))
-        {
-            string json = stream.ReadToEnd();
-            wordCollection = JsonUtility.FromJson<WordCollection>(json);
-        }
+        textAsset = Resources.Load<TextAsset>(JsonFileName);
+        wordCollection = JsonUtility.FromJson<WordCollection>(textAsset.text);
+            
+//        using (StreamReader stream = new StreamReader(_jsonPath + JsonFileName))
+//        {
+//            string json = stream.ReadToEnd();
+//            wordCollection = JsonUtility.FromJson<WordCollection>(json);
+//        }
 
         if (wordCollection == null)
             return false;
