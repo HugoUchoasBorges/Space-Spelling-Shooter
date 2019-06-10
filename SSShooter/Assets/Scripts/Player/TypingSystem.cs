@@ -10,6 +10,8 @@ public class TypingSystem : MonoBehaviour
     private EnemyManager _enemyManager;
     private EnemyDisplay _selectedEnemy;
 
+    private Color _enemyOldColor;
+
     #endregion
 
     private void Awake()
@@ -43,6 +45,7 @@ public class TypingSystem : MonoBehaviour
             return;
         
         _selectedEnemy.FillEnemyWord();
+        _selectedEnemy.GetComponent<SpriteRenderer>().color = _enemyOldColor;
         _selectedEnemy = null;
     }
 
@@ -56,6 +59,10 @@ public class TypingSystem : MonoBehaviour
             return;
 
         _selectedEnemy = foundEnemies[0];
+        SpriteRenderer enemySpriteRenderer = _selectedEnemy.GetComponent<SpriteRenderer>();
+
+        _enemyOldColor = enemySpriteRenderer.color;
+        enemySpriteRenderer.color = Color.red;
     }
 
     private void Shoot(string input)
@@ -63,7 +70,6 @@ public class TypingSystem : MonoBehaviour
         if (!_selectedEnemy)
             return;
 
-        _selectedEnemy.GetComponent<SpriteRenderer>().color = Color.red;
         _selectedEnemy.ConsumeLetter(input);
     }
 }
