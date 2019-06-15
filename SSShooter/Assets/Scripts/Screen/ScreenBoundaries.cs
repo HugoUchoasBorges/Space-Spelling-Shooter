@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 
+
 public class ScreenBoundaries : MonoBehaviour
 {
 
@@ -32,8 +33,8 @@ public class ScreenBoundaries : MonoBehaviour
         if (_spriteRenderer)
         {
             _objectDimensions = _spriteRenderer.bounds.size;
-            ScreenBoundsOffset.x = 0.3f * _objectDimensions.x;
-            ScreenBoundsOffset.y = 0.3f * _objectDimensions.y;
+            ScreenBoundsOffset.x = 1 * _objectDimensions.x / 2f;
+            ScreenBoundsOffset.y = 1 * _objectDimensions.y / 2f;
         }
     }
 
@@ -41,15 +42,17 @@ public class ScreenBoundaries : MonoBehaviour
     {
         Vector3 objectPos = transform.position;
 
-        if (Mathf.Abs(objectPos.x) > ScreenBounds.x + ScreenBoundsOffset.x)
-            objectPos.x = -objectPos.x;
+        float absPosX = Mathf.Abs(objectPos.x);
+        if (absPosX >= ScreenBounds.x + ScreenBoundsOffset.x)
+            objectPos.x = objectPos.x * (0.1f*ScreenBoundsOffset.x / absPosX - 1);
 
-        if (Mathf.Abs(objectPos.y) > ScreenBounds.y + ScreenBoundsOffset.y)
-            objectPos.y = -objectPos.y;
+        float absPosY = Mathf.Abs(objectPos.y);
+        if (absPosY >= ScreenBounds.y + ScreenBoundsOffset.y)
+            objectPos.y = objectPos.y * (0.1f*ScreenBoundsOffset.y / absPosY - 1);
 
         transform.position = objectPos;
     }
-
+    
     private void LateUpdate()
     {
         LimitMovement();
