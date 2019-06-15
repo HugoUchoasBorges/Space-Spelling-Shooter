@@ -11,7 +11,6 @@ public class EnemyManager : MonoBehaviour
     
     // Components
     private WordLoader _wordLoader;
-    private GameObject _mainCanvas;
     private GuiController _guiController;
 
     private const string EnemyPath = "Prefabs/Enemy/Enemy";
@@ -38,12 +37,8 @@ public class EnemyManager : MonoBehaviour
     private void Awake()
     {
         _wordLoader = GetComponent<WordLoader>();
-        _mainCanvas = GameObject.FindGameObjectWithTag("Canvas");
-        _guiController = _mainCanvas.GetComponent<GuiController>();
-        
+
         Assert.IsNotNull(_wordLoader);
-        Assert.IsNotNull(_mainCanvas);
-        Assert.IsNotNull(_guiController);
     }
 
     private void Start()
@@ -53,6 +48,10 @@ public class EnemyManager : MonoBehaviour
         totalEnemiesDefeated = 0;
         totalPointsObtained = 0;
         totalCharsTyped = 0;
+        
+        _guiController = GlobalVariables.GuiController;
+        Assert.IsNotNull(_guiController);
+        
         UpdateGuiInfoEnemyManager();
             
         InvokeRepeating(nameof(SpawnEnemy), enemiesFrequency , enemiesFrequency );

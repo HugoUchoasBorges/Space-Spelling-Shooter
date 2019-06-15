@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     private PlayerMovement _playerMovement;
     private TypingSystem _typingSystem;
     private GuiController _guiController;
-    private GameObject _mainCanvas;
 
     [Space] [Header("Base Configuration________________")]
     [SerializeField]
@@ -44,16 +43,18 @@ public class Player : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerMovement = GetComponent<PlayerMovement>();
         _typingSystem = GetComponent<TypingSystem>();
-        _mainCanvas = GameObject.FindGameObjectWithTag("Canvas");
-        _guiController = _mainCanvas.GetComponent<GuiController>();
-
-        UpdateGuiInfoPlayer();
 
         Assert.IsNotNull(_spriteRenderer);
         Assert.IsNotNull(_playerMovement);
         Assert.IsNotNull(_typingSystem);
+    }
+
+    private void Start()
+    {
+        _guiController = GlobalVariables.GuiController;
         Assert.IsNotNull(_guiController);
-        Assert.IsNotNull(_mainCanvas);
+
+        UpdateGuiInfoPlayer();
     }
 
     public void Death()

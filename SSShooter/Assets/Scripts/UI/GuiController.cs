@@ -18,6 +18,8 @@ public class GuiController : MonoBehaviour
 
     private void Awake()
     {
+        GlobalVariables.GuiController = this;
+        
         Assert.IsNotNull(livesValue);
         Assert.IsNotNull(pointsValue);
         Assert.IsNotNull(enemiesDefeatedValue);
