@@ -17,6 +17,7 @@ public class Enemy : ScriptableObject
     public new string name = "Enemy";
     [TextArea] public string description;
     public Sprite sprite;
+    
 
     // Attributes
     [Space]
@@ -41,8 +42,20 @@ public class Enemy : ScriptableObject
         _wordLoader = wordLoader;
         
         LoadRandomWord(letter);
-        
+
         return this;
+    }
+
+    public int CalculatePontuation()
+    {
+        int points = word.text.Length;
+
+        return points;
+    }
+
+    public int GetWordLength()
+    {
+        return word.text.Length;
     }
 
     private void LoadRandomWord(string letter="")

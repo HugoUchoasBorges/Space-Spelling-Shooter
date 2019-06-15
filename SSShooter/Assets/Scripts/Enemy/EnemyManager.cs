@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -10,27 +11,50 @@ public class EnemyManager : MonoBehaviour
     
     // Components
     private WordLoader _wordLoader;
+    private GameObject _mainCanvas;
+    private GuiController _guiController;
 
     private const string EnemyPath = "Prefabs/Enemy/Enemy";
 
-    public List<EnemyDisplay> activeEnemies;
-    [FormerlySerializedAs("EnemiesFrequency")]
+    // Active Enemies Info
+    [Header("Active Enemies Info________________")]
     [SerializeField]
     [Range(1f, 10f)] 
     private float enemiesFrequency = 2f;
+    public List<EnemyDisplay> activeEnemies;
+    
+    [Space]
+    [Header("Defeated Enemies Info________________")]
+    // Defeated Enemies Info
+    [SerializeField]
+    private List<Enemy> defeatedEnemies;
+
+    [SerializeField] private int totalEnemiesDefeated;
+    [SerializeField] private int totalPointsObtained;
+    [SerializeField] private int totalCharsTyped;
 
     #endregion
 
     private void Awake()
     {
         _wordLoader = GetComponent<WordLoader>();
+        _mainCanvas = GameObject.FindGameObjectWithTag("Canvas");
+        _guiController = _mainCanvas.GetComponent<GuiController>();
         
         Assert.IsNotNull(_wordLoader);
+        Assert.IsNotNull(_mainCanvas);
+        Assert.IsNotNull(_guiController);
     }
 
     private void Start()
     {
         activeEnemies = new List<EnemyDisplay>();
+        defeatedEnemies = new List<Enemy>();
+        totalEnemiesDefeated = 0;
+        totalPointsObtained = 0;
+        totalCharsTyped = 0;
+        UpdateGuiInfoEnemyManager();
+            
         InvokeRepeating(nameof(SpawnEnemy), enemiesFrequency , enemiesFrequency );
     }
 
@@ -47,15 +71,38 @@ public class EnemyManager : MonoBehaviour
             activeEnemies.Add(enemyDisplay);
     }
 
-    public void DestroyEnemy(GameObject enemy)
+    public void DestroyEnemy(GameObject enemyGameObject)
     {
-        EnemyDisplay enemyDisplay = enemy.GetComponent<EnemyDisplay>();
+        EnemyDisplay enemyDisplay = enemyGameObject.GetComponent<EnemyDisplay>();
+        Enemy enemy = enemyDisplay.enemy;
+        
         activeEnemies.Remove(enemyDisplay);
+        defeatedEnemies.Add(enemy);
         Destroy(enemyDisplay.panel);
-        Destroy(enemy);
+        Destroy(enemyGameObject);
+
+        if (!_guiController)
+            return;
+
+        totalEnemiesDefeated += 1;
+        totalPointsObtained += enemy.CalculatePontuation();
+        totalCharsTyped += enemy.GetWordLength();
+
+        UpdateGuiInfoEnemyManager();
     }
 
-    
+    private void UpdateGuiInfoEnemyManager()
+    {
+        if (!_guiController)
+            return;
+        
+        _guiController.UpdateGuiInfo(
+            points:totalPointsObtained.ToString(),
+            enemiesDefeated:totalEnemiesDefeated.ToString(),
+            charsTyped:totalCharsTyped.ToString()
+        );
+    }
+
     public string[] GetAvailableLetters()
     {   
         string[] allLetters = _wordLoader.wordCollection.allLetters;

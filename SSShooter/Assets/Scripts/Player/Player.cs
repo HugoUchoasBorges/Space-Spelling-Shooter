@@ -12,7 +12,9 @@ public class Player : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private PlayerMovement _playerMovement;
     private TypingSystem _typingSystem;
-    
+    private GuiController _guiController;
+    private GameObject _mainCanvas;
+
     [Space] [Header("Base Configuration________________")]
     [SerializeField]
     private int lives = 3;
@@ -22,6 +24,8 @@ public class Player : MonoBehaviour
         set
         {
             lives = Mathf.Max(0, value);
+            UpdateGuiInfoPlayer();
+            
             if (lives == 0)
             {
                 GameOver();
@@ -40,10 +44,16 @@ public class Player : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerMovement = GetComponent<PlayerMovement>();
         _typingSystem = GetComponent<TypingSystem>();
-        
+        _mainCanvas = GameObject.FindGameObjectWithTag("Canvas");
+        _guiController = _mainCanvas.GetComponent<GuiController>();
+
+        UpdateGuiInfoPlayer();
+
         Assert.IsNotNull(_spriteRenderer);
         Assert.IsNotNull(_playerMovement);
         Assert.IsNotNull(_typingSystem);
+        Assert.IsNotNull(_guiController);
+        Assert.IsNotNull(_mainCanvas);
     }
 
     public void Death()
@@ -95,5 +105,13 @@ public class Player : MonoBehaviour
         gObject.layer = oldLayer;
         // ReSharper disable once Unity.InefficientPropertyAccess
         _spriteRenderer.color = oldColor;
+    }
+
+    private void UpdateGuiInfoPlayer()
+    {
+        if (!_guiController)
+            return;
+        
+        _guiController.UpdateGuiInfo(lives:lives.ToString());
     }
 }
