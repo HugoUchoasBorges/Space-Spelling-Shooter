@@ -53,15 +53,6 @@ public class EnemyDisplay : MonoBehaviour
         Assert.IsNotNull(enemyTemplate, "The Enemy " + gameObject.name + " must have an EnemyTemplate reference");
         Assert.IsNotNull(wordLoader, "The Enemy " + gameObject.name + " must have an WordLoader reference");
     }
-    
-    private void Start()
-    {
-        if (CheckForRun())
-        {
-            FillEnemyWord();
-            SetEnemyScale();
-        }
-    }
 
     public bool CheckForRun()
     {
@@ -70,6 +61,15 @@ public class EnemyDisplay : MonoBehaviour
 
     #region Initializing Methods
 
+    public void InitializeEnemy()
+    {
+        if (CheckForRun())
+        {
+            FillEnemyWord();
+            SetEnemyScale();
+        }
+    }
+    
     public void FillEnemyWord()
     {
         Word = enemy.word.text.ToUpper();

@@ -66,8 +66,11 @@ public class EnemyManager : MonoBehaviour
         GameObject newEnemy = Instantiate(enemyObject, transform);
         
         EnemyDisplay enemyDisplay = newEnemy.GetComponent<EnemyDisplay>();
-        if(enemyDisplay)
+        if (enemyDisplay)
+        {
             activeEnemies.Add(enemyDisplay);
+            enemyDisplay.InitializeEnemy();
+        }
     }
 
     public void DestroyEnemy(GameObject enemyGameObject)

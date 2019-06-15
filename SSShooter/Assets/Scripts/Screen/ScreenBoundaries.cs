@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Serialization;
 
 
 public class ScreenBoundaries : MonoBehaviour
@@ -11,7 +12,7 @@ public class ScreenBoundaries : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     
     public static Vector2 ScreenBounds;
-    public static Vector2 ScreenBoundsOffset;
+    public Vector2 screenBoundsOffset;
     private Vector2 _objectDimensions;
 
     #endregion
@@ -33,8 +34,8 @@ public class ScreenBoundaries : MonoBehaviour
         if (_spriteRenderer)
         {
             _objectDimensions = _spriteRenderer.bounds.size;
-            ScreenBoundsOffset.x = 1 * _objectDimensions.x / 2f;
-            ScreenBoundsOffset.y = 1 * _objectDimensions.y / 2f;
+            screenBoundsOffset.x = 1 * _objectDimensions.x / 2f;
+            screenBoundsOffset.y = 1 * _objectDimensions.y / 2f;
         }
     }
 
@@ -43,12 +44,12 @@ public class ScreenBoundaries : MonoBehaviour
         Vector3 objectPos = transform.position;
 
         float absPosX = Mathf.Abs(objectPos.x);
-        if (absPosX >= ScreenBounds.x + ScreenBoundsOffset.x)
-            objectPos.x = objectPos.x * (0.1f*ScreenBoundsOffset.x / absPosX - 1);
+        if (absPosX >= ScreenBounds.x + screenBoundsOffset.x)
+            objectPos.x = objectPos.x * (0.1f*screenBoundsOffset.x / absPosX - 1);
 
         float absPosY = Mathf.Abs(objectPos.y);
-        if (absPosY >= ScreenBounds.y + ScreenBoundsOffset.y)
-            objectPos.y = objectPos.y * (0.1f*ScreenBoundsOffset.y / absPosY - 1);
+        if (absPosY >= ScreenBounds.y + screenBoundsOffset.y)
+            objectPos.y = objectPos.y * (0.1f*screenBoundsOffset.y / absPosY - 1);
 
         transform.position = objectPos;
     }

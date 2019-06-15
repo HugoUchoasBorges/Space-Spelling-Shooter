@@ -10,6 +10,7 @@ public class EnemyMovement : MonoBehaviour
     // Components
     private Rigidbody2D _rigidbody2D;
     private EnemyDisplay _enemyDisplay;
+    private ScreenBoundaries _screenBoundaries;
 
     #endregion
 
@@ -17,9 +18,11 @@ public class EnemyMovement : MonoBehaviour
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _enemyDisplay = GetComponent<EnemyDisplay>();
+        _screenBoundaries = GetComponent<ScreenBoundaries>();
 
         Assert.IsNotNull(_rigidbody2D);
         Assert.IsNotNull(_enemyDisplay);
+        Assert.IsNotNull(_screenBoundaries);
     }
 
     private void Start()
@@ -33,15 +36,41 @@ public class EnemyMovement : MonoBehaviour
 
     private void SetEnemyStartPosition()
     {
-        float rightScreenLimit = ScreenBoundaries.ScreenBounds.x - ScreenBoundaries.ScreenBoundsOffset.x;
+        float rightScreenLimit = ScreenBoundaries.ScreenBounds.x;
         float leftScreenLimit = -rightScreenLimit;
 
-        float topScreenLimit = ScreenBoundaries.ScreenBounds.y - ScreenBoundaries.ScreenBoundsOffset.y;
+        float topScreenLimit = ScreenBoundaries.ScreenBounds.y;
         float bottomScreenLimit = -topScreenLimit;
 
-        Vector2 newPosition = new Vector2(
-            Random.Range(leftScreenLimit, rightScreenLimit),
-            Random.Range(bottomScreenLimit, topScreenLimit));
+        Vector2 newPosition = Vector2.zero;
+            
+        if (_screenBoundaries)
+        {
+            int[] signals = {-1,1};
+            int randomSignal = signals[Random.Range(0, 2)];
+
+            if (Random.value < 0.5f)
+            {
+                newPosition = new Vector2(
+                    randomSignal * (rightScreenLimit + 1.5f * _screenBoundaries.screenBoundsOffset.x),
+                    Random.Range(bottomScreenLimit, topScreenLimit)
+                );   
+            }
+            else
+            {
+                newPosition = new Vector2(
+                    Random.Range(leftScreenLimit, rightScreenLimit),
+                    randomSignal * (topScreenLimit + 1.5f * _screenBoundaries.screenBoundsOffset.y)
+                ); 
+            }
+        }
+        else
+        {
+            newPosition = new Vector2(
+                Random.Range(leftScreenLimit, rightScreenLimit),
+                Random.Range(bottomScreenLimit, topScreenLimit));
+        }
+        
         transform.position = newPosition;
 
     }
