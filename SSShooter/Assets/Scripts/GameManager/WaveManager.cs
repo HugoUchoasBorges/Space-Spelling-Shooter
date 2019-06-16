@@ -38,7 +38,7 @@ public class WaveManager : MonoBehaviour
 
             if (_enemyManager)
             {
-                StartWave();
+                NextWave();
             }
         }
         
@@ -53,14 +53,12 @@ public class WaveManager : MonoBehaviour
 
     private void StartWave()
     {
-        waveNumber++;
-        _guiController.UpdateGuiInfo(wave:waveNumber.ToString());
-
         // Calculates the wave level
         int waveEnemies = waveNumber * 3;
         float waveEnemiesSpawnRate = 2f / waveNumber;
         int maxScreenEnemies = waveNumber * 2;
         
+        // Start invoking enemies
         InvokeEnemies(waveEnemies, waveEnemiesSpawnRate, maxScreenEnemies);
     }
 
@@ -92,10 +90,24 @@ public class WaveManager : MonoBehaviour
     private void StopInvokeEnemy()
     {
         CancelInvoke(nameof(InvokeEnemy));
+        InvokeRepeating(nameof(CheckForEnemiesLeft), 0, 0.5f);
+    }
+
+    private void CheckForEnemiesLeft()
+    {
+        if (_enemyManager.activeEnemies.Count > 0)
+            return;
+
+        CancelInvoke(nameof(CheckForEnemiesLeft));
+        NextWave();
+
     }
 
     private void NextWave()
     {
-        Debug.Log("Next Wave");
+        waveNumber++;
+        _guiController.UpdateGuiInfo(wave:waveNumber.ToString());
+        
+        StartWave();
     }
 }
