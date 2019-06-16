@@ -11,6 +11,7 @@ public class WaveManager : MonoBehaviour
     [SerializeField]
     private int waveNumber;
     private int _enemiesLeftToInvoke;
+    private int _maxEnemiesOnScreen;
     
 
     // Components
@@ -58,21 +59,26 @@ public class WaveManager : MonoBehaviour
         // Calculates the wave level
         int waveEnemies = waveNumber * 3;
         float waveEnemiesSpawnRate = 2f / waveNumber;
+        int maxScreenEnemies = waveNumber * 2;
         
-        InvokeEnemies(waveEnemies, waveEnemiesSpawnRate);
+        InvokeEnemies(waveEnemies, waveEnemiesSpawnRate, maxScreenEnemies);
     }
 
-    private void InvokeEnemies(int enemiesTotal, float repeatRate)
+    private void InvokeEnemies(int enemiesTotal, float repeatRate, int maxEnemiesOnScreen)
     {
         if (!_enemyManager)
             return;
 
+        _maxEnemiesOnScreen = maxEnemiesOnScreen;
         _enemiesLeftToInvoke = enemiesTotal;
         InvokeRepeating(nameof(InvokeEnemy), repeatRate, repeatRate);
     }
 
     private void InvokeEnemy()
     {
+        if (_enemyManager.activeEnemies.Count >= _maxEnemiesOnScreen)
+            return;
+        
         if (!_enemyManager.SpawnEnemy())
             return;
         
