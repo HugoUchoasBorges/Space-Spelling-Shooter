@@ -1,6 +1,6 @@
-using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Assertions;
 
 
@@ -74,9 +74,12 @@ public class Player : MonoBehaviour
 #if UNITY_EDITOR
         // Application.Quit() does not work in the editor so
         // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
-        UnityEditor.EditorApplication.isPlaying = false;
+//        UnityEditor.EditorApplication.isPlaying = false;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+
 #else
-         Application.Quit();
+//         Application.Quit();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
 #endif
     }
 
