@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Serialization;
 
 public class EnemyManager : MonoBehaviour
 {
@@ -38,6 +36,8 @@ public class EnemyManager : MonoBehaviour
     {
         _wordLoader = GetComponent<WordLoader>();
 
+        GlobalVariables.EnemyManager = this;
+
         Assert.IsNotNull(_wordLoader);
     }
 
@@ -58,10 +58,10 @@ public class EnemyManager : MonoBehaviour
             InvokeRepeating(nameof(SpawnEnemy), enemiesFrequency , enemiesFrequency );
     }
 
-    private void SpawnEnemy()
+    public EnemyDisplay SpawnEnemy()
     {
         if (!_wordLoader || GetAvailableLetters().Length == 0)
-            return;
+            return null;
      
         GameObject enemyObject = Resources.Load<GameObject>(EnemyPath);
         GameObject newEnemy = Instantiate(enemyObject, transform);
@@ -71,7 +71,10 @@ public class EnemyManager : MonoBehaviour
         {
             activeEnemies.Add(enemyDisplay);
             enemyDisplay.InitializeEnemy();
+            return enemyDisplay;
         }
+
+        return null;
     }
 
     public void DestroyEnemy(GameObject enemyGameObject)

@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e808350da05e43a49a88295d7e9097be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  waveNumber: 0
 --- !u!4 &366556089
 Transform:
   m_ObjectHideFlags: 0
@@ -353,6 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d1bac384c644d6e82728a1c826aa967, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnEnemies: 0
   enemiesFrequency: 2
   activeEnemies: []
   defeatedEnemies: []

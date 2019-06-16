@@ -37,8 +37,10 @@ public class GlobalVariables : MonoBehaviour
     #endregion
 
     #region Variables
-
+    
+    // Static Components
     public static GuiController GuiController;
+    public static EnemyManager EnemyManager;
 
     #endregion
 }

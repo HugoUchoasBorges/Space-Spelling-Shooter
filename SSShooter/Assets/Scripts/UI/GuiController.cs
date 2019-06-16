@@ -36,7 +36,7 @@ public class GuiController : MonoBehaviour
         Assert.IsNotNull(wavesValue);
     }
 
-    public void UpdateGuiInfo(string lives="", string points="", string enemiesDefeated="", string charsTyped="")
+    public void UpdateGuiInfo(string lives="", string points="", string enemiesDefeated="", string charsTyped="", string wave="")
     {
         if(livesValue)
             livesValue.text = lives!="" ? lives : livesValue.text;
@@ -46,6 +46,8 @@ public class GuiController : MonoBehaviour
             enemiesDefeatedValue.text = enemiesDefeated!="" ? enemiesDefeated : enemiesDefeatedValue.text;
         if(charsTypedValue)
             charsTypedValue.text = charsTyped!="" ? charsTyped : charsTypedValue.text;
+        if(wavesValue)
+            wavesValue.text = wave!="" ? wave : wavesValue.text;
     }
 
 }
