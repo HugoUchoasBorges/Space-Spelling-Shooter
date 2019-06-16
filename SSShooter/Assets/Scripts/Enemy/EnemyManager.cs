@@ -15,16 +15,16 @@ public class EnemyManager : MonoBehaviour
 
     private const string EnemyPath = "Prefabs/Enemy/Enemy";
 
-    // Active Enemies Info
-    [Header("Active Enemies Info________________")]
+    [Header("EnemyController Info________________")]
+    public bool spawnEnemies;
     [SerializeField]
-    [Range(1f, 10f)] 
     private float enemiesFrequency = 2f;
+
+    [Header("Active Enemies Info________________")]
+    [Range(1f, 10f)] 
     public List<EnemyDisplay> activeEnemies;
     
-    [Space]
     [Header("Defeated Enemies Info________________")]
-    // Defeated Enemies Info
     [SerializeField]
     private List<Enemy> defeatedEnemies;
 
@@ -54,7 +54,8 @@ public class EnemyManager : MonoBehaviour
         
         UpdateGuiInfoEnemyManager();
             
-        InvokeRepeating(nameof(SpawnEnemy), enemiesFrequency , enemiesFrequency );
+        if(spawnEnemies) 
+            InvokeRepeating(nameof(SpawnEnemy), enemiesFrequency , enemiesFrequency );
     }
 
     private void SpawnEnemy()
