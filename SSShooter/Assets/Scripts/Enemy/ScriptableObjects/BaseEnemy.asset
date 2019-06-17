@@ -17,5 +17,6 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: bb2de7499f30db046bef4e2d21b220de, type: 3}
   word:
     text: Enemy
-  speed: 0.2
+  speed: 0.4
   scale: 1
+  maxInitialTorque: 0.01

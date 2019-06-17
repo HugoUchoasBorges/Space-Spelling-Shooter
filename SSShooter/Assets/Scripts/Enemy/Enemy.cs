@@ -24,7 +24,8 @@ public class Enemy : ScriptableObject
     [Header("Attributes________________")]
     public Word word;
     public float speed = 1f;
-    [Range(0.5f, 2f)] public float scale = 1f;
+    [Range(0.5f, 2f)] public float scale;
+    [Range(0f, 0.5f)] public float maxInitialTorque;
 
     #endregion
 
@@ -38,6 +39,7 @@ public class Enemy : ScriptableObject
 
         speed = template.speed;
         scale = template.scale;
+        maxInitialTorque = template.maxInitialTorque;
 
         _wordLoader = wordLoader;
         
