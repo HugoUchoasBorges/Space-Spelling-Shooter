@@ -14,28 +14,15 @@ public class Player : MonoBehaviour
     private TypingSystem _typingSystem;
     private GuiController _guiController;
 
-    [Space] [Header("Base Configuration________________")]
+    [Header("Base Configuration________________")]
     [SerializeField]
     private int lives = 3;
-    private int Lives
-    {
-        get => lives;
-        set
-        {
-            lives = Mathf.Max(0, value);
-            UpdateGuiInfoPlayer();
-            
-            if (lives == 0)
-            {
-                GameOver();
-            }
-        } 
-    }
+    
     public Color respawnColor = Color.red;
     [Range(0.5f, 3f)] public float respawnTimeSec = 3f;
     [Range(0.5f, 3f)] public float respawnIntangibleTimeSec = 3f;
     public LayerMask intangibleLayer;
-    
+
     #endregion
 
     private void Awake()
@@ -59,7 +46,13 @@ public class Player : MonoBehaviour
 
     public void Death()
     {
-        Lives--;
+        lives = Mathf.Max(0, lives-1);
+        UpdateGuiInfoPlayer();
+            
+        if (lives == 0)
+        {
+            GameOver();
+        }
 
         if (!_spriteRenderer)
             return;
@@ -71,16 +64,7 @@ public class Player : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("GameOver");
-#if UNITY_EDITOR
-        // Application.Quit() does not work in the editor so
-        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
-//        UnityEditor.EditorApplication.isPlaying = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-
-#else
-//         Application.Quit();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-#endif
     }
 
     private IEnumerator Respawn()
