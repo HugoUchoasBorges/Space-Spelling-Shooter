@@ -49,6 +49,7 @@ public class PlayerMovement : MonoBehaviour
         if (_rigidbody2D)
         {
             _rigidbody2D.velocity = Vector2.zero;
+            _rigidbody2D.angularVelocity = 0f;
         }
     }
     
