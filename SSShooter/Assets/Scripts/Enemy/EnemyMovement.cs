@@ -79,15 +79,18 @@ public class EnemyMovement : MonoBehaviour
     {
         if (_rigidbody2D)
         {
-            Vector2 startImpulse = new Vector2(
-                Random.Range(-1f, 1f), 
-                Random.Range(-1f, 1f)).normalized;
+            Vector3 centerRange = new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
+            Vector2 startImpulse = (centerRange - transform.position).normalized;
+            
             if (_enemyDisplay)
             {
                 startImpulse *= _enemyDisplay.enemy.speed;
             }
+            
             _rigidbody2D.AddForce(startImpulse, ForceMode2D.Impulse);
-            _rigidbody2D.AddTorque(Random.Range(-_enemyDisplay.enemy.maxInitialTorque, _enemyDisplay.enemy.maxInitialTorque), ForceMode2D.Impulse);
+            _rigidbody2D.AddTorque(
+                Random.Range(-_enemyDisplay.enemy.maxInitialTorque, _enemyDisplay.enemy.maxInitialTorque),
+                ForceMode2D.Impulse);
         }
     }
 

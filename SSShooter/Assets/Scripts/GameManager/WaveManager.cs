@@ -80,7 +80,6 @@ public class WaveManager : MonoBehaviour
         if (!_enemyManager.SpawnEnemy())
             return;
         
-        Debug.Log("Spawned");
         _enemiesLeftToInvoke--;
 
         if (_enemiesLeftToInvoke <= 0)
