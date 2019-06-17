@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Assertions;
 
 public class PlayerInput : MonoBehaviour
@@ -13,6 +10,7 @@ public class PlayerInput : MonoBehaviour
     [HideInInspector]
     public PlayerMovement playerMovement;
     private TypingSystem _typingSystem;
+    private Player _player;
 
     private string _input = "";
 
@@ -29,9 +27,11 @@ public class PlayerInput : MonoBehaviour
     {
         playerMovement = GetComponent<PlayerMovement>();
         _typingSystem = GetComponent<TypingSystem>();
+        _player = GetComponent<Player>();
 
         Assert.IsNotNull(playerMovement, "No PlayerMovement script found within the Player.");
         Assert.IsNotNull(_typingSystem, "No TypingSystem script found within the Player.");
+        Assert.IsNotNull(_player, "No Player script found within the Player.");
     }
 
     private void ReadMovementInput()
@@ -50,6 +50,9 @@ public class PlayerInput : MonoBehaviour
 
     private void ReadTypingInput()
     {
+        if (_player && _player.isDead)
+            return;
+        
         if (Input.anyKeyDown)
         {
             _input = Input.inputString;

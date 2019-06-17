@@ -23,6 +23,9 @@ public class Player : MonoBehaviour
     [Range(0.5f, 3f)] public float respawnIntangibleTimeSec = 3f;
     public LayerMask intangibleLayer;
 
+    [Header("Player State Variables__________________")]
+    public bool isDead;
+    
     #endregion
 
     private void Awake()
@@ -46,6 +49,8 @@ public class Player : MonoBehaviour
 
     public void Death()
     {
+        isDead = true;
+        
         lives = Mathf.Max(0, lives-1);
         UpdateGuiInfoPlayer();
             
@@ -93,6 +98,7 @@ public class Player : MonoBehaviour
         gObject.layer = oldLayer;
         // ReSharper disable once Unity.InefficientPropertyAccess
         _spriteRenderer.color = oldColor;
+        isDead = false;
     }
 
     private void UpdateGuiInfoPlayer()
