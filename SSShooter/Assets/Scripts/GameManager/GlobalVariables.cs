@@ -8,6 +8,7 @@ public class GlobalVariables : Singleton<GlobalVariables>
     // Static Components
     public static GuiController GuiController;
     public static EnemyManager EnemyManager;
+    public static Vector2 ScreenBounds;
 
     #endregion
 }

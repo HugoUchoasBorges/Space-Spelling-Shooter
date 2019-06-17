@@ -36,10 +36,10 @@ public class EnemyMovement : MonoBehaviour
 
     private void SetEnemyStartPosition()
     {
-        float rightScreenLimit = ScreenBoundaries.ScreenBounds.x;
+        float rightScreenLimit = GlobalVariables.ScreenBounds.x;
         float leftScreenLimit = -rightScreenLimit;
 
-        float topScreenLimit = ScreenBoundaries.ScreenBounds.y;
+        float topScreenLimit = GlobalVariables.ScreenBounds.y;
         float bottomScreenLimit = -topScreenLimit;
 
         Vector2 newPosition = Vector2.zero;

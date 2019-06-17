@@ -1,14 +1,17 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Singleton<T> : MonoBehaviour where T: MonoBehaviour
 {
     private static T _instance;
 
+    // ReSharper disable once UnusedMember.Global
     public static T Instance
     {
         get
         {
+            if (isQuittingGame)
+                return null;
+            
             if (!_instance)
             {
                 _instance = FindObjectOfType(typeof(T)) as T;
@@ -26,6 +29,7 @@ public class Singleton<T> : MonoBehaviour where T: MonoBehaviour
         }
     }
 
+    // ReSharper disable once StaticMemberInGenericType
     private static bool isQuittingGame;
 
     private void OnDestroy()

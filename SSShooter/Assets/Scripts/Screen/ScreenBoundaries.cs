@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.Serialization;
 
 
 public class ScreenBoundaries : MonoBehaviour
@@ -11,7 +10,7 @@ public class ScreenBoundaries : MonoBehaviour
     // Components
     private SpriteRenderer _spriteRenderer;
     
-    public static Vector2 ScreenBounds;
+    private Vector2 _screenBounds;
     public Vector2 screenBoundsOffset;
     private Vector2 _objectDimensions;
 
@@ -19,6 +18,12 @@ public class ScreenBoundaries : MonoBehaviour
 
     private void Awake()
     {
+        _screenBounds = GlobalVariables.ScreenBounds;
+        
+        if (_screenBounds == Vector2.zero &&  Camera.main != null)
+            _screenBounds = GlobalVariables.ScreenBounds = Camera.main.ScreenToWorldPoint(
+                new Vector3(Screen.width, Screen.height,Camera.main.transform.position.z));
+        
         _spriteRenderer = transform.GetComponent<SpriteRenderer>();
 
         Assert.IsNotNull(_spriteRenderer, "The GameObject " + gameObject.name + "must have a SpriteRenderer for the ScreenBoundaries script to work.");
@@ -27,10 +32,6 @@ public class ScreenBoundaries : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
-        if (Camera.main != null)
-            ScreenBounds = Camera.main.ScreenToWorldPoint(
-                new Vector3(Screen.width, Screen.height,Camera.main.transform.position.z));
-
         if (_spriteRenderer)
         {
             _objectDimensions = _spriteRenderer.bounds.size;
@@ -44,11 +45,11 @@ public class ScreenBoundaries : MonoBehaviour
         Vector3 objectPos = transform.position;
 
         float absPosX = Mathf.Abs(objectPos.x);
-        if (absPosX >= ScreenBounds.x + screenBoundsOffset.x)
+        if (absPosX >= _screenBounds.x + screenBoundsOffset.x)
             objectPos.x = objectPos.x * (0.1f*screenBoundsOffset.x / absPosX - 1);
 
         float absPosY = Mathf.Abs(objectPos.y);
-        if (absPosY >= ScreenBounds.y + screenBoundsOffset.y)
+        if (absPosY >= _screenBounds.y + screenBoundsOffset.y)
             objectPos.y = objectPos.y * (0.1f*screenBoundsOffset.y / absPosY - 1);
 
         transform.position = objectPos;
