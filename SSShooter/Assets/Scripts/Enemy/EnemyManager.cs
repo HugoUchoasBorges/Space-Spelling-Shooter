@@ -70,7 +70,7 @@ public class EnemyManager : MonoBehaviour
         if (enemyDisplay)
         {
             activeEnemies.Add(enemyDisplay);
-            enemyDisplay.InitializeEnemy();
+//            enemyDisplay.InitializeEnemy();
             return enemyDisplay;
         }
 
@@ -110,7 +110,10 @@ public class EnemyManager : MonoBehaviour
     }
 
     public string[] GetAvailableLetters()
-    {   
+    {
+        if (!_wordLoader)
+            return null;
+        
         string[] allLetters = _wordLoader.wordCollection.allLetters;
         
         List<string> usingLetters = new List<string>();

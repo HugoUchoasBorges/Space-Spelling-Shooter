@@ -84,26 +84,33 @@ public class EnemyMovement : MonoBehaviour
             
             if (_enemyDisplay)
             {
-                startImpulse *= _enemyDisplay.enemy.speed;
+                if (_enemyDisplay.enemy)
+                    startImpulse *= _enemyDisplay.enemy.speed;
+                else
+                    startImpulse *= 0.1f;
             }
             
             _rigidbody2D.AddForce(startImpulse, ForceMode2D.Impulse);
+            
+            float maxInitialTorque = 0.01f;
+            if (_enemyDisplay.enemy)
+                maxInitialTorque = _enemyDisplay.enemy.maxInitialTorque;
             _rigidbody2D.AddTorque(
-                Random.Range(-_enemyDisplay.enemy.maxInitialTorque, _enemyDisplay.enemy.maxInitialTorque),
+                Random.Range(-maxInitialTorque, maxInitialTorque),
                 ForceMode2D.Impulse);
         }
     }
 
     private void UpdateCanvasPosition()
     {
+        if (!_enemyDisplay || !_enemyDisplay.panel)
+            return;
+        
         _enemyDisplay.panel.transform.position = transform.position;
     }
     
     private void LateUpdate()
     {
-        if (_enemyDisplay.CheckForRun())
-        {
-            UpdateCanvasPosition();
-        }
+        UpdateCanvasPosition();
     }
 }

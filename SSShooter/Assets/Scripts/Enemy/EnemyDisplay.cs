@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class EnemyDisplay : MonoBehaviour
 {
@@ -34,8 +33,11 @@ public class EnemyDisplay : MonoBehaviour
         {
             string[] availableLetters = enemyManager.GetAvailableLetters();
             
-            string letter = availableLetters[Random.Range(0, availableLetters.Length)];
-            enemy = ScriptableObject.CreateInstance<Enemy>().Init(enemyTemplate, letter, wordLoader);
+            if(availableLetters != null)
+            {
+                string letter = availableLetters[Random.Range(0, availableLetters.Length)];
+                enemy = ScriptableObject.CreateInstance<Enemy>().Init(enemyTemplate, letter, wordLoader);
+            }
         }
         
         _canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
@@ -52,6 +54,11 @@ public class EnemyDisplay : MonoBehaviour
         Assert.IsNotNull(enemyManager, "The Enemy " + gameObject.name + " must have an EnemyManager reference");
         Assert.IsNotNull(enemyTemplate, "The Enemy " + gameObject.name + " must have an EnemyTemplate reference");
         Assert.IsNotNull(wordLoader, "The Enemy " + gameObject.name + " must have an WordLoader reference");
+    }
+
+    private void Start()
+    {
+        InitializeEnemy();
     }
 
     public bool CheckForRun()
