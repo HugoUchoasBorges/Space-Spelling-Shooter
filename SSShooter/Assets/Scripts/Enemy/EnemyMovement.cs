@@ -87,7 +87,7 @@ public class EnemyMovement : MonoBehaviour
                 if (_enemyDisplay.enemy)
                     startImpulse *= _enemyDisplay.enemy.speed;
                 else
-                    startImpulse *= 0.1f;
+                    startImpulse *= 0.5f;
             }
             
             _rigidbody2D.AddForce(startImpulse, ForceMode2D.Impulse);

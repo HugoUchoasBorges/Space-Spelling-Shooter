@@ -34,7 +34,7 @@ public class PlayerInput : MonoBehaviour
         Assert.IsNotNull(_player, "No Player script found within the Player.");
     }
 
-    private void ReadMovementInput()
+    private void HandleMovementInput()
     {
         _inputAxisX = Input.GetAxis(inputNameAxisX);
         _inputAxisY = Input.GetAxis(inputNameAxisY);
@@ -48,7 +48,7 @@ public class PlayerInput : MonoBehaviour
         
     }
 
-    private void ReadTypingInput()
+    private void HandleTypingInput()
     {
         if (_player && _player.isDead)
             return;
@@ -69,11 +69,11 @@ public class PlayerInput : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        ReadTypingInput();
+        HandleTypingInput();
     }
 
     private void FixedUpdate()
     {
-        ReadMovementInput();
+        HandleMovementInput();
     }
 }

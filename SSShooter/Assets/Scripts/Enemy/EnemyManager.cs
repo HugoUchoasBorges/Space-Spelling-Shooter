@@ -90,6 +90,9 @@ public class EnemyManager : MonoBehaviour
         if (!_guiController)
             return;
 
+        if (!enemy)
+            return;
+        
         totalEnemiesDefeated += 1;
         totalPointsObtained += enemy.CalculatePontuation();
         totalCharsTyped += enemy.GetWordLength();
