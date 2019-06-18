@@ -89,7 +89,15 @@ public class EnemyDisplay : MonoBehaviour
         
         enemyTransform.localScale = enemy.scale * Vector3.one;
 
-        // TODO: Scale Panel
+        if (panel && enemy)
+        {
+            Image panelImage = panel.GetComponent<Image>();
+            if(panelImage)
+            {
+                panelImage.sprite = enemy.sprite;
+                panelImage.SetNativeSize();
+            }
+        }
     }
 
     #endregion
