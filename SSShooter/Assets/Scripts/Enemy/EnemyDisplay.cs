@@ -11,14 +11,15 @@ public class EnemyDisplay : MonoBehaviour
     public Enemy enemyTemplate;
     
     // Components
+    [HideInInspector]
     public EnemyManager enemyManager;
+    [HideInInspector]
     public WordLoader wordLoader;
 
     [Space]
     [Header("Canvas Components")]
-    public GameObject panel;
+    public GameObject canvasPanel;
     private Text _text;
-    private Canvas _canvas;
 
     public string Word { get; private set; } = "";
 
@@ -28,7 +29,18 @@ public class EnemyDisplay : MonoBehaviour
     {
         enemyManager = GetComponentInParent<EnemyManager>();
         wordLoader = GetComponentInParent<WordLoader>();
-        
+
+        _text = canvasPanel.GetComponentInChildren<Text>();
+
+        Assert.IsNotNull(canvasPanel, "The Enemy " + gameObject.name + " must have an Canvas Panel reference");
+        Assert.IsNotNull(_text, "The Enemy " + gameObject.name + " must have an Canvas Text reference");
+        Assert.IsNotNull(enemyManager, "The Enemy " + gameObject.name + " must have an EnemyManager reference");
+        Assert.IsNotNull(enemyTemplate, "The Enemy " + gameObject.name + " must have an EnemyTemplate reference");
+        Assert.IsNotNull(wordLoader, "The Enemy " + gameObject.name + " must have an WordLoader reference");
+    }
+
+    private void Start()
+    {
         if (enemyTemplate)
         {
             string[] availableLetters = enemyManager.GetAvailableLetters();
@@ -40,35 +52,19 @@ public class EnemyDisplay : MonoBehaviour
             }
         }
         
-        _canvas = GameObject.FindGameObjectWithTag("Canvas").GetComponent<Canvas>();
-        if (_canvas)
-        {
-            panel = Instantiate(panel, _canvas.transform);
-            _text = panel.GetComponentInChildren<Text>();
-        }
-
-        Assert.IsNotNull(_canvas);
         Assert.IsNotNull(enemy, "The Enemy " + gameObject.name + " must have an EnemyObject reference");
-        Assert.IsNotNull(panel, "The Enemy " + gameObject.name + " must have an Canvas Panel reference");
-        Assert.IsNotNull(_text, "The Enemy " + gameObject.name + " must have an Canvas Text reference");
-        Assert.IsNotNull(enemyManager, "The Enemy " + gameObject.name + " must have an EnemyManager reference");
-        Assert.IsNotNull(enemyTemplate, "The Enemy " + gameObject.name + " must have an EnemyTemplate reference");
-        Assert.IsNotNull(wordLoader, "The Enemy " + gameObject.name + " must have an WordLoader reference");
-    }
 
-    private void Start()
-    {
         InitializeEnemy();
     }
 
-    public bool CheckForRun()
+    private bool CheckForRun()
     {
-        return _canvas && enemy && panel && _text;
+        return enemy && canvasPanel && _text;
     }
 
     #region Initializing Methods
 
-    public void InitializeEnemy()
+    private void InitializeEnemy()
     {
         if (CheckForRun())
         {
@@ -89,9 +85,9 @@ public class EnemyDisplay : MonoBehaviour
         
         enemyTransform.localScale = enemy.scale * Vector3.one;
 
-        if (panel && enemy)
+        if (canvasPanel && enemy)
         {
-            Image panelImage = panel.GetComponent<Image>();
+            Image panelImage = canvasPanel.GetComponent<Image>();
             if(panelImage)
             {
                 panelImage.sprite = enemy.sprite;

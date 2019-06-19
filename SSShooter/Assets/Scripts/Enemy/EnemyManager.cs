@@ -84,7 +84,7 @@ public class EnemyManager : MonoBehaviour
         
         activeEnemies.Remove(enemyDisplay);
         defeatedEnemies.Add(enemy);
-        Destroy(enemyDisplay.panel);
+        Destroy(enemyDisplay.canvasPanel);
         Destroy(enemyGameObject);
 
         if (!_guiController)
@@ -122,6 +122,9 @@ public class EnemyManager : MonoBehaviour
         List<string> usingLetters = new List<string>();
         foreach (EnemyDisplay enemy in activeEnemies)
         {
+            if (!enemy.enemy)
+                continue;
+            
             usingLetters.Add(enemy.enemy.word.text.Substring(0, 1));
         }
 

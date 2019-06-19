@@ -103,10 +103,10 @@ public class EnemyMovement : MonoBehaviour
 
     private void UpdateCanvasPosition()
     {
-        if (!_enemyDisplay || !_enemyDisplay.panel)
+        if (!_enemyDisplay || !_enemyDisplay.canvasPanel)
             return;
         
-        _enemyDisplay.panel.transform.position = transform.position;
+        _enemyDisplay.canvasPanel.transform.position = transform.position;
     }
     
     private void LateUpdate()

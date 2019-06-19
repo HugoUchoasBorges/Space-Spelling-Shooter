@@ -25,19 +25,15 @@ public class ScreenBoundaries : MonoBehaviour
                 new Vector3(Screen.width, Screen.height,Camera.main.transform.position.z));
         
         _spriteRenderer = transform.GetComponent<SpriteRenderer>();
-
-        Assert.IsNotNull(_spriteRenderer, "The GameObject " + gameObject.name + "must have a SpriteRenderer for the ScreenBoundaries script to work.");
-    }
-
-    // Start is called before the first frame update
-    private void Start()
-    {
+        
         if (_spriteRenderer)
         {
             _objectDimensions = _spriteRenderer.bounds.size;
             screenBoundsOffset.x = 1 * _objectDimensions.x / 2f;
             screenBoundsOffset.y = 1 * _objectDimensions.y / 2f;
         }
+
+        Assert.IsNotNull(_spriteRenderer, "The GameObject " + gameObject.name + "must have a SpriteRenderer for the ScreenBoundaries script to work.");
     }
 
     private void LimitMovement()
