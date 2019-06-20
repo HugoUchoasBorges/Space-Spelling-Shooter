@@ -26,17 +26,18 @@ public class TypingSystem : MonoBehaviour
         Assert.IsNotNull(_enemyManager, "No EnemyManager GameObject found in this Scene");
     }
 
-    public void TypeChar(string input)
+    public EnemyDisplay TypeChar(string input)
     {
         // Return key
         if (input == "\r")
         {
             DeselectEnemy();
+            return null;
         }
         if (!_selectedEnemy)
             FindEnemy(input);
         
-        Shoot(input);
+        return Shoot(input);
     }
 
     public void DeselectEnemy()
@@ -65,11 +66,12 @@ public class TypingSystem : MonoBehaviour
         enemySpriteRenderer.color = Color.red;
     }
 
-    private void Shoot(string input)
+    private EnemyDisplay Shoot(string input)
     {
         if (!_selectedEnemy)
-            return;
+            return null;
 
         _selectedEnemy.ConsumeLetter(input);
+        return _selectedEnemy;
     }
 }

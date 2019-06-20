@@ -11,6 +11,7 @@ public class PlayerInput : MonoBehaviour
     public PlayerMovement playerMovement;
     private TypingSystem _typingSystem;
     private Player _player;
+    private PlayerWeapon _playerWeapon;
 
     private string _input = "";
 
@@ -28,10 +29,12 @@ public class PlayerInput : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         _typingSystem = GetComponent<TypingSystem>();
         _player = GetComponent<Player>();
+        _playerWeapon = GetComponent<PlayerWeapon>();
 
         Assert.IsNotNull(playerMovement, "No PlayerMovement script found within the Player.");
         Assert.IsNotNull(_typingSystem, "No TypingSystem script found within the Player.");
         Assert.IsNotNull(_player, "No Player script found within the Player.");
+        Assert.IsNotNull(_player, "No PlayerWeapon script found within the Player.");
     }
 
     private void HandleMovementInput()
@@ -62,7 +65,9 @@ public class PlayerInput : MonoBehaviour
             if (!_typingSystem)
                 return;
 
-            _typingSystem.TypeChar(_input.ToUpper());
+            EnemyDisplay enemyTarget = _typingSystem.TypeChar(_input.ToUpper());
+            if (enemyTarget && _playerWeapon)
+                _playerWeapon.Shoot(enemyTarget.transform);
         }
     }
 

@@ -77,15 +77,13 @@ public class EnemyManager : MonoBehaviour
         return null;
     }
 
-    public void DestroyEnemy(GameObject enemyGameObject)
+    public void RemoveEnemy(GameObject enemyGameObject)
     {
         EnemyDisplay enemyDisplay = enemyGameObject.GetComponent<EnemyDisplay>();
         Enemy enemy = enemyDisplay.enemy;
         
         activeEnemies.Remove(enemyDisplay);
         defeatedEnemies.Add(enemy);
-        Destroy(enemyDisplay.canvasPanel);
-        Destroy(enemyGameObject);
 
         if (!_guiController)
             return;
@@ -98,6 +96,13 @@ public class EnemyManager : MonoBehaviour
         totalCharsTyped += enemy.GetWordLength();
 
         UpdateGuiInfoEnemyManager();
+    }
+    
+    public void DestroyEnemy(GameObject enemyGameObject)
+    {
+        EnemyDisplay enemyDisplay = enemyGameObject.GetComponent<EnemyDisplay>();
+        Destroy(enemyDisplay.canvasPanel);
+        Destroy(enemyGameObject);
     }
 
     private void UpdateGuiInfoEnemyManager()

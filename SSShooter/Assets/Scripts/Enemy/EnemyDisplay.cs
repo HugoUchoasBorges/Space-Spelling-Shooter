@@ -117,9 +117,7 @@ public class EnemyDisplay : MonoBehaviour
         }
 
         if (Word == "")
-        {
-            enemyManager.DestroyEnemy(gameObject);
-        }
+            enemyManager.RemoveEnemy(gameObject);
         
         _text.text = Word;
         

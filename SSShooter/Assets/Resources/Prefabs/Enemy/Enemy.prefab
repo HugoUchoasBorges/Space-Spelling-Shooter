@@ -579,9 +579,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e3c6d65263119d42ab6f2887bb7e7c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  updateSpeedSeconds: 0.4
   healthBarImage: {fileID: 899636830}
+  updateSpeedSeconds: 0.2
+  fullHealth: {r: 0, g: 1, b: 0, a: 1}
+  midHealth: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  lowHealth: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &4301561109391634051
 GameObject:
   m_ObjectHideFlags: 0

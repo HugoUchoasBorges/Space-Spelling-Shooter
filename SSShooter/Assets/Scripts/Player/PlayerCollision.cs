@@ -36,6 +36,7 @@ public class PlayerCollision : MonoBehaviour
         if (!enemyManager)
             return;
 
+        enemyManager.RemoveEnemy(enemy.gameObject);
         enemyManager.DestroyEnemy(enemy.gameObject);
     }
 }
