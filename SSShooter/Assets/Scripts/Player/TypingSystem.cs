@@ -47,6 +47,7 @@ public class TypingSystem : MonoBehaviour
         
         _selectedEnemy.FillEnemyWord();
         _selectedEnemy.GetComponent<SpriteRenderer>().color = _enemyOldColor;
+        _selectedEnemy.gameObject.layer = LayerMask.NameToLayer(GlobalVariables.ENEMY_LAYER);
         _selectedEnemy = null;
     }
 
@@ -60,6 +61,8 @@ public class TypingSystem : MonoBehaviour
             return;
 
         _selectedEnemy = foundEnemies[0];
+        _selectedEnemy.gameObject.layer = LayerMask.NameToLayer(GlobalVariables.SELECTED_ENEMY_LAYER);
+        
         SpriteRenderer enemySpriteRenderer = _selectedEnemy.GetComponent<SpriteRenderer>();
 
         _enemyOldColor = enemySpriteRenderer.color;
