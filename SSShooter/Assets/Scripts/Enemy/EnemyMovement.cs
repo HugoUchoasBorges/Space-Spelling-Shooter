@@ -1,7 +1,5 @@
-using System;
 using UnityEngine;
 using UnityEngine.Assertions;
-using Random = UnityEngine.Random;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -42,7 +40,7 @@ public class EnemyMovement : MonoBehaviour
         float topScreenLimit = GlobalVariables.ScreenBounds.y;
         float bottomScreenLimit = -topScreenLimit;
 
-        Vector2 newPosition = Vector2.zero;
+        Vector2 newPosition;
             
         if (_screenBoundaries)
         {
@@ -99,18 +97,5 @@ public class EnemyMovement : MonoBehaviour
                 Random.Range(-maxInitialTorque, maxInitialTorque),
                 ForceMode2D.Impulse);
         }
-    }
-
-    private void UpdateCanvasPosition()
-    {
-        if (!_enemyDisplay || !_enemyDisplay.canvasPanel)
-            return;
-        
-        _enemyDisplay.canvasPanel.transform.position = transform.position;
-    }
-    
-    private void LateUpdate()
-    {
-        UpdateCanvasPosition();
     }
 }
