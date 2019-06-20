@@ -19,6 +19,7 @@ public class EnemyDisplay : MonoBehaviour
     [Space]
     [Header("Canvas Components")]
     public GameObject canvasPanel;
+    public HealthBar healthBar;
     private Text _text;
 
     public string Word { get; private set; } = "";
@@ -32,11 +33,12 @@ public class EnemyDisplay : MonoBehaviour
 
         _text = canvasPanel.GetComponentInChildren<Text>();
 
-        Assert.IsNotNull(canvasPanel, "The Enemy " + gameObject.name + " must have an Canvas Panel reference");
-        Assert.IsNotNull(_text, "The Enemy " + gameObject.name + " must have an Canvas Text reference");
-        Assert.IsNotNull(enemyManager, "The Enemy " + gameObject.name + " must have an EnemyManager reference");
-        Assert.IsNotNull(enemyTemplate, "The Enemy " + gameObject.name + " must have an EnemyTemplate reference");
-        Assert.IsNotNull(wordLoader, "The Enemy " + gameObject.name + " must have an WordLoader reference");
+        Assert.IsNotNull(healthBar, "The Enemy don't seem to have a HealthBar");
+        Assert.IsNotNull(canvasPanel, "The Enemy must have a Canvas Panel reference");
+        Assert.IsNotNull(_text, "The Enemy must have a Canvas Text reference");
+        Assert.IsNotNull(enemyManager, "The Enemy must have an EnemyManager reference");
+        Assert.IsNotNull(enemyTemplate, "The Enemy must have an EnemyTemplate reference");
+        Assert.IsNotNull(wordLoader, "The Enemy must have an WordLoader reference");
     }
 
     private void Start()
@@ -52,7 +54,7 @@ public class EnemyDisplay : MonoBehaviour
             }
         }
         
-        Assert.IsNotNull(enemy, "The Enemy " + gameObject.name + " must have an EnemyObject reference");
+        Assert.IsNotNull(enemy, "The Enemy must have an EnemyObject reference");
 
         InitializeEnemy();
     }
@@ -77,6 +79,8 @@ public class EnemyDisplay : MonoBehaviour
     {
         Word = enemy.word.text.ToUpper();
         _text.text = Word;
+        if (healthBar)
+            healthBar.SetHealthBarAmount(100);
     }
 
     private void SetEnemyScale()
@@ -106,6 +110,11 @@ public class EnemyDisplay : MonoBehaviour
             return false;
 
         Word = Word.Substring(1);
+        if(healthBar)
+        {
+            float healthAmount = Word.Length / (float) enemy.word.text.Length;
+            healthBar.SetHealthBarAmount(healthAmount);
+        }
 
         if (Word == "")
         {
