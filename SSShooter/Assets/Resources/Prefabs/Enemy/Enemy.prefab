@@ -30,7 +30,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1602871895}
-  - {fileID: 2113995167}
   m_Father: {fileID: 1050959195}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -109,9 +108,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 14.086666}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &740624562
 CanvasRenderer:
@@ -154,7 +153,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ENEMY
+  m_Text: Hugo
 --- !u!1 &899636829
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,6 +425,8 @@ GameObject:
   - component: {fileID: 1602871895}
   - component: {fileID: 1602871897}
   - component: {fileID: 1602871896}
+  - component: {fileID: 8567972960702827677}
+  - component: {fileID: 3883153438720026165}
   m_Layer: 9
   m_Name: TextPanel
   m_TagString: Untagged
@@ -445,13 +446,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 740624560}
+  - {fileID: 2113995167}
   m_Father: {fileID: 504062513}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 15.78}
+  m_AnchoredPosition: {x: 0, y: -6.13}
+  m_SizeDelta: {x: 0, y: 21.13}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &1602871897
 CanvasRenderer:
@@ -490,6 +492,43 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!114 &8567972960702827677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602871894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1741964061, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_HorizontalFit: 2
+  m_VerticalFit: 0
+--- !u!114 &3883153438720026165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602871894}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1297475563, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 4
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 0
 --- !u!1 &2113995166
 GameObject:
   m_ObjectHideFlags: 0
@@ -502,6 +541,7 @@ GameObject:
   - component: {fileID: 2113995169}
   - component: {fileID: 2113995168}
   - component: {fileID: 2113995170}
+  - component: {fileID: 5092222251356750986}
   m_Layer: 9
   m_Name: HealthPanel
   m_TagString: Untagged
@@ -516,19 +556,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113995166}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1153665236}
   - {fileID: 899636832}
-  m_Father: {fileID: 504062513}
+  m_Father: {fileID: 1602871895}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -5.63}
-  m_SizeDelta: {x: 0, y: 5.81}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 7.043333}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &2113995169
 CanvasRenderer:
@@ -584,6 +624,26 @@ MonoBehaviour:
   fullHealth: {r: 0, g: 1, b: 0, a: 1}
   midHealth: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
   lowHealth: {r: 1, g: 0, b: 0, a: 1}
+--- !u!114 &5092222251356750986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113995166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1679637790, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: 50
+  m_PreferredWidth: 50
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &4301561109391634051
 GameObject:
   m_ObjectHideFlags: 0
