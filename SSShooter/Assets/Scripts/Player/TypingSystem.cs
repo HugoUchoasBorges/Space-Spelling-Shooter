@@ -29,12 +29,12 @@ public class TypingSystem : MonoBehaviour
     public EnemyDisplay TypeChar(string input)
     {
         // Return key
-        if (input == "\r")
-        {
-            DeselectEnemy();
-            return null;
-        }
-        if (!_selectedEnemy)
+//        if (input == "\r")
+//        {
+//            DeselectEnemy();
+//            return null;
+//        }
+        if (!_selectedEnemy || _selectedEnemy && _selectedEnemy.Word == "")
             FindEnemy(input);
         
         return Shoot(input);
