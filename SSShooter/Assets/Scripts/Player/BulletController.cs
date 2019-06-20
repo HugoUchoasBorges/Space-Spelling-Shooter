@@ -27,11 +27,15 @@ public class BulletController : MonoBehaviour
         if (!other.gameObject.CompareTag("Enemy"))
             return;
 
-        _toBeDestroyed = true;
         EnemyDisplay enemy = other.gameObject.GetComponent<EnemyDisplay>();
+        _toBeDestroyed = true;
+        StopAllCoroutines();
 
-        if (lastBullet && enemy.Word == "")
+        if (lastBullet)
+        {
             enemy.enemyManager.DestroyEnemy(other.gameObject);
+        }
+        Destroy(gameObject);
     }
 
     public IEnumerator ShootAtTarget(Transform target, float bulletSpeed)
@@ -52,7 +56,5 @@ public class BulletController : MonoBehaviour
                 bulletPosition + bulletSpeed * Time.deltaTime * targetVector.normalized);
             yield return null;
         }
-        
-        Destroy(gameObject);
     }
 }
