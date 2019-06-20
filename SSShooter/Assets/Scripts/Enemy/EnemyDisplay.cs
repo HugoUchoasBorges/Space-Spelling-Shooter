@@ -15,6 +15,7 @@ public class EnemyDisplay : MonoBehaviour
     public EnemyManager enemyManager;
     [HideInInspector]
     public WordLoader wordLoader;
+    private EnemyMovement _enemyMovement;
 
     [Space]
     [Header("Canvas Components")]
@@ -31,6 +32,7 @@ public class EnemyDisplay : MonoBehaviour
         enemyManager = GetComponentInParent<EnemyManager>();
         wordLoader = GetComponentInParent<WordLoader>();
 
+        _enemyMovement = GetComponent<EnemyMovement>();
         _text = canvasPanel.GetComponentInChildren<Text>();
 
         Assert.IsNotNull(healthBar, "The Enemy don't seem to have a HealthBar");
@@ -39,6 +41,7 @@ public class EnemyDisplay : MonoBehaviour
         Assert.IsNotNull(enemyManager, "The Enemy must have an EnemyManager reference");
         Assert.IsNotNull(enemyTemplate, "The Enemy must have an EnemyTemplate reference");
         Assert.IsNotNull(wordLoader, "The Enemy must have an WordLoader reference");
+        Assert.IsNotNull(wordLoader, "The Enemy must have an EnemyMovement reference");
     }
 
     private void Start()
@@ -72,6 +75,9 @@ public class EnemyDisplay : MonoBehaviour
         {
             FillEnemyWord();
             SetEnemyScale();
+            
+            if(_enemyMovement)
+                _enemyMovement.StartEnemyPositionMovement();
         }
     }
     

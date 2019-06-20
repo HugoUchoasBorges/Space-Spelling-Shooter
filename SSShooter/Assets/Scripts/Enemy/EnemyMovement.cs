@@ -23,7 +23,7 @@ public class EnemyMovement : MonoBehaviour
         Assert.IsNotNull(_screenBoundaries);
     }
 
-    private void Start()
+    public void StartEnemyPositionMovement()
     {
         SetEnemyStartPosition();
         if (_rigidbody2D)
