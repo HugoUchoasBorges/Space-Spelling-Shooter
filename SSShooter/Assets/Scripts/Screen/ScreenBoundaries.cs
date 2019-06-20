@@ -19,11 +19,13 @@ public class ScreenBoundaries : MonoBehaviour
     private void Awake()
     {
         _screenBounds = GlobalVariables.ScreenBounds;
+        Camera mainCamera = Camera.main;
         
-        if (_screenBounds == Vector2.zero &&  Camera.main != null)
-            _screenBounds = GlobalVariables.ScreenBounds = Camera.main.ScreenToWorldPoint(
-                new Vector3(Screen.width, Screen.height,Camera.main.transform.position.z));
-        
+        if (_screenBounds == Vector2.zero &&  mainCamera != null)
+        {
+            _screenBounds = GlobalVariables.ScreenBounds =
+                mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
+        }
         _spriteRenderer = transform.GetComponent<SpriteRenderer>();
         
         if (_spriteRenderer)
