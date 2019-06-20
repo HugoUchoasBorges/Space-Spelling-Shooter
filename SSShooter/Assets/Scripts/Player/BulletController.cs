@@ -11,6 +11,7 @@ public class BulletController : MonoBehaviour
     
     // Components
     private Rigidbody2D _rigidbody2D;
+    public bool lastBullet;
     
     #endregion
 
@@ -29,8 +30,7 @@ public class BulletController : MonoBehaviour
         _toBeDestroyed = true;
         EnemyDisplay enemy = other.gameObject.GetComponent<EnemyDisplay>();
 
-        // TODO: Verificar se ainda existem Bullets a atingirem o inimigo
-        if (enemy.Word == "")
+        if (lastBullet && enemy.Word == "")
             enemy.enemyManager.DestroyEnemy(other.gameObject);
     }
 
