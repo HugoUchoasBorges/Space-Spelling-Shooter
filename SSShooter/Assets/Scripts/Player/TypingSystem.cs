@@ -71,7 +71,6 @@ public class TypingSystem : MonoBehaviour
         if (!_selectedEnemy)
             return null;
 
-        _selectedEnemy.ConsumeLetter(input);
-        return _selectedEnemy;
+        return _selectedEnemy.ConsumeLetter(input) ? _selectedEnemy : null;
     }
 }
