@@ -6,6 +6,9 @@ public class BulletController : MonoBehaviour
 {
     #region Variables
 
+    // Control the bullet Destroy
+    private bool _toBeDestroyed;
+    
     // Components
     private Rigidbody2D _rigidbody2D;
     
@@ -22,10 +25,11 @@ public class BulletController : MonoBehaviour
     {
         if (!other.gameObject.CompareTag("Enemy"))
             return;
-        
+
+        _toBeDestroyed = true;
         EnemyDisplay enemy = other.gameObject.GetComponent<EnemyDisplay>();
-        Destroy(gameObject);
-        
+
+        // TODO: Verificar se ainda existem Bullets a atingirem o inimigo
         if (enemy.Word == "")
             enemy.enemyManager.DestroyEnemy(other.gameObject);
     }
@@ -40,7 +44,7 @@ public class BulletController : MonoBehaviour
         Vector2 bulletPosition = transform.position;
         Vector2 targetVector = (Vector2)target.position - bulletPosition;
         
-        while (!_isBeingDestroyed && targetVector.magnitude > enemyRadius)
+        while (!_toBeDestroyed && targetVector.magnitude > enemyRadius)
         {
             bulletPosition = transform.position;
             targetVector = (Vector2)target.position - bulletPosition;
@@ -48,11 +52,7 @@ public class BulletController : MonoBehaviour
                 bulletPosition + bulletSpeed * Time.deltaTime * targetVector.normalized);
             yield return null;
         }
-    }
-
-    private bool _isBeingDestroyed;
-    private void OnDestroy()
-    {
-        _isBeingDestroyed = true;
+        
+        Destroy(gameObject);
     }
 }
