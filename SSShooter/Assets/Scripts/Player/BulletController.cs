@@ -13,6 +13,10 @@ public class BulletController : MonoBehaviour
     private Rigidbody2D _rigidbody2D;
     public bool lastBullet;
     
+    [Header("VFX Prefabs")] 
+    public GameObject muzzlePrefab;
+    public GameObject hitPrefab;
+    
     #endregion
 
     private void Awake()
@@ -22,10 +26,29 @@ public class BulletController : MonoBehaviour
         Assert.IsNotNull(_rigidbody2D, "The Bullet must have a RigidBody2D Component");
     }
 
+    private void Start()
+    {
+        if (muzzlePrefab)
+        {
+            GameObject muzzleVfx = Instantiate(muzzlePrefab, transform.position, Quaternion.identity);
+            muzzleVfx.transform.forward = transform.forward;
+        }
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (!other.gameObject.CompareTag("Enemy"))
             return;
+            
+        if (hitPrefab)
+        {
+            ContactPoint2D contactPoint2D = other.contacts[0];
+            Quaternion rot = Quaternion.FromToRotation(Vector3.up, contactPoint2D.normal);
+            Vector2 pos = contactPoint2D.point;
+            
+            GameObject hitVfx = Instantiate(hitPrefab, pos, rot);
+            hitVfx.transform.forward = transform.forward;
+        }
 
         EnemyDisplay enemy = other.gameObject.GetComponent<EnemyDisplay>();
         _toBeDestroyed = true;
