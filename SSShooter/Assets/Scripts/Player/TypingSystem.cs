@@ -40,6 +40,29 @@ public class TypingSystem : MonoBehaviour
         return Shoot(input);
     }
 
+    private void FindEnemy(string input)
+    {
+        EnemyDisplay[] activeEnemies = _enemyManager.activeEnemies.ToArray();
+        EnemyDisplay[] foundEnemies = Array.FindAll(activeEnemies,
+            enemy => enemy.Word.StartsWith(input));
+
+        if (foundEnemies.Length == 0)
+            return;
+        
+        SelectEnemy(foundEnemies[0]);
+    }
+
+    private void SelectEnemy(EnemyDisplay enemy)
+    {
+        _selectedEnemy = enemy;
+        _selectedEnemy.gameObject.layer = LayerMask.NameToLayer(GlobalVariables.SELECTED_ENEMY_LAYER);
+        
+        SpriteRenderer enemySpriteRenderer = _selectedEnemy.GetComponent<SpriteRenderer>();
+
+        _enemyOldColor = enemySpriteRenderer.color;
+        enemySpriteRenderer.color = Color.red;
+    }
+    
     public void DeselectEnemy()
     {
         if (!_selectedEnemy)
@@ -49,24 +72,6 @@ public class TypingSystem : MonoBehaviour
         _selectedEnemy.GetComponent<SpriteRenderer>().color = _enemyOldColor;
         _selectedEnemy.gameObject.layer = LayerMask.NameToLayer(GlobalVariables.ENEMY_LAYER);
         _selectedEnemy = null;
-    }
-
-    private void FindEnemy(string input)
-    {
-        EnemyDisplay[] activeEnemies = _enemyManager.activeEnemies.ToArray();
-        EnemyDisplay[] foundEnemies = Array.FindAll(activeEnemies,
-            enemy => enemy.Word.StartsWith(input));
-
-        if (foundEnemies.Length == 0)
-            return;
-
-        _selectedEnemy = foundEnemies[0];
-        _selectedEnemy.gameObject.layer = LayerMask.NameToLayer(GlobalVariables.SELECTED_ENEMY_LAYER);
-        
-        SpriteRenderer enemySpriteRenderer = _selectedEnemy.GetComponent<SpriteRenderer>();
-
-        _enemyOldColor = enemySpriteRenderer.color;
-        enemySpriteRenderer.color = Color.red;
     }
 
     private EnemyDisplay Shoot(string input)
