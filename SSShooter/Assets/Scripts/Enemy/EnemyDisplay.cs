@@ -21,7 +21,7 @@ public class EnemyDisplay : MonoBehaviour
     [Header("Canvas Components")]
     public GameObject canvasPanel;
     public HealthBar healthBar;
-    private Text _text;
+    public Text text;
 
     public string Word { get; private set; } = "";
 
@@ -33,11 +33,11 @@ public class EnemyDisplay : MonoBehaviour
         wordLoader = GetComponentInParent<WordLoader>();
 
         _enemyMovement = GetComponent<EnemyMovement>();
-        _text = canvasPanel.GetComponentInChildren<Text>();
+        text = canvasPanel.GetComponentInChildren<Text>();
 
         Assert.IsNotNull(healthBar, "The Enemy don't seem to have a HealthBar");
         Assert.IsNotNull(canvasPanel, "The Enemy must have a Canvas Panel reference");
-        Assert.IsNotNull(_text, "The Enemy must have a Canvas Text reference");
+        Assert.IsNotNull(text, "The Enemy must have a Canvas Text reference");
         Assert.IsNotNull(enemyManager, "The Enemy must have an EnemyManager reference");
         Assert.IsNotNull(enemyTemplate, "The Enemy must have an EnemyTemplate reference");
         Assert.IsNotNull(wordLoader, "The Enemy must have an WordLoader reference");
@@ -64,7 +64,7 @@ public class EnemyDisplay : MonoBehaviour
 
     private bool CheckForRun()
     {
-        return enemy && canvasPanel && _text;
+        return enemy && canvasPanel && text;
     }
 
     #region Initializing Methods
@@ -84,7 +84,7 @@ public class EnemyDisplay : MonoBehaviour
     public void FillEnemyWord()
     {
         Word = enemy.word.text.ToUpper();
-        _text.text = Word;
+        text.text = Word;
         if (healthBar)
             healthBar.SetHealthBarAmount(100);
     }
@@ -125,7 +125,7 @@ public class EnemyDisplay : MonoBehaviour
         if (Word == "")
             enemyManager.RemoveEnemy(gameObject);
         
-        _text.text = Word;
+        text.text = Word;
         
         return true;
     }

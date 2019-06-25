@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 
 public class TypingSystem : MonoBehaviour
 {
@@ -56,11 +57,11 @@ public class TypingSystem : MonoBehaviour
     {
         _selectedEnemy = enemy;
         _selectedEnemy.gameObject.layer = LayerMask.NameToLayer(GlobalVariables.SELECTED_ENEMY_LAYER);
-        
-        SpriteRenderer enemySpriteRenderer = _selectedEnemy.GetComponent<SpriteRenderer>();
 
-        _enemyOldColor = enemySpriteRenderer.color;
-        enemySpriteRenderer.color = Color.red;
+        Text enemyText = _selectedEnemy.text;
+
+        _enemyOldColor = enemyText.color;
+        enemyText.color = Color.red;
     }
     
     public void DeselectEnemy()
@@ -69,7 +70,7 @@ public class TypingSystem : MonoBehaviour
             return;
         
         _selectedEnemy.FillEnemyWord();
-        _selectedEnemy.GetComponent<SpriteRenderer>().color = _enemyOldColor;
+        _selectedEnemy.text.color = _enemyOldColor;
         _selectedEnemy.gameObject.layer = LayerMask.NameToLayer(GlobalVariables.ENEMY_LAYER);
         _selectedEnemy = null;
     }
