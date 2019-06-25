@@ -6,32 +6,25 @@ public class WordLoader : MonoBehaviour
 {
     #region Variables
 
-//    private string _jsonPath = "";
-    private const string JsonFileName = "wordCollection";
-
     // Components
+    public TextAsset wordsJsonFile;
+
     public WordCollection wordCollection;
     
-    [HideInInspector] public TextAsset textAsset;
-
     #endregion
-
+    
     private void Awake()
     {
-//        _jsonPath = Application.dataPath + "/Resources/";
-//
 //        CreateJsonFile("Assets/Resources/", JsonFileName);
-
         if (!LoadWords())
             WriteToJsonFile();
-
     }
 
     #region JSon Handling Methods
 
     private void CreateJsonFile(string path, string filename, bool force=false)
     {
-        if (force || (Resources.Load<TextAsset>(filename.Replace(".json", "")) != null))
+        if (force || Resources.Load<TextAsset>(filename.Replace(".json", "")) != null)
             return;
         
         const string str = "";
@@ -53,7 +46,7 @@ public class WordLoader : MonoBehaviour
 
         string json = JsonUtility.ToJson(wordCollection);
 
-        textAsset = new TextAsset(json);
+        wordsJsonFile = new TextAsset(json);
         
 //        using (StreamWriter stream = new StreamWriter(_jsonPath + JsonFileName))
 //        {
@@ -76,14 +69,10 @@ public class WordLoader : MonoBehaviour
     [ContextMenu("Load Words")]
     private bool LoadWords()
     {
-        textAsset = Resources.Load<TextAsset>(JsonFileName);
-        wordCollection = JsonUtility.FromJson<WordCollection>(textAsset.text);
-            
-//        using (StreamReader stream = new StreamReader(_jsonPath + JsonFileName))
-//        {
-//            string json = stream.ReadToEnd();
-//            wordCollection = JsonUtility.FromJson<WordCollection>(json);
-//        }
+        if (!wordsJsonFile)
+            return false;
+        
+        wordCollection = JsonUtility.FromJson<WordCollection>(wordsJsonFile.text);
 
         if (wordCollection == null)
             return false;

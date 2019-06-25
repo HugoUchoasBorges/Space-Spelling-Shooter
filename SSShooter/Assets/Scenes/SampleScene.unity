@@ -371,7 +371,7 @@ MonoBehaviour:
     words: []
     subCollections: []
     allLetters: []
-  textAsset: {fileID: 0}
+  wordsJsonFile: {fileID: 4900000, guid: 498d0420c41f8c24280177e85ee34005, type: 3}
 --- !u!1001 &4710676140480638949
 PrefabInstance:
   m_ObjectHideFlags: 0
