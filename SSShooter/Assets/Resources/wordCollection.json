@@ -1,13 +1,1 @@
-{"words":[
-{"text":"Amigo"},
-{"text":"Americano"},
-{"text":"Arroz"},
-{"text":"Abacate"},
-{"text":"Banana"},
-{"text":"Boca"},
-{"text":"Cavalo"},
-{"text":"Coca"},
-{"text":"Pudim"},
-{"text":"Panela"},
-{"text":"Pijama"}
-]}
+{"words":[{"text":"Amigo"},{"text":"Americano"},{"text":"Arroz"},{"text":"Abacate"},{"text":"Banana"},{"text":"Boca"},{"text":"Cavalo"},{"text":"Coca"},{"text":"Pudim"},{"text":"Panela"},{"text":"Pijama"}],"subCollections":[{"letter":"A","words":[{"text":"Amigo"},{"text":"Americano"},{"text":"Arroz"},{"text":"Abacate"}]},{"letter":"B","words":[{"text":"Banana"},{"text":"Boca"}]},{"letter":"C","words":[{"text":"Cavalo"},{"text":"Coca"}]},{"letter":"P","words":[{"text":"Pudim"},{"text":"Panela"},{"text":"Pijama"}]}],"allLetters":["A","B","C","P"]}

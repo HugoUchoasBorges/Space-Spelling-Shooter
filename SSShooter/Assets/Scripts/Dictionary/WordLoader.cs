@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -34,7 +35,7 @@ public class WordLoader : MonoBehaviour
             }
         }
 #if UNITY_EDITOR
-        UnityEditor.AssetDatabase.Refresh ();
+        AssetDatabase.Refresh ();
 #endif
     }
 
@@ -44,16 +45,17 @@ public class WordLoader : MonoBehaviour
         if(sample)
             GenerateSampleWords();
 
-        string json = JsonUtility.ToJson(wordCollection);
+        // TODO: Salvar alterações no arquivo fora do editor
 
-        wordsJsonFile = new TextAsset(json);
+#if UNITY_EDITOR
+        string filePath = AssetDatabase.GetAssetPath(wordsJsonFile);
         
-//        using (StreamWriter stream = new StreamWriter(_jsonPath + JsonFileName))
-//        {
-//            string json = JsonUtility.ToJson(wordCollection);
-//
-//            stream.Write(json);
-//        }
+        using (StreamWriter stream = new StreamWriter(filePath))
+        {
+            string json = JsonUtility.ToJson(wordCollection);
+            stream.Write(json);
+        }  
+#endif
     }
 
     private void GenerateSampleWords()

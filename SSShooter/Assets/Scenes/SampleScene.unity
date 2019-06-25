@@ -367,11 +367,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d9b8589d537f1646b759063b294f1e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wordsJsonFile: {fileID: 4900000, guid: 664ea705afc8f4e41b771da61f4bd10d, type: 3}
   wordCollection:
     words: []
     subCollections: []
     allLetters: []
-  wordsJsonFile: {fileID: 4900000, guid: 498d0420c41f8c24280177e85ee34005, type: 3}
 --- !u!1001 &4710676140480638949
 PrefabInstance:
   m_ObjectHideFlags: 0
