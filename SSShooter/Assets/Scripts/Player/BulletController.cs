@@ -1,13 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Analytics;
 using UnityEngine.Assertions;
 
 public class BulletController : MonoBehaviour
 {
     #region Variables
-
-    // Control the bullet Destroy
-    private bool _toBeDestroyed;
     
     // Components
     private Rigidbody2D _rigidbody2D;
@@ -30,8 +29,19 @@ public class BulletController : MonoBehaviour
     {
         if (muzzlePrefab)
         {
-            GameObject muzzleVfx = Instantiate(muzzlePrefab, transform.position, Quaternion.identity);
-            muzzleVfx.transform.forward = transform.forward;
+            GameObject muzzleObj = Instantiate(muzzlePrefab, transform.position, transform.rotation);
+            ParticleSystem muzzleParticle = muzzleObj.GetComponent<ParticleSystem>();
+            if (muzzleParticle != null)
+            {
+                Destroy(muzzleObj, muzzleParticle.main.duration);
+            }
+            else
+            {
+                ParticleSystem muzzleParticleChild = muzzleObj.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(muzzleObj, muzzleParticleChild.main.duration);
+
+            }
+
         }
     }
 
@@ -48,11 +58,20 @@ public class BulletController : MonoBehaviour
             
             GameObject hitVfx = Instantiate(hitPrefab, pos, rot);
             hitVfx.transform.forward = transform.forward;
+            ParticleSystem hitParticle = hitVfx.GetComponent<ParticleSystem>();
+            if (hitParticle != null)
+            {
+                Destroy(hitVfx, hitParticle.main.duration);
+            }
+            else
+            {
+                ParticleSystem hitParticleChild = hitVfx.transform.GetChild(0).GetComponent<ParticleSystem>();
+                Destroy(hitVfx, hitParticleChild.main.duration);
+
+            }
         }
 
         EnemyDisplay enemy = other.gameObject.GetComponent<EnemyDisplay>();
-        _toBeDestroyed = true;
-        StopAllCoroutines();
 
         if (lastBullet)
         {
@@ -71,7 +90,7 @@ public class BulletController : MonoBehaviour
         Vector2 bulletPosition = transform.position;
         Vector2 targetVector = (Vector2)target.position - bulletPosition;
         
-        while (!_toBeDestroyed && targetVector.magnitude > enemyRadius)
+        while (targetVector.magnitude > enemyRadius)
         {
             bulletPosition = transform.position;
             targetVector = (Vector2)target.position - bulletPosition;
@@ -79,5 +98,11 @@ public class BulletController : MonoBehaviour
                 bulletPosition + bulletSpeed * Time.deltaTime * targetVector.normalized);
             yield return null;
         }
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
+        Destroy(gameObject);
     }
 }
