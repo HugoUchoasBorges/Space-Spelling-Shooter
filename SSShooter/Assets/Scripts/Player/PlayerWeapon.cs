@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
 {
@@ -25,6 +25,6 @@ public class PlayerWeapon : MonoBehaviour
 
         if (enemy.Word == "")
             bulletController.lastBullet = true;
-        StartCoroutine(bulletController.ShootAtTarget(target, bulletSpeed));
+        bulletController.ShootAtTarget(target, bulletSpeed);
     }
 }

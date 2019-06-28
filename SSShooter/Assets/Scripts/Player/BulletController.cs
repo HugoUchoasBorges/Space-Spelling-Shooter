@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Analytics;
 using UnityEngine.Assertions;
 
 public class BulletController : MonoBehaviour
@@ -80,7 +78,12 @@ public class BulletController : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public IEnumerator ShootAtTarget(Transform target, float bulletSpeed)
+    public void ShootAtTarget(Transform target, float bulletSpeed)
+    {
+        StartCoroutine(ShootAtTargetCoroutine(target, bulletSpeed));
+    }
+
+    private IEnumerator ShootAtTargetCoroutine(Transform target, float bulletSpeed)
     {
         if (!_rigidbody2D)
             yield break;
