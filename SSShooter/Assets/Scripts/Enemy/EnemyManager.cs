@@ -100,9 +100,7 @@ public class EnemyManager : MonoBehaviour
     
     public void DestroyEnemy(GameObject enemyGameObject)
     {
-        EnemyDisplay enemyDisplay = enemyGameObject.GetComponent<EnemyDisplay>();
-        Destroy(enemyDisplay.canvasPanel);
-        Destroy(enemyGameObject);
+        enemyGameObject.GetComponent<EnemyDisplay>().ToDestroy();
     }
 
     private void UpdateGuiInfoEnemyManager()

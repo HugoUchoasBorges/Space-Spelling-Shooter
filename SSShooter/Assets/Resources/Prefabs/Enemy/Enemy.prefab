@@ -883,8 +883,8 @@ MonoBehaviour:
   canvasPanel: {fileID: 504062512}
   healthBar: {fileID: 2113995170}
   text: {fileID: 0}
-  ENEMY_DYING_AUDIO: dying
-  ENEMY_HIT_AUDIO: 
+  enemyDyingAudio: dying
+  enemyHitAudio: hit
 --- !u!114 &4301561109391634078
 MonoBehaviour:
   m_ObjectHideFlags: 0

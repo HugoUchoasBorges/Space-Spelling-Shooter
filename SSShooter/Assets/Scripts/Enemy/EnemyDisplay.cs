@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class EnemyDisplay : MonoBehaviour
 {
@@ -16,8 +18,8 @@ public class EnemyDisplay : MonoBehaviour
     [HideInInspector]
     public WordLoader wordLoader;
     private EnemyMovement _enemyMovement;
+    private AudioManager _audioManager;
 
-    [Space]
     [Header("Canvas Components")]
     public GameObject canvasPanel;
     public HealthBar healthBar;
@@ -25,16 +27,22 @@ public class EnemyDisplay : MonoBehaviour
 
     public string Word { get; private set; } = "";
 
+    [Header("Audio Names")] 
+    public string enemyDyingAudio;
+    public string enemyHitAudio;
+
     #endregion
 
     private void Awake()
     {
         enemyManager = GetComponentInParent<EnemyManager>();
         wordLoader = GetComponentInParent<WordLoader>();
+        _audioManager = GetComponentInParent<AudioManager>();
 
         _enemyMovement = GetComponent<EnemyMovement>();
         text = canvasPanel.GetComponentInChildren<Text>();
 
+        Assert.IsNotNull(_audioManager, "The Enemy don't seem to have a AudioManager");
         Assert.IsNotNull(healthBar, "The Enemy don't seem to have a HealthBar");
         Assert.IsNotNull(canvasPanel, "The Enemy must have a Canvas Panel reference");
         Assert.IsNotNull(text, "The Enemy must have a Canvas Text reference");
@@ -60,6 +68,16 @@ public class EnemyDisplay : MonoBehaviour
         Assert.IsNotNull(enemy, "The Enemy must have an EnemyObject reference");
 
         InitializeEnemy();
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (!_audioManager)
+            return;
+        
+        if(other.gameObject.layer==LayerMask.NameToLayer(GlobalVariables.BULLET_LAYER) && 
+           !other.gameObject.GetComponent<BulletController>().lastBullet)
+            _audioManager.Play(enemyHitAudio);
     }
 
     private bool CheckForRun()
@@ -131,5 +149,16 @@ public class EnemyDisplay : MonoBehaviour
     }
 
     #endregion
-    
+
+    public void ToDestroy()
+    {
+        if (!_audioManager)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        transform.position = 100 * Vector2.one;
+        Destroy(gameObject, _audioManager.Play(enemyDyingAudio));
+    }
 }

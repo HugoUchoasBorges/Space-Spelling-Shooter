@@ -9,6 +9,7 @@ public class BulletController : MonoBehaviour
     // Components
     private Rigidbody2D _rigidbody2D;
     public bool lastBullet;
+    private Transform _target;
     
     [Header("VFX Prefabs")] 
     public GameObject muzzlePrefab;
@@ -69,7 +70,7 @@ public class BulletController : MonoBehaviour
             }
         }
 
-        EnemyDisplay enemy = other.gameObject.GetComponent<EnemyDisplay>();
+        EnemyDisplay enemy = _target.gameObject.GetComponent<EnemyDisplay>();
 
         if (lastBullet)
         {
@@ -88,6 +89,8 @@ public class BulletController : MonoBehaviour
         if (!_rigidbody2D)
             yield break;
 
+        _target = target;
+
         float enemyRadius = target.GetComponent<CircleCollider2D>().radius;
 
         Vector2 bulletPosition = transform.position;
@@ -95,10 +98,17 @@ public class BulletController : MonoBehaviour
         
         while (targetVector.magnitude > enemyRadius)
         {
-            bulletPosition = transform.position;
-            targetVector = (Vector2)target.position - bulletPosition;
-            _rigidbody2D.MovePosition(
-                bulletPosition + bulletSpeed * Time.deltaTime * targetVector.normalized);
+            try
+            {
+                bulletPosition = transform.position;
+                targetVector = (Vector2) target.position - bulletPosition;
+                _rigidbody2D.MovePosition(
+                    bulletPosition + bulletSpeed * Time.deltaTime * targetVector.normalized);
+            }
+            catch
+            {
+                Destroy(gameObject);
+            }
             yield return null;
         }
     }

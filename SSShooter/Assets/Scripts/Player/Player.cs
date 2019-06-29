@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     private PlayerMovement _playerMovement;
     private TypingSystem _typingSystem;
     private GuiController _guiController;
+    private AudioManager _audioManager;
 
     [Header("Base Configuration________________")]
     [SerializeField]
@@ -26,6 +27,9 @@ public class Player : MonoBehaviour
     [Header("Player State Variables__________________")]
     public bool isDead;
     
+    [Header("Audio Variables__________________")]
+    public string playerDyingAudio;
+    
     #endregion
 
     private void Awake()
@@ -33,10 +37,12 @@ public class Player : MonoBehaviour
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _playerMovement = GetComponent<PlayerMovement>();
         _typingSystem = GetComponent<TypingSystem>();
+        _audioManager = GetComponent<AudioManager>();
 
         Assert.IsNotNull(_spriteRenderer);
         Assert.IsNotNull(_playerMovement);
         Assert.IsNotNull(_typingSystem);
+        Assert.IsNotNull(_audioManager);
     }
 
     private void Start()
@@ -49,6 +55,9 @@ public class Player : MonoBehaviour
 
     public void Death()
     {
+        if (_audioManager)
+            _audioManager.Play(playerDyingAudio);
+        
         isDead = true;
         
         lives = Mathf.Max(0, lives-1);

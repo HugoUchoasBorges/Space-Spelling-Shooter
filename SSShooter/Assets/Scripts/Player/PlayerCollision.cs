@@ -31,12 +31,5 @@ public class PlayerCollision : MonoBehaviour
         {
             _player.Death();
         }
-
-        EnemyManager enemyManager = enemy.enemyManager;
-        if (!enemyManager)
-            return;
-
-        enemyManager.RemoveEnemy(enemy.gameObject);
-        enemyManager.DestroyEnemy(enemy.gameObject);
     }
 }
