@@ -50,7 +50,7 @@ public class EnemyMovement : MonoBehaviour
             if (Random.value < 0.5f)
             {
                 newPosition = new Vector2(
-                    randomSignal * (rightScreenLimit + 1.5f * _screenBoundaries.screenBoundsOffset.x),
+                    randomSignal * (rightScreenLimit + 2f * _screenBoundaries.screenBoundsOffset.x),
                     Random.Range(bottomScreenLimit, topScreenLimit)
                 );   
             }
@@ -58,7 +58,7 @@ public class EnemyMovement : MonoBehaviour
             {
                 newPosition = new Vector2(
                     Random.Range(leftScreenLimit, rightScreenLimit),
-                    randomSignal * (topScreenLimit + 1.5f * _screenBoundaries.screenBoundsOffset.y)
+                    randomSignal * (topScreenLimit + 2f * _screenBoundaries.screenBoundsOffset.y)
                 ); 
             }
         }

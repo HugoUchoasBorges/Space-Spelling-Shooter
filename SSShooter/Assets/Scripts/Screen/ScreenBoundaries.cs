@@ -13,11 +13,14 @@ public class ScreenBoundaries : MonoBehaviour
     private Vector2 _screenBounds;
     public Vector2 screenBoundsOffset;
     private Vector2 _objectDimensions;
+    private Rigidbody2D _rigidbody2D;
 
     #endregion
 
     private void Awake()
     {
+        _rigidbody2D = GetComponent<Rigidbody2D>();
+            
         _screenBounds = GlobalVariables.ScreenBounds;
         Camera mainCamera = Camera.main;
         
@@ -41,14 +44,32 @@ public class ScreenBoundaries : MonoBehaviour
     private void LimitMovement()
     {
         Vector3 objectPos = transform.position;
-
+        
         float absPosX = Mathf.Abs(objectPos.x);
-        if (absPosX >= _screenBounds.x + screenBoundsOffset.x)
-            objectPos.x = objectPos.x * (0.1f*screenBoundsOffset.x / absPosX - 1);
-
         float absPosY = Mathf.Abs(objectPos.y);
-        if (absPosY >= _screenBounds.y + screenBoundsOffset.y)
-            objectPos.y = objectPos.y * (0.1f*screenBoundsOffset.y / absPosY - 1);
+
+        if (_rigidbody2D)
+        {
+            Vector2 velocity = _rigidbody2D.velocity;
+            
+            if (velocity.x > 0 && objectPos.x >= _screenBounds.x + screenBoundsOffset.x)
+                objectPos.x *= 0.1f * screenBoundsOffset.x / absPosX - 1;
+            else if (velocity.x < 0 && objectPos.x <= -(_screenBounds.x + screenBoundsOffset.x))
+                objectPos.x *= 0.1f * screenBoundsOffset.x / absPosX - 1;
+            
+            if (velocity.y > 0 && objectPos.y >= _screenBounds.y + screenBoundsOffset.y)
+                objectPos.y *= 0.1f * screenBoundsOffset.y / absPosY - 1;
+            else if (velocity.y < 0 && objectPos.y <= -(_screenBounds.y + screenBoundsOffset.y))
+                objectPos.y *= 0.1f * screenBoundsOffset.y / absPosY - 1;
+        }
+        else
+        {
+            if (absPosX >= _screenBounds.x + screenBoundsOffset.x)
+                objectPos.x *= 0.1f * screenBoundsOffset.x / absPosX - 1;
+
+            if (absPosY >= _screenBounds.y + screenBoundsOffset.y)
+                objectPos.y *= 0.1f * screenBoundsOffset.y / absPosY - 1;
+        }
 
         transform.position = objectPos;
     }
