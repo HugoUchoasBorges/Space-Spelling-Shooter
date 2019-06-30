@@ -74,7 +74,7 @@ public class BulletController : MonoBehaviour
 
         if (lastBullet)
         {
-            enemy.enemyManager.DestroyEnemy(other.gameObject);
+            enemy.enemyManager.DestroyEnemy(enemy.gameObject);
         }
         Destroy(gameObject);
     }
