@@ -116,6 +116,5 @@ public class BulletController : MonoBehaviour
     private void OnDestroy()
     {
         StopAllCoroutines();
-        Destroy(gameObject);
     }
 }
