@@ -1,8 +1,7 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Assertions;
-
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {

@@ -94,7 +94,7 @@ public class WaveManager : MonoBehaviour
 
     private void CheckForEnemiesLeft()
     {
-        if (_enemyManager.activeEnemies.Count > 0)
+        if (_enemyManager.transform.childCount > 0)
             return;
 
         CancelInvoke(nameof(CheckForEnemiesLeft));
