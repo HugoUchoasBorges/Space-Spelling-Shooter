@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 4710676140913262343}
   - component: {fileID: 4710676140913262340}
   - component: {fileID: 594041441}
-  - component: {fileID: 594041440}
+  - component: {fileID: 8717096894492162613}
   - component: {fileID: 594041436}
   - component: {fileID: 978014433}
   - component: {fileID: 978014434}
@@ -141,7 +141,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &594041440
+--- !u!60 &8717096894492162613
 PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -166,12 +166,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -0.35505182, y: -0.25682163}
-      - {x: -0.0564982, y: -0.068267345}
-      - {x: 0.04576698, y: -0.062995434}
-      - {x: 0.35782972, y: -0.2613821}
-      - {x: 0.05251696, y: 0.28517985}
-      - {x: -0.038242884, y: 0.2915249}
+    - - {x: -0.00086481124, y: 0.24864674}
+      - {x: 0.29335147, y: -0.2006607}
+      - {x: -0.28984642, y: -0.2090373}
+      - {x: -0.19612265, y: -0.045021057}
 --- !u!114 &594041436
 MonoBehaviour:
   m_ObjectHideFlags: 0
