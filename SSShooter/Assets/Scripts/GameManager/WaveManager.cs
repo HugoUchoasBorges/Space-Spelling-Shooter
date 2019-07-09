@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
 
 public class WaveManager : MonoBehaviour
 {
@@ -13,42 +12,25 @@ public class WaveManager : MonoBehaviour
     private int _enemiesLeftToInvoke;
     private int _maxEnemiesOnScreen;
     
-
-    // Components
-    private GameObject _wavesPanel;
-    private Text _wavesValue;
     
+    [Header("GUI Elements__________________")]
+    public GuiController[] guiControllers;
+    
+
     // Relational Components
     private EnemyManager _enemyManager;
-    private GuiController _guiController;
 
     #endregion
 
     private void Start()
     {
-        _wavesPanel = GlobalVariables.GuiController.wavesPanel;
-        _wavesValue = GlobalVariables.GuiController.wavesValue;
-
         _enemyManager = GlobalVariables.EnemyManager;
-        _guiController = GlobalVariables.GuiController;
 
-        if (_wavesPanel && _wavesValue)
-        {
-            _wavesPanel.SetActive(true);
-
-            if (_enemyManager)
-            {
-                NextWave();
-            }
-        }
-        
+        if (_enemyManager)
+            NextWave();
+    
         Assert.IsNotNull(_enemyManager, 
             "EnemyManager not found in the Scene. You must provide one in order to Spawn the Enemies");
-        Assert.IsNotNull(_guiController, 
-            "GUIController not found in the Scene. You must provide one in order to display Information");
-        
-        Assert.IsNotNull(_wavesPanel);
-        Assert.IsNotNull(_wavesValue);
     }
 
     private void StartWave()
@@ -105,7 +87,7 @@ public class WaveManager : MonoBehaviour
     private void NextWave()
     {
         waveNumber++;
-        _guiController.UpdateGuiInfo(wave:waveNumber.ToString());
+        GuiController.InvokeMulti(this, guiControllers);
         
         StartWave();
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -23,7 +24,7 @@ public class EnemyDisplay : MonoBehaviour
     [Header("Canvas Components")]
     public GameObject canvasPanel;
     public HealthBar healthBar;
-    public Text text;
+    public TextMeshProUGUI text;
 
     public string Word { get; private set; } = "";
 
@@ -40,7 +41,7 @@ public class EnemyDisplay : MonoBehaviour
         _audioManager = GetComponentInParent<AudioManager>();
 
         _enemyMovement = GetComponent<EnemyMovement>();
-        text = canvasPanel.GetComponentInChildren<Text>();
+        text = canvasPanel.GetComponentInChildren<TextMeshProUGUI>();
 
         Assert.IsNotNull(_audioManager, "The Enemy don't seem to have a AudioManager");
         Assert.IsNotNull(healthBar, "The Enemy don't seem to have a HealthBar");

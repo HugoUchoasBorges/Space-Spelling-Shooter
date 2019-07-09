@@ -9,7 +9,6 @@ public class EnemyManager : MonoBehaviour
     
     // Components
     private WordLoader _wordLoader;
-    private GuiController _guiController;
 
     private const string EnemyPath = "Prefabs/Enemy/Enemy";
 
@@ -17,6 +16,9 @@ public class EnemyManager : MonoBehaviour
     public bool spawnEnemies;
     [SerializeField]
     private float enemiesFrequency = 2f;
+    
+    [Header("GUI Elements__________________")]
+    public GuiController[] guiControllers;
 
     [Header("Active Enemies Info________________")]
     [Range(1f, 10f)] 
@@ -26,9 +28,9 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private List<Enemy> defeatedEnemies;
 
-    [SerializeField] private int totalEnemiesDefeated;
-    [SerializeField] private int totalPointsObtained;
-    [SerializeField] private int totalCharsTyped;
+    private int _totalEnemiesDefeated;
+    private int _totalPointsObtained;
+    private int _totalCharsTyped;
 
     #endregion
 
@@ -45,12 +47,9 @@ public class EnemyManager : MonoBehaviour
     {
         activeEnemies = new List<EnemyDisplay>();
         defeatedEnemies = new List<Enemy>();
-        totalEnemiesDefeated = 0;
-        totalPointsObtained = 0;
-        totalCharsTyped = 0;
-        
-        _guiController = GlobalVariables.GuiController;
-        Assert.IsNotNull(_guiController);
+        _totalEnemiesDefeated = 0;
+        _totalPointsObtained = 0;
+        _totalCharsTyped = 0;
         
         UpdateGuiInfoEnemyManager();
             
@@ -85,19 +84,16 @@ public class EnemyManager : MonoBehaviour
         activeEnemies.Remove(enemyDisplay);
         defeatedEnemies.Add(enemy);
 
-        if (!_guiController)
-            return;
-
         if (!enemy)
             return;
         
-        totalEnemiesDefeated += 1;
-        totalPointsObtained += enemy.CalculatePontuation();
-        totalCharsTyped += enemy.GetWordLength();
+        _totalEnemiesDefeated += 1;
+        _totalPointsObtained += enemy.CalculatePontuation();
+        _totalCharsTyped += enemy.GetWordLength();
 
         UpdateGuiInfoEnemyManager();
     }
-    
+
     public void DestroyEnemy(GameObject enemyGameObject)
     {
         enemyGameObject.GetComponent<EnemyDisplay>().ToDestroy();
@@ -105,14 +101,7 @@ public class EnemyManager : MonoBehaviour
 
     private void UpdateGuiInfoEnemyManager()
     {
-        if (!_guiController)
-            return;
-        
-        _guiController.UpdateGuiInfo(
-            points:totalPointsObtained.ToString(),
-            enemiesDefeated:totalEnemiesDefeated.ToString(),
-            charsTyped:totalCharsTyped.ToString()
-        );
+        GuiController.InvokeMulti(this, guiControllers);
     }
 
     public string[] GetAvailableLetters()

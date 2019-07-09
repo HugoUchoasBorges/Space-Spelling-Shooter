@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.UI;
@@ -58,7 +59,7 @@ public class TypingSystem : MonoBehaviour
         _selectedEnemy = enemy;
         _selectedEnemy.gameObject.layer = LayerMask.NameToLayer(GlobalVariables.SELECTED_ENEMY_LAYER);
 
-        Text enemyText = _selectedEnemy.text;
+        TextMeshProUGUI enemyText = _selectedEnemy.text;
 
         _enemyOldColor = enemyText.color;
         enemyText.color = Color.red;

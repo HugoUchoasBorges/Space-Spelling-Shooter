@@ -182,13 +182,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27c63710e46d4ce08b713db175931218, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lives: 3
   respawnColor: {r: 1, g: 0, b: 0, a: 1}
   respawnTimeSec: 2
   respawnIntangibleTimeSec: 2
   intangibleLayer:
     serializedVersion: 2
     m_Bits: 2048
+  guiControllers:
+  - name: Lives
+    textMesh: {fileID: 0}
+    value: _lives
   isDead: 0
   playerDyingAudio: dying
 --- !u!114 &978014433

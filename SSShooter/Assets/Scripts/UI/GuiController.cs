@@ -1,53 +1,48 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using System.Reflection;
+using TMPro;
 using UnityEngine.Assertions;
-using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
-public class GuiController : MonoBehaviour
+
+[Serializable]
+public class GuiController
 {
     #region Variables
     
-    // Panels info
-    [Header("Player Info Info ____________")]
-    public Text livesValue; 
-    
-    [Space]
-    [Header("Pontuation Info ____________")]
-    public Text pointsValue;
-    public Text enemiesDefeatedValue;
-    public Text charsTypedValue;
+    private BindingFlags _bindingFlags = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance;
 
-    [Space] 
-    [Header("Wave Manager Info ____________")]
-    public GameObject wavesPanel;
-    public Text wavesValue;
-    
+    public string name;
+    public TextMeshProUGUI textMesh;
+    public string value;
+
     #endregion
 
-    private void Awake()
+    public static void InvokeMulti(Object obj, IEnumerable<GuiController> guiControllers)
     {
-        GlobalVariables.GuiController = this;
-        
-        Assert.IsNotNull(livesValue);
-        Assert.IsNotNull(pointsValue);
-        Assert.IsNotNull(enemiesDefeatedValue);
-        Assert.IsNotNull(charsTypedValue);
-        
-        Assert.IsNotNull(wavesPanel);
-        Assert.IsNotNull(wavesValue);
+        foreach (GuiController guiController in guiControllers)
+            guiController.Invoke(obj);
     }
-
-    public void UpdateGuiInfo(string lives="", string points="", string enemiesDefeated="", string charsTyped="", string wave="")
+    
+    private void Invoke(Object obj)
     {
-        if(livesValue)
-            livesValue.text = lives!="" ? lives : livesValue.text;
-        if(pointsValue)
-            pointsValue.text = points!="" ? points : pointsValue.text;
-        if(enemiesDefeatedValue)
-            enemiesDefeatedValue.text = enemiesDefeated!="" ? enemiesDefeated : enemiesDefeatedValue.text;
-        if(charsTypedValue)
-            charsTypedValue.text = charsTyped!="" ? charsTyped : charsTypedValue.text;
-        if(wavesValue)
-            wavesValue.text = wave!="" ? wave : wavesValue.text;
+        var val = obj.GetType().GetField(value, _bindingFlags)?.GetValue(obj);
+        var valStr = val?.ToString();
+        
+//        var newVal = valStr != "" ? valStr : value;
+        var newVal = valStr;
+        UpdateText(textMesh, newVal, obj);
     }
+    
+    private void UpdateText(TextMeshProUGUI text, string val, object obj)
+    {
+        Assert.IsNotNull(text);
+        Assert.IsNotNull(val, "The field " + value + " does not exist in the class " + obj.GetType());
 
+        if (!text)
+            return;
+        
+        text.text = val;
+    }
 }

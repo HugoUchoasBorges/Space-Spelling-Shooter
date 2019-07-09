@@ -11,20 +11,20 @@ public class Player : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
     private PlayerMovement _playerMovement;
     private TypingSystem _typingSystem;
-    private GuiController _guiController;
     private AudioManager _audioManager;
 
-    [Header("Base Configuration________________")]
-    [SerializeField]
-    private int lives = 3;
+    private int _lives = 3;
     
     public Color respawnColor = Color.red;
     [Range(0.5f, 3f)] public float respawnTimeSec = 3f;
     [Range(0.5f, 3f)] public float respawnIntangibleTimeSec = 3f;
     public LayerMask intangibleLayer;
 
+    [Header("GUI Elements__________________")]
+    public GuiController[] guiControllers;
+
     [Header("Player State Variables__________________")]
-    public bool isDead;
+    [HideInInspector]public bool isDead;
     
     [Header("Audio Variables__________________")]
     public string playerDyingAudio;
@@ -46,9 +46,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        _guiController = GlobalVariables.GuiController;
-        Assert.IsNotNull(_guiController);
-
         UpdateGuiInfoPlayer();
     }
 
@@ -59,10 +56,10 @@ public class Player : MonoBehaviour
         
         isDead = true;
         
-        lives = Mathf.Max(0, lives-1);
+        _lives = Mathf.Max(0, _lives-1);
         UpdateGuiInfoPlayer();
             
-        if (lives == 0)
+        if (_lives == 0)
         {
             GameOver();
         }
@@ -111,9 +108,6 @@ public class Player : MonoBehaviour
 
     private void UpdateGuiInfoPlayer()
     {
-        if (!_guiController)
-            return;
-        
-        _guiController.UpdateGuiInfo(lives:lives.ToString());
+        GuiController.InvokeMulti(this, guiControllers);
     }
 }
