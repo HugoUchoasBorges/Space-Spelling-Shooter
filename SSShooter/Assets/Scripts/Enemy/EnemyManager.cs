@@ -22,7 +22,7 @@ public class EnemyManager : MonoBehaviour
 
     [Header("Active Enemies Info________________")]
     [Range(1f, 10f)] 
-    public List<EnemyDisplay> activeEnemies;
+    public List<Enemy> activeEnemies;
     
     [Header("Defeated Enemies Info________________")]
     [SerializeField]
@@ -45,7 +45,7 @@ public class EnemyManager : MonoBehaviour
 
     private void Start()
     {
-        activeEnemies = new List<EnemyDisplay>();
+        activeEnemies = new List<Enemy>();
         defeatedEnemies = new List<Enemy>();
         _totalEnemiesDefeated = 0;
         _totalPointsObtained = 0;
@@ -57,7 +57,7 @@ public class EnemyManager : MonoBehaviour
             InvokeRepeating(nameof(SpawnEnemy), enemiesFrequency , enemiesFrequency );
     }
 
-    public EnemyDisplay SpawnEnemy()
+    public Enemy SpawnEnemy()
     {
         if (!_wordLoader || GetAvailableLetters().Length == 0)
             return null;
@@ -65,12 +65,12 @@ public class EnemyManager : MonoBehaviour
         GameObject enemyObject = Resources.Load<GameObject>(EnemyPath);
         GameObject newEnemy = Instantiate(enemyObject, transform);
         
-        EnemyDisplay enemyDisplay = newEnemy.GetComponent<EnemyDisplay>();
-        if (enemyDisplay)
+        Enemy enemy = newEnemy.GetComponent<Enemy>();
+        if (enemy)
         {
-            activeEnemies.Add(enemyDisplay);
+            activeEnemies.Add(enemy);
 //            enemyDisplay.InitializeEnemy();
-            return enemyDisplay;
+            return enemy;
         }
 
         return null;
@@ -78,10 +78,9 @@ public class EnemyManager : MonoBehaviour
 
     public void RemoveEnemy(GameObject enemyGameObject)
     {
-        EnemyDisplay enemyDisplay = enemyGameObject.GetComponent<EnemyDisplay>();
-        Enemy enemy = enemyDisplay.enemy;
+        Enemy enemy = enemyGameObject.GetComponent<Enemy>();
         
-        activeEnemies.Remove(enemyDisplay);
+        activeEnemies.Remove(enemy);
         defeatedEnemies.Add(enemy);
 
         if (!enemy)
@@ -96,7 +95,7 @@ public class EnemyManager : MonoBehaviour
 
     public void DestroyEnemy(GameObject enemyGameObject)
     {
-        enemyGameObject.GetComponent<EnemyDisplay>().ToDestroy();
+        enemyGameObject.GetComponent<Enemy>().ToDestroy();
     }
 
     private void UpdateGuiInfoEnemyManager()
@@ -112,12 +111,12 @@ public class EnemyManager : MonoBehaviour
         string[] allLetters = _wordLoader.wordCollection.allLetters;
         
         List<string> usingLetters = new List<string>();
-        foreach (EnemyDisplay enemy in activeEnemies)
+        foreach (Enemy enemy in activeEnemies)
         {
-            if (!enemy.enemy)
+            if (!enemy)
                 continue;
             
-            usingLetters.Add(enemy.enemy.word.text.Substring(0, 1));
+            usingLetters.Add(enemy.word.text.Substring(0, 1));
         }
 
         return allLetters.Where(x=>!usingLetters.ToArray().Contains(x)).ToArray();

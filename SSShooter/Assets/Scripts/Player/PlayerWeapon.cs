@@ -20,7 +20,7 @@ public class PlayerWeapon : MonoBehaviour
 
     public void Shoot(Transform target)
     {
-        EnemyDisplay enemy = target.GetComponent<EnemyDisplay>();
+        Enemy enemy = target.GetComponent<Enemy>();
 
         Vector3 position = weaponPosition ? weaponPosition.position : transform.position;
         GameObject newBullet = Instantiate(bullet, position, transform.rotation);

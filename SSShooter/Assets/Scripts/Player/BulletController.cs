@@ -70,7 +70,7 @@ public class BulletController : MonoBehaviour
             }
         }
 
-        EnemyDisplay enemy = _target.gameObject.GetComponent<EnemyDisplay>();
+        Enemy enemy = _target.gameObject.GetComponent<Enemy>();
 
         if (lastBullet)
         {

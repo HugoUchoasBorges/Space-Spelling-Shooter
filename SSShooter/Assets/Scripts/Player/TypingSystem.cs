@@ -10,7 +10,7 @@ public class TypingSystem : MonoBehaviour
 
     // Enemies
     private EnemyManager _enemyManager;
-    private EnemyDisplay _selectedEnemy;
+    private Enemy _selectedEnemy;
 
     private Color _enemyOldColor;
 
@@ -28,7 +28,7 @@ public class TypingSystem : MonoBehaviour
         Assert.IsNotNull(_enemyManager, "No EnemyManager GameObject found in this Scene");
     }
 
-    public EnemyDisplay TypeChar(string input)
+    public Enemy TypeChar(string input)
     {
         // Return key
 //        if (input == "\r")
@@ -44,8 +44,8 @@ public class TypingSystem : MonoBehaviour
 
     private void FindEnemy(string input)
     {
-        EnemyDisplay[] activeEnemies = _enemyManager.activeEnemies.ToArray();
-        EnemyDisplay[] foundEnemies = Array.FindAll(activeEnemies,
+        Enemy[] activeEnemies = _enemyManager.activeEnemies.ToArray();
+        Enemy[] foundEnemies = Array.FindAll(activeEnemies,
             enemy => enemy.Word.StartsWith(input));
 
         if (foundEnemies.Length == 0)
@@ -54,7 +54,7 @@ public class TypingSystem : MonoBehaviour
         SelectEnemy(foundEnemies[0]);
     }
 
-    private void SelectEnemy(EnemyDisplay enemy)
+    private void SelectEnemy(Enemy enemy)
     {
         _selectedEnemy = enemy;
         _selectedEnemy.gameObject.layer = LayerMask.NameToLayer(GlobalVariables.SELECTED_ENEMY_LAYER);
@@ -76,7 +76,7 @@ public class TypingSystem : MonoBehaviour
         _selectedEnemy = null;
     }
 
-    private EnemyDisplay Shoot(string input)
+    private Enemy Shoot(string input)
     {
         if (!_selectedEnemy)
             return null;

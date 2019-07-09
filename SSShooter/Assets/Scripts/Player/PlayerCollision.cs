@@ -22,7 +22,7 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        EnemyDisplay enemy = other.gameObject.GetComponent<EnemyDisplay>();
+        Enemy enemy = other.gameObject.GetComponent<Enemy>();
 
         if (!enemy)
             return;

@@ -72,7 +72,7 @@ public class PlayerInput : MonoBehaviour
             if (!_typingSystem)
                 return;
 
-            EnemyDisplay enemyTarget = _typingSystem.TypeChar(_input.ToUpper());
+            Enemy enemyTarget = _typingSystem.TypeChar(_input.ToUpper());
             if (enemyTarget && _playerWeapon)
             {
                 _playerWeapon.Shoot(enemyTarget.transform);

@@ -7,7 +7,7 @@ public class EnemyMovement : MonoBehaviour
 
     // Components
     private Rigidbody2D _rigidbody2D;
-    private EnemyDisplay _enemyDisplay;
+    private Enemy _enemy;
     private ScreenBoundaries _screenBoundaries;
 
     #endregion
@@ -15,11 +15,11 @@ public class EnemyMovement : MonoBehaviour
     private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _enemyDisplay = GetComponent<EnemyDisplay>();
+        _enemy = GetComponent<Enemy>();
         _screenBoundaries = GetComponent<ScreenBoundaries>();
 
         Assert.IsNotNull(_rigidbody2D);
-        Assert.IsNotNull(_enemyDisplay);
+        Assert.IsNotNull(_enemy);
         Assert.IsNotNull(_screenBoundaries);
     }
 
@@ -80,10 +80,10 @@ public class EnemyMovement : MonoBehaviour
             Vector3 centerRange = new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f));
             Vector2 startImpulse = (centerRange - transform.position).normalized;
             
-            if (_enemyDisplay)
+            if (_enemy)
             {
-                if (_enemyDisplay.enemy)
-                    startImpulse *= _enemyDisplay.enemy.speed;
+                if (_enemy)
+                    startImpulse *= _enemy.speed;
                 else
                     startImpulse *= 0.5f;
             }
@@ -91,8 +91,8 @@ public class EnemyMovement : MonoBehaviour
             _rigidbody2D.AddForce(startImpulse, ForceMode2D.Impulse);
             
             float maxInitialTorque = 0.01f;
-            if (_enemyDisplay.enemy)
-                maxInitialTorque = _enemyDisplay.enemy.maxInitialTorque;
+            if (_enemy)
+                maxInitialTorque = _enemy.maxInitialTorque;
             _rigidbody2D.AddTorque(
                 Random.Range(-maxInitialTorque, maxInitialTorque),
                 ForceMode2D.Impulse);
