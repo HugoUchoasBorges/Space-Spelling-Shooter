@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "102603199048",
+    "firebase_url": "https://ssshooter-4acf9.firebaseio.com",
+    "project_id": "ssshooter-4acf9",
+    "storage_bucket": "ssshooter-4acf9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:102603199048:android:1a04028343f4c0445fbe7d",
+        "android_client_info": {
+          "package_name": "com.hugouchoasborges.ssshooter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "102603199048-p1eiqp1b8kj39ulj2fh6o2kvqhsja2gt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ61MdxH6CNxOaXIeYChtHGgBG5ry9yNc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "102603199048-p1eiqp1b8kj39ulj2fh6o2kvqhsja2gt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
